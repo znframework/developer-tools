@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-use Restful, Method, Validation, File;
+use Restful, Method, Validation, File, Session;
 
 class Home extends Controller
 {
@@ -26,7 +26,11 @@ class Home extends Controller
             }
         }
 
-        $return = Restful::get('https://www.znframework.com/api');
+        if( ! $return = Session::select('return') )
+        {
+            $return = Restful::get('https://www.znframework.com/api');
+            Session::insert('return', $return);
+        }
 
         $this->masterpage->page  = 'dashboard';
         $this->masterpage->pdata['return'] = $return;
