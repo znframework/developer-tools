@@ -31,8 +31,11 @@
     'dashboardVersion' => 'Panel Versiyon',
     'version' => 'Versiyon',
     'systemInfo' => 'Sistem Bilgisi',
+    'systemLogs' => 'Sistem Logları',
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
     'migrations' => 'Göçler',
-    'documentation' => 'Dökümantasyon'
+    'documentation' => 'Dökümantasyon',
+    'notFount' => 'Bulunamadı',
+    'show' => 'Göster'
 ];

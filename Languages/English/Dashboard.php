@@ -31,8 +31,11 @@
     'dashboardVersion' => 'Dashboard Version',
     'version' => 'Version',
     'systemInfo' => 'System Info',
+    'systemLogs' => 'System Logs',
     'models' => 'Models',
     'controllers' => 'Controllers',
     'migrations' => 'Migrations',
-    'documentation' => 'Documentation'
+    'documentation' => 'Documentation',
+    'notFound' => 'Not Found',
+    'show' => 'Show'
 ];

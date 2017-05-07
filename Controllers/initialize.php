@@ -1,6 +1,6 @@
 <?php namespace Project\Controllers;
 
-use Folder, Arrays, Form, Config, Route;
+use Folder, Arrays, Form, Config, Route, Validation;
 
 class Initialize extends Controller
 {
@@ -19,7 +19,8 @@ class Initialize extends Controller
         $projects = Folder::files(PROJECTS_DIR, 'dir');
         $projects = Arrays::combine($projects, $projects);
         $default  = PROJECTS_CONFIG['directory']['default'];
-        $select   = Form::class('form-control')->select('projects', $projects, $default);
+        $postBack = Validation::postBack('projects');
+        $select   = Form::class('form-control')->select('projects', $projects, ! empty($postBack) ? $postBack : $default);
 
         define('PROJECT_LIST', $projects);
         define('PROJECTS_SELECT', $select);
@@ -32,7 +33,8 @@ class Initialize extends Controller
             'models'        => ['icon' => 'database',   'href' => 'generate/model'],
             'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],
             'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
-            'systemInfo'   => ['icon' => 'info',       'href' => 'info/main']
+            'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
+            'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
         ];
 
         define('MENUS', $menus);
