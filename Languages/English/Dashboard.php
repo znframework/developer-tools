@@ -27,6 +27,7 @@
     'projectList' => 'Project List',
     'createButton' => 'CREATE',
     'generateButton' => 'GENERATE',
+    'refreshButton' => 'REFRESH',
     'newProject' => 'New Project',
     'dashboardVersion' => 'Dashboard Version',
     'version' => 'Version',

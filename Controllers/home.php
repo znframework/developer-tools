@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Session;
+use Restful, Method, Validation, File, Session, Json;
 
 class Home extends Controller
 {
@@ -46,7 +46,7 @@ class Home extends Controller
 
         if( ! $return = Session::select('return') )
         {
-            $return = Restful::get('https://www.znframework.com/api');
+            $return = Restful::get('https://api.znframework.com/statistics');
 
             Session::insert('return', $return);
         }
@@ -64,6 +64,37 @@ class Home extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function docs(String $params = NULL)
     {
+        $docs = FILES_DIR . 'docs.json';
+
+        if( Method::post('refresh') )
+        {
+            File::delete($docs);
+            clearstatcache();
+        }
+
+        if( ! File::exists($docs) )
+        {
+            $return = Restful::get('https://api.znframework.com/docs');
+
+            if( ! empty($return) )
+            {
+                File::write($docs, Json::encode($return));
+            }
+        }
+        else
+        {
+            $return = Json::decode(File::read($docs));
+        }
+
+        \Import::handload('Functions');
+
+        $this->masterpage->plugin['name'] = array_merge(\Config::get('Masterpage', 'plugin')['name'], [
+            'Dashboard/highlight/styles/agate.css',
+            'Dashboard/highlight/highlight.pack.js'
+        ]);
+
+        $this->masterpage->pdata['docs'] = $return;
+
         $this->masterpage->page  = 'docs';
     }
 

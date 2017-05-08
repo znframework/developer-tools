@@ -6754,4 +6754,7 @@ button.close {
     display: none !important;
   }
 }
+html,body{  height: 95%; }
+#wrapper{height: 100%;}
+#page-wrapper{min-height: 100%;}
 /*# sourceMappingURL=bootstrap.css.map */

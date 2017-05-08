@@ -49,9 +49,9 @@ class Initialize extends Controller
             'home'          => ['icon' => 'home',       'href' => 'home/main'],
             'controllers'   => ['icon' => 'gears',      'href' => 'generate/controller'],
             'models'        => ['icon' => 'database',   'href' => 'generate/model'],
-            'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],
-            'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
+            'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],    
             'sqlConverter'  => ['icon' => 'refresh',    'href' => 'system/converter'],
+            'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
             'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
             'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
         ];

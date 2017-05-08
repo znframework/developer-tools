@@ -116,7 +116,7 @@
     [
         'name'      =>
         [
-            'Dashboard/css/bootstrap.min.css',
+            'Dashboard/css/bootstrap.css',
             'Dashboard/css/sb-admin.css',
             'Dashboard/css/plugins/morris.css',
             'Dashboard/font-awesome/css/font-awesome.min.css',

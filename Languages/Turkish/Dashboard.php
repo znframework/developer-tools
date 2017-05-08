@@ -26,6 +26,7 @@
     'libraryCount' => 'Kütüphane Sayısı',
     'projectList' => 'Proje Listesi',
     'createButton' => 'OLUŞTUR',
+    'refreshButton' => 'YENİLE',
     'generateButton' => 'OLUŞTUR',
     'newProject' => 'Yeni Proje',
     'dashboardVersion' => 'Panel Versiyon',
