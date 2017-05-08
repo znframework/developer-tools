@@ -37,5 +37,9 @@
     'migrations' => 'Göçler',
     'documentation' => 'Dökümantasyon',
     'notFount' => 'Bulunamadı',
-    'show' => 'Göster'
+    'show' => 'Göster',
+    'sqlConverter' => 'SQL to ORM',
+    'syntax' => 'Deyimi',
+    'convert' => 'Çevir',
+    'supportQueries' => 'Desteklenen Sorgular',
 ];

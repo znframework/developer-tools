@@ -1,9 +1,27 @@
 <?php namespace Project\Controllers;
 
+//------------------------------------------------------------------------------------------------------------
+// INITIALIZE
+//------------------------------------------------------------------------------------------------------------
+//
+// Author   : ZN Framework
+// Site     : www.znframework.com
+// License  : The MIT License
+// Copyright: Copyright (c) 2012-2016, znframework.com
+//
+//------------------------------------------------------------------------------------------------------------
+
 use Folder, Arrays, Form, Config, Route, Validation;
 
 class Initialize extends Controller
 {
+    //--------------------------------------------------------------------------------------------------------
+    // Main
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
         $ips = Config::get('Dashboard', 'ip');
@@ -33,6 +51,7 @@ class Initialize extends Controller
             'models'        => ['icon' => 'database',   'href' => 'generate/model'],
             'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],
             'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
+            'sqlConverter'  => ['icon' => 'refresh',    'href' => 'system/converter'],
             'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
             'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
         ];

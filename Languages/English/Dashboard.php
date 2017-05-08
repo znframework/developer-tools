@@ -37,5 +37,9 @@
     'migrations' => 'Migrations',
     'documentation' => 'Documentation',
     'notFound' => 'Not Found',
-    'show' => 'Show'
+    'show' => 'Show',
+    'sqlConverter' => 'SQL to ORM',
+    'syntax' => 'Syntax',
+    'convert' => 'Convert',
+    'supportQueries' => 'Support Queries',
 ];
