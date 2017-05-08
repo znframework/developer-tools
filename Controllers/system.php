@@ -30,14 +30,22 @@ class System extends Controller
 
             $this->_cselect($orm);
             $this->_cdelete($orm);
+            $this->_cinsert($orm);
+            $this->_cupdate($orm);
+
+            $orm = suffix(str_replace('->', '<br>&nbsp;&nbsp;->', $orm), ';');
+
+            $this->masterpage->pdata['orm'] = $orm;
         }
 
         $this->masterpage->pdata['supportQueries'] =
         [
             '<b>select</b> columns <b>from</b> table [<b>where</b> column cond value] [<b>limit</b> start, limit] [<b>group by</b> column] [<b>order by</b> column asc|desc]',
+            '<b>insert into</b> table (col1, col2, ...) <b>values</b>(val1, val2, ...)',
+            '<b>update</b> table <b>set</b> column1 = value1 ... [<b>where</b> column cond value]',
             '<b>delete</b> <b>from</b> table <b>where</b> column cond value'
         ];
-        $this->masterpage->pdata['orm'] = str_replace('->', '<br>&nbsp;&nbsp;->', $orm ?? NULL) . ';';
+
         $this->masterpage->page  = 'converter';
     }
 
@@ -64,23 +72,102 @@ class System extends Controller
     {
         if( Method::post('show') )
         {
-            $project = Method::post('projects');
+            $project = SELECT_PROJECT;
 
             $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
 
             $files = Folder::files($path, 'log');
 
-            $logs = '<hr>';
-
-            foreach( $files as $file )
+            if( ! empty($files) )
             {
-                $logs .= Html::strong('File: ' . $file) . Html::br(1);
-                $logs .= Html::parag(str_replace('IP', '<br>IP', File::read($path . $file))) . '<hr>';
+                $logs = '<hr>';
+
+                foreach( $files as $file )
+                {
+                    $logs .= Html::strong('File: ' . $file) . Html::br(1);
+                    $logs .= Html::parag(str_replace('IP', '<br>IP', File::read($path . $file))) . '<hr>';
+                }
             }
         }
 
         $this->masterpage->pdata['logs'] = $logs ?? LANG['notFound'] . '!';
         $this->masterpage->page  = 'logs';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Update
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _cupdate(&$replace)
+    {
+        $update = '^update\s+';
+
+        if( preg_match('/' . $update . '/', $replace))
+        {
+            $replaceEx = explode('where', $replace);
+            $whereClause = $replaceEx[1] ?? NULL;
+            $replace   = suffix($replaceEx[0], ';');
+
+            $syntax = '/'.$update.'(.*?)\s+set\s+(.*?)(\s+|\;)$/si';
+
+            preg_match($syntax, $replace, $match);
+
+            if( $whereClause )
+            {
+                $where = preg_replace('/(\w+)\s+(\W+)\s+(.*?)\;/si', 'where(\'$1 $2\', \'$3\')->', $whereClause.';');
+            }
+
+            $columns = explode(',', $match[2] ?? NULL);
+
+            $options = '[';
+
+            foreach( $columns as $val )
+            {
+                $valEx = explode('=', trim($val));
+
+                $options .= presuffix(trim($valEx[0]), '\'') . ' => ' . trim($valEx[1]) . ', ';
+            }
+
+            $options = rtrim($options, ', ');
+            $options .= ']';
+            $replace = preg_replace($syntax, 'DB::' . trim($where) . 'update(\'$1\', '.$options.')', $replace);
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Insert
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _cinsert(&$replace)
+    {
+        $insert  = '^insert\s+';
+
+        if( preg_match('/' . $insert . '/', $replace))
+        {
+            $replace = suffix($replace, ';');
+
+            $syntax = '/'.$insert.'into\s+(.*?)\s*\((.*?)\)\s+values\s*\((.*?)\)/si';
+
+            preg_match($syntax, $replace, $match);
+
+            $columns = explode(',', $match[2] ?? NULL);
+            $values  = explode(',', $match[3] ?? NULL);
+
+            $options = '[';
+            foreach( $columns as $key => $val )
+            {
+                $options .= presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
+            }
+            $options = rtrim($options, ', ');
+            $options .= ']';
+            $replace = preg_replace($syntax, 'DB::insert(\'$1\', '.$options.')', $replace);
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -104,15 +191,15 @@ class System extends Controller
 
             $data =
             [
-                '/'.$delete.'/i'  => 'DB',
-                '/'.$from.'/i'    => '->delete(\'$1\')',
-                '/'.$where2.'/i'  => '::where(\'$1 $2\', \'$3\')',
-                '/'.$where.'/i'   => '::where(\'exp:$1\')'
+                '/'.$delete.'/si'  => '',
+                '/'.$from.'/si'    => '->delete(\'$1\')',
+                '/'.$where2.'/si'  => '->where(\'$1 $2\', \'$3\')',
+                '/'.$where.'/si'   => '->where(\'exp:$1\')'
             ];
 
             $replace = preg_replace(Arrays::keys($data), Arrays::values($data), $replace);
 
-            $this->_last($replace, '/\-\>delete\(.*?\)/');
+            $this->_last($replace, '/\-\>delete\(.*?\)/', 'DB');
         }
     }
 
@@ -141,19 +228,21 @@ class System extends Controller
 
             $data =
             [
-                '/'.$select.'/i'  => 'DB::select(\'$1\')',
-                '/'.$from.'/i'    => '->get(\'$1\')',
-                '/'.$where2.'/i'  => '->where(\'$1 $2\', \'$3\')',
-                '/'.$where.'/i'   => '->where(\'exp:$1\')',
-                '/'.$limit2.'/i'  => '->limit($1)',
-                '/'.$limit.'/i'   => '->limit($1)',
-                '/'.$orderBy.'/i' => '->orderBy(\'$1\', \'$2\')',
-                '/'.$groupBy.'/i' => '->groupBy(\'$1\')',
+                '/'.$select.'/si'  => '->select(\'$1\')',
+                '/'.$from.'/si'    => '->get(\'$1\')',
+                '/'.$where2.'/si'  => '->where(\'$1 $2\', \'$3\')',
+                '/'.$where.'/si'   => '->where(\'exp:$1\')',
+                '/'.$limit2.'/si'  => '->limit($1)',
+                '/'.$limit.'/si'   => '->limit($1)',
+                '/'.$orderBy.'/si' => '->orderBy(\'$1\', \'$2\')',
+                '/'.$groupBy.'/si' => '->groupBy(\'$1\')',
             ];
 
             $replace = preg_replace(Arrays::keys($data), Arrays::values($data), $replace);
 
-            $this->_last($replace, '/\-\>get\(.*?\)/');
+            $replace = str_replace('->select(\'*\')', '', $replace);
+
+            $this->_last($replace, '/\-\>get\(.*?\)/', 'DB');
         }
     }
 
@@ -165,13 +254,15 @@ class System extends Controller
     // @param string  $getRegex
     //
     //--------------------------------------------------------------------------------------------------------
-    protected function _last(&$replace, $getRegex)
+    protected function _last(&$replace, $getRegex, $class)
     {
         preg_match($getRegex, $replace, $match);
 
         $get = $match[0] ?? NULL;
 
-        $replace = preg_replace($getRegex, '', $replace) . $get;
+        $replace = $class . preg_replace($getRegex, '', $replace) . $get;
+
+        $replace = str_replace('DB->', 'DB::', $replace);
     }
 
 }

@@ -40,7 +40,7 @@ class Generate extends Controller
 
                 $status = Gen::controller(Method::post('controller'),
                 [
-                    'application' => Method::post('projects'),
+                    'application' => SELECT_PROJECT,
                     'namespace'   => 'Project\Controllers',
                     'extends'     => 'Controller',
                     'functions'   => $functions
@@ -77,7 +77,7 @@ class Generate extends Controller
 
                 $status = Gen::model(Method::post('model'),
                 [
-                    'application' => Method::post('projects'),
+                    'application' => SELECT_PROJECT,
                     'namespace'   => Method::post('namespace'),
                     'extends'     => Method::post('extends'),
                     'functions'   => $functions
@@ -110,7 +110,7 @@ class Generate extends Controller
 
             if( ! $error = Validation::error('string') )
             {
-                $path = PROJECTS_DIR . Method::post('projects') . DS . 'Models/Migrations/';
+                $path = PROJECTS_DIR . SELECT_PROJECT . DS . 'Models/Migrations/';
 
                 \Migration::path($path)->create(Method::post('migration'), (int) Method::post('version'));
 

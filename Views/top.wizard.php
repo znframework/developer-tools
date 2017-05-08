@@ -9,6 +9,18 @@
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> @@SELECT_PROJECT: <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                @foreach( PROJECT_LIST as $project ):
+                    @if($project !== SELECT_PROJECT):
+                    <li>
+                        <a href="@@siteUrl('home/project/' . $project):"> @$project:</a>
+                    </li>
+                    @endif:
+                @endforeach:
+            </ul>
+        </li>
+        <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i>  @$upperLang = strtoupper(getLang()): <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @foreach( LANGUAGES as $lang ):

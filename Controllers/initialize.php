@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation;
+use Folder, Arrays, Form, Config, Route, Validation, Session;
 
 class Initialize extends Controller
 {
@@ -37,11 +37,11 @@ class Initialize extends Controller
         $projects = Folder::files(PROJECTS_DIR, 'dir');
         $projects = Arrays::combine($projects, $projects);
         $default  = PROJECTS_CONFIG['directory']['default'];
-        $postBack = Validation::postBack('projects');
-        $select   = Form::class('form-control')->select('projects', $projects, ! empty($postBack) ? $postBack : $default);
+
+        $currentProject = Session::select('project');
 
         define('PROJECT_LIST', $projects);
-        define('PROJECTS_SELECT', $select);
+        define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : CURRENT_PROJECT);
         define('LANGUAGES', ['EN', 'TR']);
 
         $menus =

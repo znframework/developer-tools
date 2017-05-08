@@ -37,9 +37,10 @@
     'migrations' => 'Migrations',
     'documentation' => 'Documentation',
     'notFound' => 'Not Found',
-    'show' => 'Show',
+    'show' => 'SHOW',
     'sqlConverter' => 'SQL to ORM',
     'syntax' => 'Syntax',
-    'convert' => 'Convert',
+    'convert' => 'CONVERT',
     'supportQueries' => 'Support Queries',
+    'syntaxError' => 'Syntax Error!',
 ];

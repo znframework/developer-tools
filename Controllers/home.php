@@ -47,6 +47,7 @@ class Home extends Controller
         if( ! $return = Session::select('return') )
         {
             $return = Restful::get('https://www.znframework.com/api');
+
             Session::insert('return', $return);
         }
 
@@ -76,6 +77,19 @@ class Home extends Controller
     public function lang($lang = NULL)
     {
         setlang($lang);
+        redirect((string) prevUrl());
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Lang
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function project($project = NULL)
+    {
+        Session::insert('project', $project);
         redirect((string) prevUrl());
     }
 }

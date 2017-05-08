@@ -2,11 +2,6 @@
     <div class="col-lg-12">
 
             <div class="form-group">
-                <label>{{LANG['projects']}}</label>
-                {{PROJECTS_SELECT}}
-            </div>
-
-            <div class="form-group">
                 <label>{{LANG['modelName']}}</label>
                 @@Form::required()->class('form-control')->placeholder('Models/ModelName')->text('model'):
             </div>

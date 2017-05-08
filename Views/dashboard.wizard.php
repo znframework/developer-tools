@@ -1,12 +1,18 @@
 <div class="container-fluid">
-
+    @@Form::open():
     <!-- Page Heading -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-11">
             <h1 class="page-header">
                 {{LANG['home']}} <small> {{LANG['overview']}}</small>
             </h1>
 
+        </div>
+
+        <div class="col-lg-1">
+            <h1 class="page-header">
+                @@Form::class('btn btn-info')->submit('create', LANG['createButton']):
+            </h1>
         </div>
     </div>
     <!-- /.row -->
@@ -129,14 +135,12 @@
 
     <div class="row">
         <div class="col-lg-12">
-                @@Form::open():
+
                 <div class="form-group">
                     <label>{{LANG['newProject']}}</label>
                     @@Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
                 </div>
 
-                @@Form::class('btn btn-info')->submit('create', LANG['createButton']):
-                @@Form::close():
         </div>
     </div>
 
@@ -161,6 +165,6 @@
         </div>
     </div>
     @endif:
-
+    @@Form::close():
 </div>
 <!-- /.container-fluid -->
