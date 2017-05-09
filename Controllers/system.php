@@ -79,7 +79,7 @@ class System extends Controller
                     File::write($file, $content);
                 }
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {

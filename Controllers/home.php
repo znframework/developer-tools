@@ -36,7 +36,7 @@ class Home extends Controller
 
                 File::zipExtract($source, $target);
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {
