@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Session, Json;
+use Restful, Method, Validation, File, Folder, Session, Json, Uri;
 
 class Home extends Controller
 {
@@ -96,6 +96,55 @@ class Home extends Controller
         $this->masterpage->pdata['docs'] = $return;
 
         $this->masterpage->page  = 'docs';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Delete
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function deleteFile()
+    {
+        $file = PROJECTS_DIR . Uri::get('deleteFile', 'all');
+
+        if( File::exists($file) )
+        {
+            File::delete($file);
+        }
+        else
+        {
+            if( Folder::exists($file) )
+            {
+                Folder::delete($file);
+            }
+        }
+
+        redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Delete
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function delete($project = NULL)
+    {
+        if( ! empty($project) )
+        {
+            $path = PROJECTS_DIR . $project;
+
+            if( Folder::exists($path) )
+            {
+                Session::delete('project');
+                Folder::delete($path);
+            }
+        }
+
+        redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
     }
 
     //--------------------------------------------------------------------------------------------------------

@@ -45,3 +45,13 @@ redirectDeleteData('success'); ?>
 </div>
 
 </div>
+
+<script>
+function deleteProcess(link)
+{
+    if( confirm('<?php echo LANG['areYouSure']; ?>') )
+    {
+        window.location =  '<?php echo siteUrl(); ?>' + link;
+    }
+}
+</script>
