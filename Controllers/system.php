@@ -93,22 +93,19 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function log(String $params = NULL)
     {
-        if( Method::post('show') )
+        $project = SELECT_PROJECT;
+
+        $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
+
+        $files = Folder::files($path, 'log');
+
+        if( empty($files) )
         {
-            $project = SELECT_PROJECT;
-
-            $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
-
-            $files = Folder::files($path, 'log');
-
-            if( empty($files) )
-            {
-                $this->masterpage->error = LANG['notFound'];
-            }
-
-            $this->masterpage->pdata['files'] = $files;
-            $this->masterpage->pdata['path']  = $path;
+            $this->masterpage->error = LANG['notFound'];
         }
+
+        $this->masterpage->pdata['files'] = $files;
+        $this->masterpage->pdata['path']  = $path;
 
         $this->masterpage->page  = 'logs';
     }
