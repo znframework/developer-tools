@@ -14,3 +14,7 @@
 
 
 ![Dashboard](https://cloud.teslaerp.com/tesla/Application/Resources/Uploads/znframework/gallery/zn/1494259501_dashboard.png)
+
+## What is Dashboard?
+
+This tool allows you to perform more operations such as project, controller, model creation, version updates.
