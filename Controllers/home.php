@@ -36,11 +36,11 @@ class Home extends Controller
 
                 File::zipExtract($source, $target);
 
-                $this->masterpage->pdata['success'] = LANG['success'];
+                redirect(currentPath(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->pdata['error'] = $error;
+                $this->masterpage->error = $error;
             }
         }
 

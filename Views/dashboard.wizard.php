@@ -122,27 +122,6 @@
     </div>
 </div>
 
-@if( $success ?? NULL ):
-<div class="row">
-    <div class="col-lg-12">
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <i class="fa fa-info-circle"></i> @$success:
-        </div>
-    </div>
-</div>
-@endif:
-
-@if( $error ?? NULL ):
-<div class="row">
-    <div class="col-lg-12">
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <i class="fa fa-info-circle"></i> @$error:
-        </div>
-    </div>
-</div>
-@endif:
 @@Form::close():
 <!-- /.container-fluid -->
 

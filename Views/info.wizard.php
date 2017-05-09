@@ -17,7 +17,7 @@
 </div>
 <!-- /.row -->
 
-@if( isset($upgrades) ):
+@if( ! empty($upgrades) ):
 
 <div class="row">
     <div class="col-lg-12">

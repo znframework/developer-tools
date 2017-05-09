@@ -62,20 +62,24 @@ class System extends Controller
 
         $return = Separator::decodeArray($return);
 
-        if( ! empty($return) )
+        if( Method::post('upgrade') )
         {
-            $this->masterpage->pdata['upgrades'] = Arrays::keys($return);
-
-            if( Method::post('upgrade') )
+            if( ! empty($return) )
             {
                 foreach( $return as $file => $content )
                 {
                     File::write($file, $content);
                 }
 
-                redirect(currentPath());
+                redirect(currentPath(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = LANG['alreadyVersion'];
             }
         }
+
+        $this->masterpage->pdata['upgrades'] = Arrays::keys($return);
 
         $this->masterpage->page  = 'info';
     }
@@ -96,6 +100,11 @@ class System extends Controller
             $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
 
             $files = Folder::files($path, 'log');
+
+            if( empty($files) )
+            {
+                $this->masterpage->error = LANG['notFound'];
+            }
 
             $this->masterpage->pdata['files'] = $files;
             $this->masterpage->pdata['path']  = $path;

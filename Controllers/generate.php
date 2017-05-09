@@ -27,7 +27,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('controller', ['required', 'alnum'], 'Controller Name');
+            Validation::rules('controller', ['required', 'alpha'], 'Controller Name');
 
             if( ! $error = Validation::error('string') )
             {
@@ -46,11 +46,11 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                $this->masterpage->pdata['success'] = LANG['success'];
+                redirect(currentPath(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->pdata['error'] = $error;
+                $this->masterpage->error = $error;
             }
         }
 
@@ -71,7 +71,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('model', ['required', 'alnum'], 'Controller Name');
+            Validation::rules('model', ['required', 'alpha'], 'Controller Name');
 
             if( ! $error = Validation::error('string') )
             {
@@ -85,11 +85,11 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                $this->masterpage->pdata['success'] = LANG['success'];
+                redirect(currentPath(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->pdata['error'] = $error;
+                $this->masterpage->error = $error;
             }
         }
 
@@ -109,7 +109,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('migration', ['required', 'alnum'], 'Migration Name');
+            Validation::rules('migration', ['required', 'alpha'], 'Migration Name');
 
             if( ! $error = Validation::error('string') )
             {
@@ -117,11 +117,11 @@ class Generate extends Controller
 
                 \Migration::path($path)->create(Method::post('migration'), (int) Method::post('version'));
 
-                $this->masterpage->pdata['success'] = LANG['success'];
+                redirect(currentPath(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->pdata['error'] = $error;
+                $this->masterpage->error = $error;
             }
         }
 

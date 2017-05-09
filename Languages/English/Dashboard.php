@@ -46,4 +46,5 @@
     'supportQueries' => 'Support Queries',
     'syntaxError' => 'Syntax Error!',
     'updatedFiles' => 'Updated Files',
+    'alreadyVersion' => 'Already Version!'
 ];

@@ -46,4 +46,5 @@
     'supportQueries' => 'Desteklenen Sorgular',
     'syntaxError' => 'Sözdizimi Hatası!',
     'updatedFiles' => 'Güncellenen Dosyalar',
+    'alreadyVersion' => 'Versiyonunu Zaten Güncel!'
 ];
