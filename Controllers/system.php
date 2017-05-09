@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays;
+use Method, Folder, File, Html, Arrays, Restful, Separator;
 
 class System extends Controller
 {
@@ -26,7 +26,7 @@ class System extends Controller
     {
         if( Method::post('convert') )
         {
-            $orm = Method::post('sql');
+            $orm = trim(Method::post('sql'));
 
             $this->_cselect($orm);
             $this->_cdelete($orm);
@@ -58,6 +58,25 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function info(String $params = NULL)
     {
+        $return = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
+
+        $return = Separator::decodeArray($return);
+
+        if( ! empty($return) )
+        {
+            $this->masterpage->pdata['upgrades'] = Arrays::keys($return);
+
+            if( Method::post('upgrade') )
+            {
+                foreach( $return as $file => $content )
+                {
+                    File::write($file, $content);
+                }
+
+                redirect(currentPath());
+            }
+        }
+
         $this->masterpage->page  = 'info';
     }
 
@@ -78,19 +97,10 @@ class System extends Controller
 
             $files = Folder::files($path, 'log');
 
-            if( ! empty($files) )
-            {
-                $logs = '<hr>';
-
-                foreach( $files as $file )
-                {
-                    $logs .= Html::strong('File: ' . $file) . Html::br(1);
-                    $logs .= Html::parag(str_replace('IP', '<br>IP', File::read($path . $file))) . '<hr>';
-                }
-            }
+            $this->masterpage->pdata['files'] = $files;
+            $this->masterpage->pdata['path']  = $path;
         }
 
-        $this->masterpage->pdata['logs'] = $logs ?? LANG['notFound'] . '!';
         $this->masterpage->page  = 'logs';
     }
 

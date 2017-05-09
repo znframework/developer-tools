@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Method, Arrays, Generate as Gen;
-use Validation;
+use Validation, Folder;
 
 class Generate extends Controller
 {
@@ -54,8 +54,10 @@ class Generate extends Controller
             }
         }
 
+
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'controller';
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Controllers/', 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -93,6 +95,7 @@ class Generate extends Controller
 
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'model';
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Models/', 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -124,5 +127,6 @@ class Generate extends Controller
 
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'migration';
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Models/Migrations/', 'php');
     }
 }

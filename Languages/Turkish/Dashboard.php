@@ -28,6 +28,7 @@
     'createButton' => 'OLUŞTUR',
     'refreshButton' => 'YENİLE',
     'generateButton' => 'OLUŞTUR',
+    'upgradeButton' => 'YÜKSELT',
     'newProject' => 'Yeni Proje',
     'dashboardVersion' => 'Panel Versiyon',
     'version' => 'Versiyon',
@@ -44,4 +45,5 @@
     'convert' => 'ÇEVİR',
     'supportQueries' => 'Desteklenen Sorgular',
     'syntaxError' => 'Sözdizimi Hatası!',
+    'updatedFiles' => 'Güncellenen Dosyalar',
 ];

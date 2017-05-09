@@ -3,12 +3,14 @@
 Import::view('top.wizard');
 
 ?>
-<div id="page-wrapper"><?php
+<div id="page-wrapper">
+<div class="container-fluid">
+<?php
 
 Import::view(suffix($page, '.wizard'), $pdata ?? NULL);
 
 ?>
-
+</div>
 </div>
 
 <div class="container-fluid">

@@ -28,6 +28,7 @@
     'createButton' => 'CREATE',
     'generateButton' => 'GENERATE',
     'refreshButton' => 'REFRESH',
+    'upgradeButton' => 'UPGRADE',
     'newProject' => 'New Project',
     'dashboardVersion' => 'Dashboard Version',
     'version' => 'Version',
@@ -44,4 +45,5 @@
     'convert' => 'CONVERT',
     'supportQueries' => 'Support Queries',
     'syntaxError' => 'Syntax Error!',
+    'updatedFiles' => 'Updated Files',
 ];
