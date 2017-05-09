@@ -46,7 +46,7 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {
@@ -85,7 +85,7 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {
@@ -117,7 +117,7 @@ class Generate extends Controller
 
                 \Migration::path($path)->create(Method::post('migration'), (int) Method::post('version'));
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {

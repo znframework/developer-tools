@@ -32,6 +32,10 @@ class System extends Controller
             $this->_cdelete($orm);
             $this->_cinsert($orm);
             $this->_cupdate($orm);
+            $this->_ccreateTable($orm);
+            $this->_cdropTable($orm);
+            $this->_ccreateDatabase($orm);
+            $this->_cdropDatabase($orm);
 
             $orm = suffix(str_replace('->', '<br>&nbsp;&nbsp;->', $orm), ';');
 
@@ -40,10 +44,14 @@ class System extends Controller
 
         $this->masterpage->pdata['supportQueries'] =
         [
-            '<b>select</b> columns <b>from</b> table [<b>where</b> column cond value] [<b>limit</b> start, limit] [<b>group by</b> column] [<b>order by</b> column asc|desc]',
-            '<b>insert into</b> table (col1, col2, ...) <b>values</b>(val1, val2, ...)',
-            '<b>update</b> table <b>set</b> column1 = value1 ... [<b>where</b> column cond value]',
-            '<b>delete</b> <b>from</b> table <b>where</b> column cond value'
+            '<b>select</b> columns <b>from</b> table_name [<b>where</b> column cond value] [<b>limit</b> start, limit] [<b>group by</b> column] [<b>order by</b> column asc|desc]',
+            '<b>insert into</b> table_name (col1, col2, ...) <b>values</b>(val1, val2, ...)',
+            '<b>update</b> table_name <b>set</b> column1 = value1 ... [<b>where</b> column cond value]',
+            '<b>delete</b> <b>from</b> table_name <b>where</b> column cond value',
+            '<b>create</b> <b>table</b> table_name (columns ... values)',
+            '<b>drop</b> <b>table</b> table_name',
+            '<b>create</b> <b>database</b> database_name',
+            '<b>drop</b> <b>database</b> database_name'
         ];
 
         $this->masterpage->page  = 'converter';
@@ -71,7 +79,7 @@ class System extends Controller
                     File::write($file, $content);
                 }
 
-                redirect(currentPath(), 0, ['success' => LANG['success']]);
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
             else
             {
@@ -93,24 +101,121 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function log(String $params = NULL)
     {
-        if( Method::post('show') )
+        $project = SELECT_PROJECT;
+
+        $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
+
+        $files = Folder::files($path, 'log');
+
+        if( empty($files) )
         {
-            $project = SELECT_PROJECT;
-
-            $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
-
-            $files = Folder::files($path, 'log');
-
-            if( empty($files) )
-            {
-                $this->masterpage->error = LANG['notFound'];
-            }
-
-            $this->masterpage->pdata['files'] = $files;
-            $this->masterpage->pdata['path']  = $path;
+            $this->masterpage->error = LANG['notFound'];
         }
 
+        $this->masterpage->pdata['files'] = $files;
+        $this->masterpage->pdata['path']  = $path;
+
         $this->masterpage->page  = 'logs';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Create Database
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _ccreateDatabase(&$replace)
+    {
+        $query  = '^create\s+database\s+';
+
+        if( preg_match('/' . $query . '/i', $replace))
+        {
+            $replace = suffix($replace, ';');
+
+            $syntax = '/'.$query.'(\w+)/si';
+
+            $replace = preg_replace($syntax, 'DBForge::createDatabase(\'$1\')', $replace);
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Drop Database
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _cdropDatabase(&$replace)
+    {
+        $query  = '^drop\s+database\s+';
+
+        if( preg_match('/' . $query . '/i', $replace))
+        {
+            $replace = suffix($replace, ';');
+
+            $syntax = '/'.$query.'(\w+)/si';
+
+            $replace = preg_replace($syntax, 'DBForge::dropDatabase(\'$1\')', $replace);
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Drop Table
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _cdropTable(&$replace)
+    {
+        $query  = '^drop\s+table\s+';
+
+        if( preg_match('/' . $query . '/i', $replace))
+        {
+            $replace = suffix($replace, ';');
+
+            $syntax = '/'.$query.'(\w+)/si';
+
+            $replace = preg_replace($syntax, 'DBForge::dropTable(\'$1\')', $replace);
+        }
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Convert Create Table
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string &$replace
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function _ccreateTable(&$replace)
+    {
+        $query  = '^create\s+table\s+';
+
+        if( preg_match('/' . $query . '/i', $replace))
+        {
+            $replace = suffix($replace, ';');
+
+            $syntax = '/'.$query.'(.*?)\s*\((.*)\)/si';
+
+            preg_match($syntax, $replace, $match);
+
+            $columns = explode(',', $match[2] ?? NULL);
+
+            $options = '[';
+            foreach( $columns as $val )
+            {
+                $val = trim($val);
+
+                $valEx  = explode(' ', $val);
+                $column = $valEx[0] ?? NULL;
+
+                $options .= presuffix(trim($column), '\'') . ' => ' . presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
+            }
+            $options = rtrim($options, ', ');
+            $options .= ']';
+            $replace = preg_replace($syntax, 'DBForge::createTable(\'$1\', '.$options.')', $replace);
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -124,7 +229,7 @@ class System extends Controller
     {
         $update = '^update\s+';
 
-        if( preg_match('/' . $update . '/', $replace))
+        if( preg_match('/' . $update . '/i', $replace))
         {
             $replaceEx = explode('where', $replace);
             $whereClause = $replaceEx[1] ?? NULL;
@@ -167,7 +272,7 @@ class System extends Controller
     {
         $insert  = '^insert\s+';
 
-        if( preg_match('/' . $insert . '/', $replace))
+        if( preg_match('/' . $insert . '/i', $replace))
         {
             $replace = suffix($replace, ';');
 
@@ -200,7 +305,7 @@ class System extends Controller
     {
         $delete  = '^delete\s+';
 
-        if( preg_match('/' . $delete . '/', $replace))
+        if( preg_match('/' . $delete . '/i', $replace))
         {
             $replace = suffix($replace, ';');
 
@@ -233,7 +338,7 @@ class System extends Controller
     {
         $select  = '^select\s+(.*?)\s+';
 
-        if( preg_match('/' . $select . '/', $replace))
+        if( preg_match('/' . $select . '/i', $replace))
         {
             $replace = suffix($replace, ';');
 

@@ -113,13 +113,22 @@
 
 <div class="row">
     <div class="col-lg-12">
-
-            <div class="form-group">
-                <label>{{LANG['newProject']}}</label>
-                @@Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['newProject']}}</h3>
             </div>
+            <div class="panel-body">
 
+                    <div class="form-group">
+
+                        @@Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
+                    </div>
+
+
+            </div>
+        </div>
     </div>
+
 </div>
 
 @@Form::close():

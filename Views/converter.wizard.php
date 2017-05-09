@@ -38,30 +38,37 @@
 
 <div class="row">
     <div class="col-lg-12">
-
-            <div class="form-group">
-                <label>SQL {{LANG['syntax']}}</label>
-                <p>
-
-                <p>
-                @@Form::class('form-control')->textarea('sql', Validation::postBack('sql')):
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-repeat fa-fw"></i> SQL {{LANG['syntax']}}</h3>
             </div>
+            <div class="panel-body">
 
+                @@Form::class('form-control')->textarea('sql', Validation::postBack('sql')):
 
-
+            </div>
+        </div>
     </div>
+
 </div>
+
 
 @if( ! empty($orm) ):
 <div class="row">
-    <p></p>
-
     <div class="col-lg-12">
-        <div class="alert alert-success">
-            <span style="font-family:Consolas">@$orm:</span>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-th-large fa-fw"></i> ORM</h3>
+            </div>
+            <div class="panel-body">
+
+                @$orm:
+            </div>
         </div>
     </div>
+
 </div>
+
 @endif:
 
 @@Form::close():

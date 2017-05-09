@@ -1,0 +1,12 @@
+{
+    "name": "znframework/Dashboard",
+    "type": "project",
+    "description": "ZN Dashboard",
+    "keywords": ["zn", "zeroneed", "dashboard", "dev-tool"],
+    "homepage": "https://github.com/znframework/Dashboard",
+    "license": "MIT",
+    "require": 
+    {
+        "php": ">=7.0.0"
+    }
+}
