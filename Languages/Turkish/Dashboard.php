@@ -29,6 +29,9 @@
     'refreshButton' => 'YENİLE',
     'generateButton' => 'OLUŞTUR',
     'upgradeButton' => 'YÜKSELT',
+    'backupButton' => 'YEDEKLE',
+    'systemBackup' => 'Sistem Yedekleme',
+    'backupList' => 'Yedek Listesi',
     'newProject' => 'Yeni Proje',
     'newController' => 'Yeni Kontrolcü',
     'newModel' => 'Yeni Model',
@@ -50,5 +53,7 @@
     'syntaxError' => 'Sözdizimi Hatası!',
     'updatedFiles' => 'Güncellenen Dosyalar',
     'alreadyVersion' => 'Versiyonunu Zaten Güncel!',
-    'areYouSure' => 'Bu işlemi yapmak istediğinizden emin misiniz?'
+    'areYouSure' => 'Bu işlemi yapmak istediğinizden emin misiniz?',
+    'database' => 'Veritabanı',
+    'databaseBackup' => 'Veritabanı yedeği alınsın mı?'
 ];

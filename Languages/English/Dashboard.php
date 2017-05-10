@@ -29,6 +29,9 @@
     'generateButton' => 'GENERATE',
     'refreshButton' => 'REFRESH',
     'upgradeButton' => 'UPGRADE',
+    'backupButton' => 'BACKUP',
+    'systemBackup' => 'System Backup',
+    'backupList' => 'Backup List',
     'newProject' => 'New Project',
     'newController' => 'New Controller',
     'newModel' => 'New Model',
@@ -50,5 +53,7 @@
     'syntaxError' => 'Syntax Error!',
     'updatedFiles' => 'Updated Files',
     'alreadyVersion' => 'Already Version!',
-    'areYouSure' => 'Are you sure you want to do this?'
+    'areYouSure' => 'Are you sure you want to do this?',
+    'database' => 'Database',
+    'databaseBackup' => 'Get a database backup?'
 ];

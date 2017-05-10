@@ -111,11 +111,65 @@ class System extends Controller
         {
             $this->masterpage->error = LANG['notFound'];
         }
-        
+
         $this->masterpage->pdata['files'] = $files;
         $this->masterpage->pdata['path']  = $path;
 
         $this->masterpage->page  = 'logs';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Backup
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function backup(String $params = NULL)
+    {
+        $project = SELECT_PROJECT;
+
+        $path = STORAGE_DIR . 'ProjectBackup' . DS;
+
+        if( ! Folder::exists($path) )
+        {
+            Folder::create($path);
+        }
+
+        if( Method::post('backup') )
+        {
+            $fix      = '-' .\Date::convert(\Date::current() . \Time::current(), 'Y-m-d-H-i-s');
+            $project  = $project . $fix;
+            $fullPath = $path . $project;
+
+            $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
+
+            if( Method::post('databaseBackup') )
+            {
+                if( File::exists($databaseConfigPath) )
+                {
+                    \Config::set('Database', import($databaseConfigPath));
+
+                    \DBTool::backup('*', 'db.sql', $fullPath);
+                }
+            }
+
+            Folder::copy(SELECT_PROJECT_DIR, $fullPath);
+
+            redirect(currentUri(), 0, ['success' => LANG['success']]);
+        }
+
+        $files = Folder::files($path, 'dir');
+
+        if( empty($files) )
+        {
+            $this->masterpage->error = LANG['notFound'];
+        }
+
+        $this->masterpage->pdata['files'] = $files;
+        $this->masterpage->pdata['path']  = $path;
+
+        $this->masterpage->page  = 'backup';
     }
 
     //--------------------------------------------------------------------------------------------------------

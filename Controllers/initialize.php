@@ -43,6 +43,8 @@ class Initialize extends Controller
 
         define('PROJECT_LIST', $projects);
         define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : DEFAULT_PROJECT);
+        define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
+
         define('LANGUAGES', ['EN', 'TR']);
 
         $menus =
@@ -54,6 +56,7 @@ class Initialize extends Controller
             'sqlConverter'  => ['icon' => 'refresh',    'href' => 'system/converter'],
             'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
             'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
+            'systemBackup'  => ['icon' => 'floppy-o',   'href' => 'system/backup'],
             'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
         ];
 
