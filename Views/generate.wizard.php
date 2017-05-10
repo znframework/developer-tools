@@ -34,6 +34,7 @@
                     @foreach( $files as $file ):
                     <a href="/#" class="list-group-item">
                         <i class="fa fa-fw fa-file-text-o"></i> @$file:
+                        <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
                     @endforeach:
 

@@ -43,9 +43,9 @@
                 <h3 class="panel-title"><i class="fa fa-repeat fa-fw"></i> SQL {{LANG['syntax']}}</h3>
             </div>
             <div class="panel-body">
-
+                <div class="form-group">
                 @@Form::class('form-control')->textarea('sql', Validation::postBack('sql')):
-
+                </div>
             </div>
         </div>
     </div>
@@ -61,8 +61,9 @@
                 <h3 class="panel-title"><i class="fa fa-th-large fa-fw"></i> ORM</h3>
             </div>
             <div class="panel-body">
-
+                <div class="form-group">
                 @$orm:
+                </div>
             </div>
         </div>
     </div>

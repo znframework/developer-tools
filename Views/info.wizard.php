@@ -51,7 +51,9 @@
                 <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['dashboardVersion']}}</h3>
             </div>
             <div class="panel-body">
+                <div class="form-group">
                 {{DASHBOARD_VERSION}}
+                </div>
             </div>
         </div>
     </div>
@@ -64,7 +66,9 @@
                 <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> ZN {{LANG['version']}}</h3>
             </div>
             <div class="panel-body">
+                <div class="form-group">
                 {{ZN_VERSION}}
+                </div>
             </div>
         </div>
     </div>
@@ -78,7 +82,9 @@
                 <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> PHP {{LANG['version']}}</h3>
             </div>
             <div class="panel-body">
+                <div class="form-group">
                 {{PHP_VERSION}}
+                </div>
             </div>
         </div>
     </div>

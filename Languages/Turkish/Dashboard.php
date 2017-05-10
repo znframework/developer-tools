@@ -40,7 +40,7 @@
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
     'migrations' => 'Göçler',
-    'documentation' => 'Dökümantasyon',
+    'documentation' => 'Dokümantasyon',
     'notFound' => 'Bulunamadı',
     'show' => 'GÖSTER',
     'sqlConverter' => 'SQL to ORM',
@@ -49,5 +49,6 @@
     'supportQueries' => 'Desteklenen Sorgular',
     'syntaxError' => 'Sözdizimi Hatası!',
     'updatedFiles' => 'Güncellenen Dosyalar',
-    'alreadyVersion' => 'Versiyonunu Zaten Güncel!'
+    'alreadyVersion' => 'Versiyonunu Zaten Güncel!',
+    'areYouSure' => 'Bu işlemi yapmak istediğinizden emin misiniz?'
 ];

@@ -54,10 +54,12 @@ class Generate extends Controller
             }
         }
 
+        $path = 'Controllers/';
 
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'controller';
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Controllers/', 'php');
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -93,9 +95,12 @@ class Generate extends Controller
             }
         }
 
+        $path = 'Models/';
+
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'model';
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Models/', 'php');
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -125,8 +130,11 @@ class Generate extends Controller
             }
         }
 
+        $path = 'Models/Migrations/';
+
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'migration';
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . 'Models/Migrations/', 'php');
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, ['php', 'dir']);
     }
 }

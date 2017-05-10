@@ -111,7 +111,7 @@ class System extends Controller
         {
             $this->masterpage->error = LANG['notFound'];
         }
-
+        
         $this->masterpage->pdata['files'] = $files;
         $this->masterpage->pdata['path']  = $path;
 
