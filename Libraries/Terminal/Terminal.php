@@ -117,7 +117,7 @@ class InternalTerminal implements TerminalInterface
 
 					if( $command !== 'clear' )
 					{
-						$previousCommands = prefix($previousCommands, 'php zerocore ');
+						$previousCommands = prefix($previousCommands, 'php zerocore project-name ' . SELECT_PROJECT. ' ');
 					}
 
 					exec($previousCommands.$command.' 2>&1', $response);

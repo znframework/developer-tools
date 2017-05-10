@@ -14,7 +14,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['supportCommands']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> {{LANG['supportCommands']}}</h3>
             </div>
             <div class="panel-body">
                 <div class="list-group">
@@ -38,7 +38,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> PHP {{LANG['terminal']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-terminal fa-fw"></i> PHP {{LANG['terminal']}}</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group pull-left">
