@@ -40,7 +40,7 @@
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
     'migrations' => 'Göçler',
-    'documentation' => 'Dökümantasyon',
+    'documentation' => 'Dokümantasyon',
     'notFound' => 'Bulunamadı',
     'show' => 'GÖSTER',
     'sqlConverter' => 'SQL to ORM',
