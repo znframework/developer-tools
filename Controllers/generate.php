@@ -59,7 +59,7 @@ class Generate extends Controller
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'controller';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, 'php');
+        $this->masterpage->pdata['files']   = Folder::files(SELECT_PROJECT_DIR . $path, 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -71,6 +71,11 @@ class Generate extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function model(String $params = NULL)
     {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
         if( Method::post('generate') )
         {
             Validation::rules('model', ['required', 'alpha'], 'Controller Name');
@@ -100,7 +105,15 @@ class Generate extends Controller
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'model';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, 'php');
+
+        $modelFullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Folder::exists($modelFullPath) )
+        {
+            $files = Folder::files($modelFullPath, 'php');
+        }
+
+        $this->masterpage->pdata['files'] = $files ?? [];
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -112,6 +125,11 @@ class Generate extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function migration(String $params = NULL)
     {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
         if( Method::post('generate') )
         {
             Validation::rules('migration', ['required', 'alpha'], 'Migration Name');
@@ -135,6 +153,14 @@ class Generate extends Controller
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'migration';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']   = Folder::files(PROJECTS_DIR . SELECT_PROJECT . DS . $path, ['php', 'dir']);
+
+        $modelFullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Folder::exists($modelFullPath) )
+        {
+            $files = Folder::files($modelFullPath, ['php', 'dir']);
+        }
+
+        $this->masterpage->pdata['files'] = $files ?? [];
     }
 }

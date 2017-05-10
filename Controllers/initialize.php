@@ -44,21 +44,23 @@ class Initialize extends Controller
         define('PROJECT_LIST', $projects);
         define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : DEFAULT_PROJECT);
         define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
-
         define('LANGUAGES', ['EN', 'TR']);
+        define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
 
-        $menus =
-        [
-            'home'          => ['icon' => 'home',       'href' => 'home/main'],
-            'controllers'   => ['icon' => 'gears',      'href' => 'generate/controller'],
-            'models'        => ['icon' => 'database',   'href' => 'generate/model'],
-            'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],
-            'sqlConverter'  => ['icon' => 'refresh',    'href' => 'system/converter'],
-            'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
-            'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
-            'systemBackup'  => ['icon' => 'floppy-o',   'href' => 'system/backup'],
-            'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
-        ];
+        $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
+        $menus['controllers']   = ['icon' => 'database',   'href' => 'generate/model'];
+
+        if( IS_CONTAINER === FALSE )
+        {
+            $menus['models']    = ['icon' => 'database',   'href' => 'generate/model'];
+            $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
+        }
+
+        $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
+        $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
+        $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
+        $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
+        $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
 
         define('MENUS', $menus);
     }
