@@ -119,6 +119,29 @@ class System extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------
+    // Terminal
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminal(String $params = NULL)
+    {
+        $this->masterpage->pdata['supportCommands'] =
+        [
+            '[project-name ProjectName] <b>project-uri</b> controller/function/p1/p2 ... /pN',
+            '[project-name ProjectName] <b>run-controller</b> controller/function',
+            '[project-name ProjectName] <b>run-class</b> controller:function p1 p2 ... pN',
+            '[project-name ProjectName] <b>run-model</b> model:function p1 p2 p3 ... pN'   ,
+            '[project-name ProjectName] <b>run-function</b> function p1 p2 p 3 ... pN ',
+            '[project-name ProjectName] <b>run-command</b> command:method p1 p2 p 3 ... pN ',
+            '[project-name ProjectName] <b>run-external-command</b> command:method p1 p2 p 3 ... pN ',
+        ];
+
+        $this->masterpage->page  = 'terminal';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
     // Backup
     //--------------------------------------------------------------------------------------------------------
     //

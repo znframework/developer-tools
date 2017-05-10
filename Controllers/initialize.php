@@ -61,6 +61,7 @@ class Initialize extends Controller
         $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
         $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
         $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
+        $menus['terminal']      = ['icon' => 'terminal',   'href' => 'system/terminal'];
 
         define('MENUS', $menus);
     }

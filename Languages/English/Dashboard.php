@@ -50,10 +50,12 @@
     'syntax' => 'Syntax',
     'convert' => 'CONVERT',
     'supportQueries' => 'Support Queries',
+    'supportCommands' => 'Support Commands',
     'syntaxError' => 'Syntax Error!',
     'updatedFiles' => 'Updated Files',
     'alreadyVersion' => 'Already Version!',
     'areYouSure' => 'Are you sure you want to do this?',
     'database' => 'Database',
-    'databaseBackup' => 'Get a database backup?'
+    'databaseBackup' => 'Get a database backup?',
+    'terminal' => 'Terminal'
 ];

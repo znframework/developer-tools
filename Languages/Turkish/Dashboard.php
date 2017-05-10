@@ -50,10 +50,12 @@
     'syntax' => 'Deyimi',
     'convert' => 'ÇEVİR',
     'supportQueries' => 'Desteklenen Sorgular',
+    'supportCommands' => 'Desteklenen Komutlar',
     'syntaxError' => 'Sözdizimi Hatası!',
     'updatedFiles' => 'Güncellenen Dosyalar',
     'alreadyVersion' => 'Versiyonunu Zaten Güncel!',
     'areYouSure' => 'Bu işlemi yapmak istediğinizden emin misiniz?',
     'database' => 'Veritabanı',
-    'databaseBackup' => 'Veritabanı yedeği alınsın mı?'
+    'databaseBackup' => 'Veritabanı yedeği alınsın mı?',
+    'terminal' => 'Terminal'
 ];
