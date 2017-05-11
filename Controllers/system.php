@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session;
 
 class System extends Controller
 {
@@ -119,6 +119,20 @@ class System extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------
+    // Protected Clear Command
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function clearCommand()
+    {
+        unset($_SESSION['persistCommands']);
+        unset($_SESSION['commandResponses']);
+        unset($_SESSION['commands']);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
     // Terminal
     //--------------------------------------------------------------------------------------------------------
     //
@@ -144,6 +158,76 @@ class System extends Controller
         ];
 
         $this->masterpage->page  = 'terminal';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal Ajax
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminalAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $command = Method::post('command');
+
+        $previousCommands = NULL;
+
+        if( $command === 'clear' )
+        {
+            Session::delete('commands');
+            echo ''; exit;
+        }
+
+        if( $getCommands = Session::select('commands') )
+        {
+            Session::insert('commands', Arrays::addLast($getCommands, $command));
+        }
+        else
+        {
+            Session::insert('commands', [$command]);
+        }
+
+        exec('php zerocore project-name ' . SELECT_PROJECT. ' '.$command.' 2>&1', $response);
+
+        $string = NULL;
+
+        foreach( $response as $val )
+        {
+            $string .= $val . EOL;
+        }
+
+        echo $string;
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal Ajax
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminalArrowAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $index    = Method::post('index');
+        $commands = Session::select('commands');
+
+        if( ! empty($commands[$index]) )
+        {
+            echo $commands[$index]; exit;
+        }
+
+        echo NULL;
     }
 
     //--------------------------------------------------------------------------------------------------------
