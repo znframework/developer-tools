@@ -127,6 +127,11 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function terminal(String $params = NULL)
     {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
         $this->masterpage->pdata['supportCommands'] =
         [
             '<b>project-uri</b> controller/function/p1/p2 ... /pN',
