@@ -33,6 +33,21 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-location-arrow fa-fw"></i> {{LANG['backupLocation']}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @@STORAGE_DIR . 'ProjectBackup' . DS . SELECT_PROJECT . '-xxxx-xx-xx-xx-xx-xx' . DS:
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- /.row -->
 @if( ! empty($files) ):
 <div class="row">

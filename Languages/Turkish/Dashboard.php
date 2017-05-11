@@ -57,5 +57,6 @@
     'areYouSure' => 'Bu işlemi yapmak istediğinizden emin misiniz?',
     'database' => 'Veritabanı',
     'databaseBackup' => 'Veritabanı yedeği alınsın mı?',
-    'terminal' => 'Terminal'
+    'terminal' => 'Terminal',
+    'backupLocation' => 'Yedeğin Konumu'
 ];

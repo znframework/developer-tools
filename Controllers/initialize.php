@@ -32,7 +32,7 @@ class Initialize extends Controller
         }
 
         define('LANG', lang('Dashboard'));
-        define('DASHBOARD_VERSION', '1.0.0');
+        define('DASHBOARD_VERSION', 'Alpha - 1.0.0');
 
         $projects = Folder::files(PROJECTS_DIR, 'dir');
         $projects = Arrays::deleteElement($projects, CURRENT_PROJECT);
@@ -61,7 +61,7 @@ class Initialize extends Controller
         $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
         $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
         $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
-        
+
         if( IS_CONTAINER === FALSE )
         {
             $menus['terminal']      = ['icon' => 'terminal',   'href' => 'system/terminal'];

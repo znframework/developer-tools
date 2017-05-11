@@ -57,5 +57,6 @@
     'areYouSure' => 'Are you sure you want to do this?',
     'database' => 'Database',
     'databaseBackup' => 'Get a database backup?',
-    'terminal' => 'Terminal'
+    'terminal' => 'Terminal',
+    'backupLocation' => 'Backup Location'
 ];

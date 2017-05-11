@@ -148,7 +148,7 @@ class System extends Controller
 
         $this->masterpage->pdata['supportCommands'] =
         [
-            '<b>project-uri</b> controller/function/p1/p2 ... /pN',
+            '<b>run-uri</b> controller/function/p1/p2 ... /pN',
             '<b>run-controller</b> controller/function',
             '<b>run-class</b> controller:function p1 p2 ... pN',
             '<b>run-model</b> model:function p1 p2 p3 ... pN'   ,
