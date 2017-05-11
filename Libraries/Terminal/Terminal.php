@@ -1,5 +1,5 @@
 <?php
-class InternalTerminal implements TerminalInterface
+class InternalTerminal
 {
 	//----------------------------------------------------------------------------------------------------
 	//
@@ -48,28 +48,28 @@ class InternalTerminal implements TerminalInterface
 	| Örnek Kullanım: Terminal::run('cmd');        	  										  |
 	|          																				  |
 	******************************************************************************************/
-	public function run($terminalType = 'php', $settings = array())
+	protected function _run()
 	{
 		$configs = $this->config;
 
-		$settings['width'] 		=  isset($settings['width']) 	  ? $settings['width']      : $configs['width'];
-		$settings['height'] 	=  isset($settings['height']) 	  ? $settings['height']     : $configs['height'];
-		$settings['bgColor'] 	=  isset($settings['bgColor'])    ? $settings['bgColor']    : $configs['bgColor'];
-		$settings['barBgColor'] =  isset($settings['barBgColor']) ? $settings['barBgColor'] : $configs['barBgColor'];
-		$settings['textColor'] 	=  isset($settings['textColor'])  ? $settings['textColor']  : $configs['textColor'];
-		$settings['textType'] 	=  isset($settings['textType'])   ? $settings['textType']   : $configs['textType'];
-		$settings['textSize'] 	=  isset($settings['textSize'])   ? $settings['textSize']   : $configs['textSize'];
+		$settings['width'] 		=  $configs['width'];
+		$settings['height'] 	=  $configs['height'];
+		$settings['bgColor'] 	=  $configs['bgColor'];
+		$settings['barBgColor'] =  $configs['barBgColor'];
+		$settings['textColor'] 	=  $configs['textColor'];
+		$settings['textType'] 	=  $configs['textType'];
+		$settings['textSize'] 	=  $configs['textSize'];
 
-		if( isset($_POST['clear']) && $_POST['clear'] === 'clear' )
+		if( Method::post('clear') === 'clear' )
 		{
 			$this->clearCommand();
 		}
 
 		if( ! isset($_SESSION['persistCommands']) || ! isset($_SESSION['commands']) )
 		{
-			$_SESSION['persistCommands']  = array();
-			$_SESSION['commands'] 		  = array();
-			$_SESSION['commandResponses'] = array();
+			$_SESSION['persistCommands']  = [];
+			$_SESSION['commands'] 		  = [];
+			$_SESSION['commandResponses'] = [];
 		}
 
 		$togglingPersist = false;
@@ -113,8 +113,6 @@ class InternalTerminal implements TerminalInterface
 				}
 				else
 				{
-					$terminalType = 'cmd';
-
 					if( $command !== 'clear' )
 					{
 						$previousCommands = prefix($previousCommands, 'php zerocore project-name ' . SELECT_PROJECT. ' ');
@@ -123,7 +121,6 @@ class InternalTerminal implements TerminalInterface
 					exec($previousCommands.$command.' 2>&1', $response);
 				}
 			}
-
 
 			if( $command !== 'clear' )
 			{
@@ -149,195 +146,207 @@ class InternalTerminal implements TerminalInterface
 				}
 			}
 		}
-	?>
-		<style type="text/css">
-			*
-			{
-				margin: 0;
-				padding: 0;
-			}
+	}
 
-			input
-			{
-				color: inherit;
-				font-family: inherit;
-				font-size: inherit;
-				font-weight: inherit;
-				background-color: inherit;
-				border: inherit;
-			}
-			.content
-			{
-				width: <?php echo $settings['width']; ?>;
-				min-width: 400px;
-				margin: 0px auto;
-				text-align: left;
-				overflow: auto;
-				background-color: <?php echo $settings['bgColor']; ?>;
-				color: <?php echo $settings['textColor']; ?>;
-				font-family: <?php echo $settings['textType']; ?>;
-				font-weight: bold;
-				font-size: <?php echo $settings['textSize']; ?>;
-			}
-			.terminal
-			{
-				border: 1px solid #CCC;
-				height: <?php echo $settings['height']; ?>;
-				position: relative;
-				overflow: auto;
-				padding-bottom: 20px;
-			}
-			.terminal .bar
-			{
-				background:<?php echo $settings['barBgColor']; ?>;;
-				height:40px;
-				padding: 2px;
-				white-space: nowrap;
-				overflow: hidden;
-				color:<?php echo $settings['textColor']; ?>;
-				text-align:center;
-				padding-top:12px;
-			}
-			.terminal .commands
-			{
-				padding: 2px;
-				padding-right: 0;
-			}
-			.terminal #command
-			{
-				width: 90%;
-				outline:none;
-				border:none;
-			}
+	public function create()
+	{
+		$this->_run('cmd');
+		$this->_terminal($this->config);
+	}
 
-			pre{
-				background: none;
-				border:none;
-				line-height: 0px;
-			}
-		</style>
+	public function _terminal($settings)
+	{
+		?>
+			<style type="text/css">
+				*
+				{
+					margin: 0;
+					padding: 0;
+				}
 
-		<div class="content">
-			<div class="terminal" onclick="document.getElementById('command').focus();" id="terminal">
-				<div class="bar">
-					<?php echo 'ZN Framework Terminal Application '; ?>
-				</div>
+				input
+				{
+					color: inherit;
+					font-family: inherit;
+					font-size: inherit;
+					font-weight: inherit;
+					background-color: inherit;
+					border: inherit;
+				}
+				.content
+				{
+					width: <?php echo $settings['width']; ?>;
+					min-width: 400px;
+					margin: 0px auto;
+					text-align: left;
+					overflow: auto;
+					background-color: <?php echo $settings['bgColor']; ?>;
+					color: <?php echo $settings['textColor']; ?>;
+					font-family: <?php echo $settings['textType']; ?>;
+					font-weight: bold;
+					font-size: <?php echo $settings['textSize']; ?>;
+				}
+				.terminal
+				{
+					border: 1px solid #CCC;
+					height: <?php echo $settings['height']; ?>;
+					position: relative;
+					overflow: auto;
+					padding-bottom: 20px;
+				}
+				.terminal .bar
+				{
+					background:<?php echo $settings['barBgColor']; ?>;;
+					height:40px;
+					padding: 2px;
+					white-space: nowrap;
+					overflow: hidden;
+					color:<?php echo $settings['textColor']; ?>;
+					text-align:center;
+					padding-top:12px;
+				}
+				.terminal .commands
+				{
+					padding: 2px;
+					padding-right: 0;
+				}
+				.terminal #command
+				{
+					width: 90%;
+					outline:none;
+					border:none;
+				}
 
-				<form action="<?php echo currentUrl(); ?>" method="post" class="commands" id="commands">
+				pre{
+					background: none;
+					border:none;
+					line-height: 0px;
+					margin:0;
+				}
+			</style>
 
-					<?php if( ! empty($_SESSION['commands'])): ?>
-					<div>
-						<?php foreach ($_SESSION['commands'] as $index => $command): ?>
-
-						<pre><?php echo $terminalType.' > ', $command, "\n"; ?></pre>
-
-							<?php foreach ($_SESSION['commandResponses'][$index] as $value):?>
-                                		<pre><?php echo htmlentities($value), "\n"; ?></pre>
-							<?php endforeach; ?>
-
-						<?php endforeach; ?>
+			<div class="content">
+				<div class="terminal" onclick="document.getElementById('command').focus();" id="terminal">
+					<div class="bar">
+						<?php echo 'ZN Framework Terminal Application '; ?>
 					</div>
-					<?php endif; ?>
-					<?php echo $terminalType.' > ';?>
-					<input type="text" name="command" id="command" autocomplete="off" onkeydown="return commandKeyedDown(event);" />
 
-				</form>
+					<form action="<?php echo currentUrl(); ?>" method="post" class="commands" id="commands">
+
+						<?php if( ! empty($_SESSION['commands'])): ?>
+						<div>
+							<?php foreach ($_SESSION['commands'] as $index => $command): ?>
+
+							<pre><?php echo 'zerocore > ', $command, "\n"; ?></pre>
+
+								<?php foreach ($_SESSION['commandResponses'][$index] as $value):?>
+	                                		<pre><?php echo htmlentities($value), "\n"; ?></pre>
+								<?php endforeach; ?>
+
+							<?php endforeach; ?>
+						</div>
+						<?php endif; ?>
+						<?php echo 'zerocore > ';?>
+						<input type="text" name="command" id="command" autocomplete="off" onkeydown="return commandKeyedDown(event);" />
+
+					</form>
+				</div>
 			</div>
-		</div>
-		<script type="text/javascript">
 
-			<?php
-				$singleQuoteCancelledCommands = array();
+			<script type="text/javascript">
 
-				if( ! empty( $_SESSION['commands'] ) )
-				{
-					foreach( $_SESSION['commands'] as $command )
+				<?php
+					$singleQuoteCancelledCommands = array();
+
+					if( ! empty( $_SESSION['commands'] ) )
 					{
-						$cancelledCommand = str_replace('\\', '\\\\', $command);
-						$cancelledCommand = str_replace('\'', '\\\'', $command);
-						$singleQuoteCancelledCommands[] = $cancelledCommand;
+						foreach( $_SESSION['commands'] as $command )
+						{
+							$cancelledCommand = str_replace('\\', '\\\\', $command);
+							$cancelledCommand = str_replace('\'', '\\\'', $command);
+							$singleQuoteCancelledCommands[] = $cancelledCommand;
+						}
 					}
-				}
-			?>
+				?>
 
-			var previousCommands = ['', '<?php echo implode('\', \'', $singleQuoteCancelledCommands) ?>', ''];
+				var previousCommands = ['', '<?php echo implode('\', \'', $singleQuoteCancelledCommands) ?>', ''];
 
-			var currentCommandIndex = previousCommands.length - 1;
+				var currentCommandIndex = previousCommands.length - 1;
 
-			document.getElementById('command').select();
+				document.getElementById('command').select();
 
-			document.getElementById('terminal').scrollTop = document.getElementById('terminal').scrollHeight;
+				document.getElementById('terminal').scrollTop = document.getElementById('terminal').scrollHeight;
 
-			function togglePersistCommand(command_id)
-			{
-				document.getElementById('persistCommandId').value = command_id;
-				document.getElementById('commands').submit();
-			}
-
-			function commandKeyedDown(event)
-			{
-				var keyCode = getKeyCode(event);
-				if( keyCode == 38 )
+				function togglePersistCommand(commandId)
 				{
-					fillInPreviousCommand();
+					document.getElementById('persistCommandId').value = commandId;
+					document.getElementById('commands').submit();
 				}
-				else if( keyCode == 40 )
+
+				function commandKeyedDown(event)
 				{
-					fillInNextCommand();
-				}
-				else if( keyCode == 13 )
-				{
-					if (event.shiftKey)
+					var keyCode = getKeyCode(event);
+					if( keyCode == 38 )
 					{
-						togglePersistCommand
-						(
-							<?php
-							if( isset($_SESSION['commands']) )
-							{
-								echo count($_SESSION['commands']);
-							}
-							else
-							{
-								echo 0;
-							}
-							?>
-						);
-						return false;
+						fillInPreviousCommand();
 					}
+					else if( keyCode == 40 )
+					{
+						fillInNextCommand();
+					}
+					else if( keyCode == 13 )
+					{
+						if (event.shiftKey)
+						{
+							togglePersistCommand
+							(
+								<?php
+								if( isset($_SESSION['commands']) )
+								{
+									echo count($_SESSION['commands']);
+								}
+								else
+								{
+									echo 0;
+								}
+								?>
+							);
+							return false;
+						}
+					}
+					return true;
 				}
-				return true;
-			}
 
-			function fillInPreviousCommand()
-			{
-				currentCommandIndex--;
-
-				if( currentCommandIndex < 0 )
+				function fillInPreviousCommand()
 				{
-					currentCommandIndex = 0;
-					return;
+					currentCommandIndex--;
+
+					if( currentCommandIndex < 0 )
+					{
+						currentCommandIndex = 0;
+						return;
+					}
+					document.getElementById('command').value = previousCommands[currentCommandIndex];
 				}
-				document.getElementById('command').value = previousCommands[currentCommandIndex];
-			}
 
-			function fillInNextCommand()
-			{
-				currentCommandIndex++;
-
-				if( currentCommandIndex >= previousCommands.length )
+				function fillInNextCommand()
 				{
-					currentCommandIndex = previousCommands.length - 1;
-					return;
-				}
-				document.getElementById('command').value = previousCommands[currentCommandIndex];
-			}
+					currentCommandIndex++;
 
-			function getKeyCode(event)
-			{
-				var eventKeyCode = event.keyCode;
-				return eventKeyCode;
-			}
-		</script>
-    <?php
+					if( currentCommandIndex >= previousCommands.length )
+					{
+						currentCommandIndex = previousCommands.length - 1;
+						return;
+					}
+					document.getElementById('command').value = previousCommands[currentCommandIndex];
+				}
+
+				function getKeyCode(event)
+				{
+					var eventKeyCode = event.keyCode;
+					return eventKeyCode;
+				}
+			</script>
+	    <?php
 	}
 }

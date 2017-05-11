@@ -42,7 +42,7 @@
             </div>
             <div class="panel-body">
                 <div class="form-group pull-left">
-                @Terminal::run('cmd'):
+                @Terminal::create():
                 </div>
             </div>
         </div>
