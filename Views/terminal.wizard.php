@@ -98,7 +98,7 @@
                 </style>
 
                     <div class="content">
-        				<div class="terminal" id="terminal">
+        				<div class="terminal" id="terminal" onclick="document.getElementById('command').focus();">
 
     					<pre></pre>
 
@@ -109,6 +109,7 @@
         			</div>
 
                     <script type="text/javascript">
+                        $('/#command').focus();
 
                         $('/#command').keyup(function(e)
                         {

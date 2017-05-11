@@ -155,6 +155,7 @@ class System extends Controller
             '<b>run-function</b> function p1 p2 p 3 ... pN ',
             '<b>run-command</b> command:method p1 p2 p 3 ... pN ',
             '<b>run-external-command</b> command:method p1 p2 p 3 ... pN ',
+            '<b>clear</b>'
         ];
 
         $this->masterpage->page  = 'terminal';
