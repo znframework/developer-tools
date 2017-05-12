@@ -8,7 +8,7 @@
 ## Requirements
 
 * PHP >= 7.0.0
-* ZN  >= 4.4.0
+* ZN  >= 4.4.6
 
 ## Screenshot
 
