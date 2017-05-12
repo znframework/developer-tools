@@ -17,6 +17,7 @@
     'commandName' => 'Command Name',
     'configName' => 'Config Name',
     'routeName' => 'Route Name',
+    'migrationName' => 'Migration Name',
     'namespace' => 'Namespace',
     'extends' => 'Extends',
     'projects' => 'Projects',

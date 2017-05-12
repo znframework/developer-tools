@@ -54,7 +54,6 @@ class Initialize extends Controller
             $databaseConfigPath = str_replace(SELECT_PROJECT, IS_CONTAINER, $databaseConfigPath);
         }
 
-
         \Config::set('Database', import($databaseConfigPath));
 
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];

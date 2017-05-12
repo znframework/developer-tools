@@ -16,6 +16,7 @@
     'commandName' => 'Komut Adı',
     'configName' => 'Yapılandırma Adı',
     'routeName' => 'Rota Adı',
+    'migrationName' => 'Göç Adı',
     'modelName' => 'Model Adı',
     'namespace' => 'Namespace(İsim Alanı)',
     'extends' => 'Extends(Uzantı)',

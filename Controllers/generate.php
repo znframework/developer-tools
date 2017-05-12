@@ -37,7 +37,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('controller', ['required', 'alpha'], 'Controller Name');
+            Validation::rules('controller', ['required', 'alpha'], LANG['controllerName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -89,7 +89,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('command', ['required', 'alpha'], 'Command Name');
+            Validation::rules('command', ['required', 'alpha'], LANG['commandName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -145,7 +145,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('route', ['required', 'alpha'], 'Route Name');
+            Validation::rules('route', ['required', 'alpha'], LANG['routeName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -188,7 +188,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('config', ['required', 'alpha'], 'Route Name');
+            Validation::rules('config', ['required', 'alpha'], LANG['configName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -226,7 +226,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('model', ['required', 'alpha'], 'Controller Name');
+            Validation::rules('model', ['required', 'alpha'], LANG['modelName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -280,7 +280,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('migration', ['required', 'alpha'], 'Migration Name');
+            Validation::rules('migration', ['required', 'alpha'], LANG['migrationName']);
 
             if( ! $error = Validation::error('string') )
             {
