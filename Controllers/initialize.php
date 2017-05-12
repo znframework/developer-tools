@@ -54,9 +54,16 @@ class Initialize extends Controller
             $databaseConfigPath = str_replace(SELECT_PROJECT, IS_CONTAINER, $databaseConfigPath);
         }
 
+
         \Config::set('Database', import($databaseConfigPath));
 
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
+
+        if( IS_CONTAINER === FALSE )
+        {
+            $menus['configs']   = ['icon' => 'cog',        'href' => 'generate/config'];
+        }
+
         $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
 
         if( IS_CONTAINER === FALSE )
@@ -65,6 +72,7 @@ class Initialize extends Controller
             $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
             $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
             $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
+
         }
 
         $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];

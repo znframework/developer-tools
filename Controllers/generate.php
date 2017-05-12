@@ -86,7 +86,7 @@ class Generate extends Controller
         {
             redirect();
         }
-        
+
         if( Method::post('generate') )
         {
             Validation::rules('command', ['required', 'alpha'], 'Command Name');
@@ -164,6 +164,48 @@ class Generate extends Controller
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'route';
 
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Command
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function config(String $params = NULL)
+    {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
+        $path = 'Config/';
+
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Method::post('generate') )
+        {
+            Validation::rules('config', ['required', 'alpha'], 'Route Name');
+
+            if( ! $error = Validation::error('string') )
+            {
+                $functions = explode(',', Method::post('functions'));
+
+                File::create($fullPath . suffix(Method::post('config'), '.php'));
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'config';
         $this->masterpage->pdata['deletePath'] = $path;
         $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
     }

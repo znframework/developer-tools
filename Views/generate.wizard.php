@@ -40,7 +40,7 @@
                     </a>
 
 
-                    <pre id="b@$key:" class="collapse" contenteditable="true" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this);"><code>@@Security::phpTagEncode(File::read($fullPath . $file)):</code></pre>
+                    <pre id="b@$key:" class="collapse" contenteditable="true" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this);"><code>@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</code></pre>
                     @endforeach:
                 </div>
 
