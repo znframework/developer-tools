@@ -259,12 +259,7 @@ class System extends Controller
 
             if( Method::post('databaseBackup') )
             {
-                if( File::exists($databaseConfigPath) )
-                {
-                    \Config::set('Database', import($databaseConfigPath));
-
-                    \DBTool::backup('*', 'db.sql', $fullPath);
-                }
+                \DBTool::backup('*', 'db.sql', $fullPath);
             }
 
             Folder::copy(SELECT_PROJECT_DIR, $fullPath);

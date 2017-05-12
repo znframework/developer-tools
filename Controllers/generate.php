@@ -16,6 +16,15 @@ use Validation, Folder;
 
 class Generate extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->masterpage->plugin['name'] = array_merge(\Config::get('Masterpage', 'plugin')['name'], [
+            'Dashboard/highlight/styles/agate.css',
+            'Dashboard/highlight/highlight.pack.js'
+        ]);
+    }
     //--------------------------------------------------------------------------------------------------------
     // Controller
     //--------------------------------------------------------------------------------------------------------
@@ -54,12 +63,15 @@ class Generate extends Controller
             }
         }
 
+
+
         $path = 'Controllers/';
 
-        $this->masterpage->page  = 'generate';
-        $this->masterpage->pdata['content'] = 'controller';
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'controller';
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']   = Folder::files(SELECT_PROJECT_DIR . $path, 'php');
+        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -106,7 +118,7 @@ class Generate extends Controller
         $this->masterpage->pdata['content'] = 'model';
         $this->masterpage->pdata['deletePath'] = $path;
 
-        $modelFullPath = SELECT_PROJECT_DIR . $path;
+        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($modelFullPath) )
         {
@@ -154,7 +166,7 @@ class Generate extends Controller
         $this->masterpage->pdata['content'] = 'migration';
         $this->masterpage->pdata['deletePath'] = $path;
 
-        $modelFullPath = SELECT_PROJECT_DIR . $path;
+        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($modelFullPath) )
         {

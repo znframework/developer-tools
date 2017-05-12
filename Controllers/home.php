@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Folder, Session, Json, Uri;
+use Restful, Method, Validation, File, Folder, Session, Json, Uri, Security, Http;
 
 class Home extends Controller
 {
@@ -97,6 +97,40 @@ class Home extends Controller
 
         $this->masterpage->page  = 'docs';
     }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Save File
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function saveFile()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $link    = Method::post('link');
+        $content = Method::post('content');
+        $data    = str_replace
+        (
+            '&nbsp;', ' ', Security::htmlDecode
+            (
+                Security::htmlTagClean
+                (
+                    str_replace
+                    (
+                        '<br>', EOL, Security::htmlDecode($content)
+                    )
+                )
+            )
+        );
+
+        File::write($link, $data);
+    }
+
 
     //--------------------------------------------------------------------------------------------------------
     // Delete

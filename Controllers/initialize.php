@@ -47,6 +47,10 @@ class Initialize extends Controller
         define('LANGUAGES', ['EN', 'TR']);
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
 
+        $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
+
+        \Config::set('Database', import($databaseConfigPath));
+
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
         $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
 

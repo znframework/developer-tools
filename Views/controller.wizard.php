@@ -15,10 +15,7 @@
                     <label>{{LANG['functions']}}</label>
                     @@Form::class('form-control')->placeholder('Function1,Function2,Function3 ...')->text('functions'):
                 </div>
-
-
             </div>
         </div>
     </div>
-
 </div>

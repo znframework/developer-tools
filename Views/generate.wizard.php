@@ -31,13 +31,17 @@
             <div class="panel-body">
                 <div class="list-group">
 
-                    @foreach( $files as $file ):
-                    <a href="/#" class="list-group-item">
+                    @foreach( $files as $key => $file ):
+                    <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i> @$file:
+                        <span><i class="fa fa-angle-down fa-fw"></i></span>
+
                         <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
-                    @endforeach:
 
+
+                    <pre id="b@$key:" class="collapse" contenteditable="true" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this);"><code>@@Security::phpTagEncode(File::read($fullPath . $file)):</code></pre>
+                    @endforeach:
                 </div>
 
             </div>
@@ -45,3 +49,20 @@
     </div>
 </div>
 @endif:
+
+<script>hljs.initHighlightingOnLoad();</script>
+<script>
+function saveProcess(link, e)
+{
+    $.ajax
+    ({
+        'url'/:'@@siteUrl('home/saveFile'):',
+        'data'/:'link=' + link + '&content=' + encodeURIComponent($(e).html()),
+        'type'/:'post',
+        'success'/:function()
+        {
+            hljs.initHighlightingOnLoad();
+        }
+    });
+}
+</script>
