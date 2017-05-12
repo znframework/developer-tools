@@ -24,7 +24,7 @@
 
                     @foreach( $supportQueries as $query ):
                     <a href="/#" class="list-group-item">
-                        <i class="fa fa-fw fa-folder"></i> @$query:
+                        <i class="fa fa-fw fa-code"></i> @$query:
                     </a>
                     @endforeach:
 

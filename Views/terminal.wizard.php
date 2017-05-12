@@ -21,7 +21,7 @@
 
                     @foreach( $supportCommands as $command ):
                     <a href="/#" class="list-group-item">
-                        <i class="fa fa-fw fa-folder"></i> @$command:
+                        <i class="fa fa-fw fa-code"></i> @$command:
                     </a>
                     @endforeach:
 

@@ -48,7 +48,7 @@ class Initialize extends Controller
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
 
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
-        $menus['controllers']   = ['icon' => 'database',   'href' => 'generate/model'];
+        $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/model'];
 
         if( IS_CONTAINER === FALSE )
         {
