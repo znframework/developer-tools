@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Method, Arrays, Generate as Gen;
-use Validation, Folder;
+use Validation, Folder, File;
 
 class Generate extends Controller
 {
@@ -25,6 +25,7 @@ class Generate extends Controller
             'Dashboard/highlight/highlight.pack.js'
         ]);
     }
+
     //--------------------------------------------------------------------------------------------------------
     // Controller
     //--------------------------------------------------------------------------------------------------------
@@ -63,13 +64,106 @@ class Generate extends Controller
             }
         }
 
-
-
         $path = 'Controllers/';
 
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'controller';
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Command
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function command(String $params = NULL)
+    {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+        
+        if( Method::post('generate') )
+        {
+            Validation::rules('command', ['required', 'alpha'], 'Command Name');
+
+            if( ! $error = Validation::error('string') )
+            {
+                $functions = explode(',', Method::post('functions'));
+
+                if( ! Arrays::valueExists($functions, 'main') )
+                {
+                    $functions = Arrays::addFirst($functions, 'main');
+                }
+
+                $status = Gen::command(Method::post('command'),
+                [
+                    'application' => SELECT_PROJECT,
+                    'namespace'   => 'Project\Commands',
+                    'extends'     => 'Command',
+                    'functions'   => $functions
+                ]);
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $path = 'Commands/';
+
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'command';
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Command
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function route(String $params = NULL)
+    {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
+        $path = 'Routes/';
+
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Method::post('generate') )
+        {
+            Validation::rules('route', ['required', 'alpha'], 'Route Name');
+
+            if( ! $error = Validation::error('string') )
+            {
+                $functions = explode(',', Method::post('functions'));
+
+                File::create($fullPath . suffix(Method::post('route'), '.php'));
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'route';
+
         $this->masterpage->pdata['deletePath'] = $path;
         $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
     }
