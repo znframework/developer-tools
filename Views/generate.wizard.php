@@ -39,9 +39,9 @@
                         <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
 
-
                     <pre id="b@$key:" class="collapse"><code onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event);" contenteditable="true" class="html">@@str_replace("\t", '&nbsp;&nbsp;&nbsp;&nbsp;', Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file)))):</code></pre>
                     @endforeach:
+                    
                 </div>
 
             </div>

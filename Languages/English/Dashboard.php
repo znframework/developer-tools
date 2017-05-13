@@ -12,6 +12,7 @@
     //--------------------------------------------------------------------------------------------------------
 
     'success' => 'Operation succeeded.',
+    'error' => 'Operation failed!',
     'controllerName' => 'Controller Name',
     'modelName' => 'Model Name',
     'commandName' => 'Command Name',
@@ -43,6 +44,7 @@
     'newCommand' => 'New Command',
     'newConfig' => 'New Config',
     'newRoute' => 'New Route',
+    'newDatatable' => 'New Datatable',
     'dashboardVersion' => 'Dashboard Version',
     'version' => 'Version',
     'systemInfo' => 'System Info',

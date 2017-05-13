@@ -43,6 +43,7 @@
     'newRoute' => 'Yeni Rota',
     'newModel' => 'Yeni Model',
     'newMigration' => 'Yeni Göç',
+    'newDatatable' => 'Yeni Veri Tablosu',
     'dashboardVersion' => 'Panel Versiyon',
     'version' => 'Versiyon',
     'systemInfo' => 'Sistem Bilgisi',

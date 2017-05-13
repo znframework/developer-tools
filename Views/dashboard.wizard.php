@@ -120,7 +120,6 @@
             <div class="panel-body">
 
                     <div class="form-group">
-
                         @@Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
                     </div>
 
