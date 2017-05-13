@@ -68,5 +68,6 @@
     'database' => 'Veritabanı',
     'databaseBackup' => 'Veritabanı yedeği alınsın mı?',
     'terminal' => 'Terminal',
-    'backupLocation' => 'Yedeğin Konumu'
+    'backupLocation' => 'Yedeğin Konumu',
+    'datatables' => 'Veri Tabloları'
 ];

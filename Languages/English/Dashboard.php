@@ -53,6 +53,7 @@
     'commands' => 'Commands',
     'configs' => 'Configs',
     'routes' => 'Routes',
+    'datatables' => 'Datatables',
     'documentation' => 'Documentation',
     'notFound' => 'Not Found',
     'show' => 'SHOW',
@@ -68,5 +69,6 @@
     'database' => 'Database',
     'databaseBackup' => 'Get a database backup?',
     'terminal' => 'Terminal',
-    'backupLocation' => 'Backup Location'
+    'backupLocation' => 'Backup Location',
+    'datatables' => 'Datatables'
 ];

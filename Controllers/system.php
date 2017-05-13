@@ -114,8 +114,7 @@ class System extends Controller
 
         $this->masterpage->pdata['files'] = $files;
         $this->masterpage->pdata['path']  = $path;
-
-        $this->masterpage->page  = 'logs';
+        $this->masterpage->page           = 'logs';
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -276,8 +275,7 @@ class System extends Controller
 
         $this->masterpage->pdata['files'] = $files;
         $this->masterpage->pdata['path']  = $path;
-
-        $this->masterpage->page  = 'backup';
+        $this->masterpage->page           = 'backup';
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -365,6 +363,7 @@ class System extends Controller
             $columns = explode(',', $match[2] ?? NULL);
 
             $options = '[';
+
             foreach( $columns as $val )
             {
                 $val = trim($val);
@@ -374,6 +373,7 @@ class System extends Controller
 
                 $options .= presuffix(trim($column), '\'') . ' => ' . presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
             }
+
             $options = rtrim($options, ', ');
             $options .= ']';
             $replace = preg_replace($syntax, 'DBForge::createTable(\'$1\', '.$options.')', $replace);
@@ -446,10 +446,12 @@ class System extends Controller
             $values  = explode(',', $match[3] ?? NULL);
 
             $options = '[';
+
             foreach( $columns as $key => $val )
             {
                 $options .= presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
             }
+            
             $options = rtrim($options, ', ');
             $options .= ']';
             $replace = preg_replace($syntax, 'DB::insert(\'$1\', '.$options.')', $replace);

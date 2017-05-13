@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Method, Arrays, Generate as Gen;
-use Validation, Folder, File;
+use Validation, Folder, File, Config;
 
 class Generate extends Controller
 {
@@ -20,10 +20,14 @@ class Generate extends Controller
     {
         parent::__construct();
 
-        $this->masterpage->plugin['name'] = array_merge(\Config::get('Masterpage', 'plugin')['name'], [
-            'Dashboard/highlight/styles/agate.css',
-            'Dashboard/highlight/highlight.pack.js'
-        ]);
+        $this->masterpage->plugin['name'] = array_merge
+        (
+            Config::get('Masterpage', 'plugin')['name'],
+            [
+                'Dashboard/highlight/styles/agate.css',
+                'Dashboard/highlight/highlight.pack.js'
+            ]
+        );
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -163,7 +167,6 @@ class Generate extends Controller
 
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'route';
-
         $this->masterpage->pdata['deletePath'] = $path;
         $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
     }

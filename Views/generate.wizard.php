@@ -40,7 +40,7 @@
                     </a>
 
 
-                    <pre id="b@$key:" class="collapse" contenteditable="true" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this);"><code>@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</code></pre>
+                    <pre id="b@$key:" class="collapse"><code onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event);" contenteditable="true" class="html">@@str_replace("\t", '&nbsp;&nbsp;&nbsp;&nbsp;', Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file)))):</code></pre>
                     @endforeach:
                 </div>
 
@@ -52,7 +52,8 @@
 
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
-function saveProcess(link, e)
+
+function saveProcess(link, e, evt)
 {
     $.ajax
     ({
@@ -61,8 +62,9 @@ function saveProcess(link, e)
         'type'/:'post',
         'success'/:function()
         {
-            hljs.initHighlightingOnLoad();
+
         }
     });
 }
+
 </script>

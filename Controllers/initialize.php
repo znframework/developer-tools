@@ -56,7 +56,7 @@ class Initialize extends Controller
 
         \Config::set('Database', import($databaseConfigPath));
 
-        $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
+        $menus['home']          = ['icon' => 'home',       'href' => 'home'];
 
         if( IS_CONTAINER === FALSE )
         {
@@ -71,8 +71,9 @@ class Initialize extends Controller
             $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
             $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
             $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
-
         }
+
+        $menus['datatables']    = ['icon' => 'table',     'href' => 'datatables'];
 
         $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
         $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
