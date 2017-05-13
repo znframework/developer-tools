@@ -1,4 +1,4 @@
-<div id="success-process" class="hide row">
+<div id="success-process{{$id ?? NULL}}" class="hide row">
     <div class="col-lg-12">
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -9,7 +9,7 @@
 </div>
 
 
-<div id="error-process" class="hide row">
+<div id="error-process{{$id ?? NULL}}" class="hide row">
     <div class="col-lg-12">
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

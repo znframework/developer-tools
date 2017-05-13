@@ -34,6 +34,7 @@
     'generateButton' => 'OLUŞTUR',
     'upgradeButton' => 'YÜKSELT',
     'backupButton' => 'YEDEKLE',
+    'updateButton' => 'GÜNCELLE',
     'systemBackup' => 'Sistem Yedekleme',
     'backupList' => 'Yedek Listesi',
     'newProject' => 'Yeni Proje',

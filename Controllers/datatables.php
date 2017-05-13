@@ -89,6 +89,38 @@ class Datatables extends Controller
         ]);
     }
 
+    public function updateRows()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $post = Method::post();
+
+        $columns = $post['columns'];
+        $table   = $post['table'];
+        $uniqueKey = $post['uniqueKey'];
+        $newData = [];
+
+        $i = 0;
+
+
+        foreach( $columns as $key => $values )
+        {
+            foreach( $values as $value )
+            {
+                $newData[$i][$key] = $value;
+
+                DB::where($uniqueKey, $newData[$i][$uniqueKey])->update($table, $newData[$i]);
+
+                $i++;
+            }
+
+            $i = 0;
+        }
+    }
+
     public function deleteRow()
     {
         if( ! Http::isAjax() )

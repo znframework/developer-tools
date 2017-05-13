@@ -97,6 +97,28 @@ function deleteRow(table, column, value, id)
     }
 }
 
+function updateRows(table, uniqueKey)
+{
+    $.ajax
+    ({
+        url/:"@@siteUrl('datatables/updateRows'):",
+    	data/:$('#' + table).serialize() + '&table=' + table + '&uniqueKey=' + uniqueKey,
+    	method/:"post",
+
+    	success/:function(data)
+    	{
+            if( ! data )
+            {
+                $('/#success-process-' + table).removeClass('hide');
+            }
+            else
+            {
+                $('/#error-process-' + table).removeClass('hide');
+            }
+    	}
+    });
+}
+
 function createTable()
 {
     $.ajax

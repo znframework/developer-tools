@@ -34,6 +34,7 @@
     'generateButton' => 'GENERATE',
     'refreshButton' => 'REFRESH',
     'upgradeButton' => 'UPGRADE',
+    'updateButton' => 'UPDATE',
     'backupButton' => 'BACKUP',
     'systemBackup' => 'System Backup',
     'backupList' => 'Backup List',

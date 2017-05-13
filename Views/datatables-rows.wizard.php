@@ -1,4 +1,6 @@
+@@Form::id($table)->open($table):
 <table class="table table-bordered table-hover table-striped">
+
     <thead>
         {[ $columns = DB::get($table)->columns()]}
 
@@ -6,7 +8,10 @@
             @foreach( $columns as $column):
             <th>@$column:</th>
             @endforeach:
-            <th></th>
+            <th>
+                <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('@$table:')" title="Delete Datatable"></i></span>
+                <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#edit-@$table:"  class="fa fa-edit fa-fw" title="Edit Datatable"></i></span>
+            </th>
         </tr>
 
     </thead>
@@ -17,6 +22,73 @@
             $result = $get->resultArray();
         ]}
 
+        <tr class="collapse" id="edit-@$table:">
+            <td colspan="{{count($columns) + 1}}">
+                <table class="table table-bordered table-hover table-striped">
+
+                    <thead>
+                        {[
+                            $columns = DB::get($table)->columns();
+                            $columnData = DB::get($table)->columnData();
+                        ]}
+
+                        <tr>
+                            @foreach( $columns as $key => $column):
+                            {[
+                                if( $columnData[$column]->primaryKey == 1 )
+                                {
+                                    $uniqueKey = $column;
+                                    echo Form::hidden('columns['.$column.']', $column);
+
+                                    Form::disabled();
+                                }
+                            ]}
+                            <th>@@Form::class('form-control')->text('columns['.$column.']', $column):</th>
+                            @endforeach:
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        {[
+                            $get = DB::limit($start ?? NULL, 10)->get($table);
+                            $result = $get->resultArray();
+                        ]}
+
+                        @foreach( $result as $key => $row ):
+                        <tr>
+                            @foreach( $columns as $key => $column):
+                            {[
+                                if( $columnData[$column]->primaryKey == 1 )
+                                {
+                                    echo Form::hidden('columns['.$column.'][]', $row[$column]);
+                                    Form::disabled();
+                                }
+                            ]}
+                            <td>{{ strlen($row[$column]) > 255
+                                                         ? Form::class('form-control')->textarea('columns['.$column.'][]', $row[$column])
+                                                         : Form::class('form-control')->text('columns['.$column.'][]', $row[$column]) }}
+                            </td>
+                            @endforeach:
+
+                        </tr>
+                        @endforeach:
+                        <tr>
+                            <td colspan="{{count($columns) + 1}}">
+                                @@Form::onclick('updateRows(\''.$table.'\', \''.$uniqueKey.'\', \'/#table-'.$table.'\')')->class('form-control btn btn-info')->button('update', LANG['updateButton']):
+                            </td>
+
+                        <tr>
+
+
+                    </tbody>
+                </table>
+                @Import::view('alert-bar.wizard', ['id' => '-' . $table]):
+
+            </td>
+        </tr>
+
         @foreach( $result as $key => $row ):
         <tr>
             @foreach( $columns as $column):
@@ -24,12 +96,11 @@
             @endforeach:
             <td>
                 <span style="cursor: pointer;" class="pull-right"><i onclick="deleteRow('@$table:', '@@Arrays::getFirst($columns):', '@@Arrays::getFirst($row):', '/#table-@$table:')" class="fa fa-trash-o fa-fw" title="Delete"></i></span>
-                <span style="cursor: pointer;" class="pull-right"><i onclick="" class="fa fa-edit fa-fw" title="Edit"></i></span>
             </td>
         </tr>
         @endforeach:
         <tr>
-            <td colspan="@@count($columns):">
+            <td colspan="{{count($columns) + 1}}">
                 <ul class="pagination">
                   {[ $rows = ceil($get->totalRows(true) / 10) ]}
                   @for( $i = 1; $i <= $rows; $i++ ):
@@ -41,4 +112,6 @@
         </tr>
 
     </tbody>
+
 </table>
+@@Form::close():
