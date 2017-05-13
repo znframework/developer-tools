@@ -38,12 +38,11 @@
                                 if( $columnData[$column]->primaryKey == 1 )
                                 {
                                     $uniqueKey = $column;
-                                    echo Form::hidden('columns['.$column.']', $column);
-
-                                    Form::disabled();
                                 }
+
+                                echo Form::hidden('columns['.$column.']', $column);
                             ]}
-                            <th>@@Form::class('form-control')->text('columns['.$column.']', $column):</th>
+                            <th>@@Form::disabled()->class('form-control')->text('columns['.$column.']', $column):</th>
                             @endforeach:
 
                         </tr>
