@@ -97,7 +97,7 @@ function deleteRow(table, column, value, id)
     }
 }
 
-function updateRows(table, uniqueKey)
+function updateRows(table, uniqueKey, id)
 {
     $.ajax
     ({
@@ -107,6 +107,8 @@ function updateRows(table, uniqueKey)
 
     	success/:function(data)
     	{
+            $(id).html(data);
+
             if( ! data )
             {
                 $('/#success-process-' + table).removeClass('hide');
@@ -119,12 +121,61 @@ function updateRows(table, uniqueKey)
     });
 }
 
+function addRow(table, id)
+{
+    $.ajax
+    ({
+        url/:"@@siteUrl('datatables/addRow'):",
+    	data/:$('#' + table).serialize() + '&table=' + table,
+    	method/:"post",
+
+    	success/:function(data)
+    	{
+            $(id).html(data);
+
+            if( data )
+            {
+                $('/#success-process-' + table).removeClass('hide');
+            }
+            else
+            {
+                $('/#error-process-' + table).removeClass('hide');
+            }
+    	}
+    });
+}
+
+function alterTable(table, id, type)
+{
+    $.ajax
+    ({
+        url/:"@@siteUrl('datatables/alterTable'):",
+    	data/:'content=' + $('/#' + table + '-modifyTableContent').text() + '&table=' + table + '&type=' + type,
+    	method/:"post",
+        dataType:"json",
+    	success/:function(data)
+    	{
+            $('/#tables').html(data.result);
+
+            if( data.status )
+            {
+                $('/#success-process-' + table).removeClass('hide');
+            }
+            else
+            {
+                $('/#error-process-' + table).removeClass('hide');
+                $('/#error-process-content-' + table).text(data.error);
+            }
+    	}
+    });
+}
+
 function createTable()
 {
     $.ajax
     ({
         url/:"@@siteUrl('datatables/createTable'):",
-    	data/:{"content":$('/#createTableContent').text()},
+    	data/:{"content"/:$('/#createTableContent').text()},
     	method/:"post",
         dataType:"json",
     	success/:function(data)
