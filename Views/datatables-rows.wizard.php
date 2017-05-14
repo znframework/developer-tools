@@ -82,36 +82,9 @@
 
                     <thead>
 
-                        {[ $alterTablePath = STORAGE_DIR . 'ProjectTables' . DS . CURRENT_DATABASE . DS . $table . '.php' ]}
-
-                        @if( File::exists($alterTablePath) ):
-                        <tr>
-                            <td colspan="{{ $colspan = count($columns) + 1 }}">
-                                <pre><code id="{{$table}}-modifyTableContent" contenteditable="true" class="html">@@str_replace("\t", '&nbsp;&nbsp;&nbsp;&nbsp;', Security::phpTagEncode(Security::htmlEncode(File::read($alterTablePath)))):</code></pre>
-
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td colspan="{{ $colspan }}">
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'renameTable\')')->class('btn btn-success')->button('update', LANG['renameButton']):
-
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'dropTable\')')->class('btn btn-danger')->button('update', LANG['dropButton']):
-
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'addColumn\')')->class('btn btn-success')->button('update', LANG['addColumnButton']):
-
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'modifyColumn\')')->class('btn btn-info')->button('update', LANG['modifyColumnButton']):
-
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'renameColumn\')')->class('btn btn-warning')->button('update', LANG['renameColumnButton']):
-
-                                @@Form::onclick('alterTable(\''.$table.'\', \'/#table-'.$table.'\', \'dropColumn\')')->class('btn btn-danger')->button('update', LANG['dropColumnButton']):
-
-                            </td>
-
-                        </tr>
-                        @endif:
                         <tr>
                             @foreach( $columns as $key => $column):
+
                             {[
                                 if( $columnData[$column]->primaryKey == 1 )
                                 {
@@ -123,6 +96,13 @@
 
                             <th>@@Form::disabled()->class('form-control')->text('columns['.$column.']', $column):</th>
                             @endforeach:
+
+                            {[
+                                if( empty($uniqueKey) )
+                                {
+                                    $uniqueKey = 'id';
+                                }
+                            ]}
 
                         </tr>
 

@@ -4,7 +4,7 @@
     <i class="fa fa-fw fa-table"></i> @$table:
     <span><i class="fa fa-angle-down fa-fw"></i></span>
 
-    
+
 </a>
 
 <div id="table-@$table:" class="collapse table-responsive">
