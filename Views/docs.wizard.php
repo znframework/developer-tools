@@ -17,12 +17,16 @@
 
     <div class="col-lg-12">
 
-        @foreach( $docs as $doc ):
+        @foreach( $docs as $key => $doc ):
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> @@Separator::decode($doc->meta_keyword)->{getLang()}:</h3>
+                <h3 style="cursor:pointer" data-toggle="collapse" data-target="/#id{{$key}}" class="panel-title">
+                    <i class="fa fa-book fa-fw"></i>
+                    @@Separator::decode($doc->meta_keyword)->{getLang()}:
+                    <span><i class="fa fa-angle-down fa-fw"></i></span>
+                </h3>
             </div>
-            <div class="panel-body">
+            <div id="id{{$key}}" class="collapse panel-body">
                 <div class="list-group">
                     @@specialWord(Separator::decode($doc->content)->{getLang()}):
                 </div>
