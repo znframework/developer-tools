@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session;
 
 class System extends Controller
 {
@@ -111,11 +111,171 @@ class System extends Controller
         {
             $this->masterpage->error = LANG['notFound'];
         }
-        
+
         $this->masterpage->pdata['files'] = $files;
         $this->masterpage->pdata['path']  = $path;
+        $this->masterpage->page           = 'logs';
+    }
 
-        $this->masterpage->page  = 'logs';
+    //--------------------------------------------------------------------------------------------------------
+    // Protected Clear Command
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    protected function clearCommand()
+    {
+        unset($_SESSION['persistCommands']);
+        unset($_SESSION['commandResponses']);
+        unset($_SESSION['commands']);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminal(String $params = NULL)
+    {
+        if( IS_CONTAINER )
+        {
+            redirect();
+        }
+
+        $this->masterpage->pdata['supportCommands'] =
+        [
+            '<b>run-uri</b> controller/function/p1/p2 ... /pN',
+            '<b>run-controller</b> controller/function',
+            '<b>run-class</b> controller:function p1 p2 ... pN',
+            '<b>run-model</b> model:function p1 p2 p3 ... pN'   ,
+            '<b>run-function</b> function p1 p2 p 3 ... pN ',
+            '<b>run-command</b> command:method p1 p2 p 3 ... pN ',
+            '<b>run-external-command</b> command:method p1 p2 p 3 ... pN ',
+            '<b>clear</b>'
+        ];
+
+        $this->masterpage->page  = 'terminal';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal Ajax
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminalAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $command = Method::post('command');
+
+        $previousCommands = NULL;
+
+        if( $command === 'clear' )
+        {
+            Session::delete('commands');
+            echo ''; exit;
+        }
+
+        if( $getCommands = Session::select('commands') )
+        {
+            Session::insert('commands', Arrays::addLast($getCommands, $command));
+        }
+        else
+        {
+            Session::insert('commands', [$command]);
+        }
+
+        exec('php zerocore project-name ' . SELECT_PROJECT. ' '.$command.' 2>&1', $response);
+
+        $string = NULL;
+
+        foreach( $response as $val )
+        {
+            $string .= $val . EOL;
+        }
+
+        echo $string;
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal Ajax
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function terminalArrowAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $index    = Method::post('index');
+        $commands = Session::select('commands');
+
+        if( ! empty($commands[$index]) )
+        {
+            echo $commands[$index]; exit;
+        }
+
+        echo NULL;
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Backup
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function backup(String $params = NULL)
+    {
+        $project = SELECT_PROJECT;
+
+        $path = STORAGE_DIR . 'ProjectBackup' . DS;
+
+        if( ! Folder::exists($path) )
+        {
+            Folder::create($path);
+        }
+
+        if( Method::post('backup') )
+        {
+            $fix      = '-' .\Date::convert(\Date::current() . \Time::current(), 'Y-m-d-H-i-s');
+            $project  = $project . $fix;
+            $fullPath = $path . $project;
+
+            $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
+
+            if( Method::post('databaseBackup') )
+            {
+                \DBTool::backup('*', 'db.sql', $fullPath);
+            }
+
+            Folder::copy(SELECT_PROJECT_DIR, $fullPath);
+
+            redirect(currentUri(), 0, ['success' => LANG['success']]);
+        }
+
+        $files = Folder::files($path, 'dir');
+
+        if( empty($files) )
+        {
+            $this->masterpage->error = LANG['notFound'];
+        }
+
+        $this->masterpage->pdata['files'] = $files;
+        $this->masterpage->pdata['path']  = $path;
+        $this->masterpage->page           = 'backup';
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -203,6 +363,7 @@ class System extends Controller
             $columns = explode(',', $match[2] ?? NULL);
 
             $options = '[';
+
             foreach( $columns as $val )
             {
                 $val = trim($val);
@@ -212,6 +373,7 @@ class System extends Controller
 
                 $options .= presuffix(trim($column), '\'') . ' => ' . presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
             }
+
             $options = rtrim($options, ', ');
             $options .= ']';
             $replace = preg_replace($syntax, 'DBForge::createTable(\'$1\', '.$options.')', $replace);
@@ -284,10 +446,12 @@ class System extends Controller
             $values  = explode(',', $match[3] ?? NULL);
 
             $options = '[';
+
             foreach( $columns as $key => $val )
             {
                 $options .= presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
             }
+            
             $options = rtrim($options, ', ');
             $options .= ']';
             $replace = preg_replace($syntax, 'DB::insert(\'$1\', '.$options.')', $replace);

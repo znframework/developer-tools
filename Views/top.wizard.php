@@ -38,7 +38,7 @@
         <ul class="nav navbar-nav side-nav">
             @foreach( MENUS as $menu => $attr ):
             <li class="{{$attr['href'] === CURRENT_CFPATH ? 'active' : ''}}">
-                <a href="@@siteUrl($attr['href']):"><i class="fa fa-fw fa-@$attr['icon']:"></i> {{LANG[$menu]}}</a>
+                <a href="@@siteUrl($attr['href']):"{{isset($attr['target']) ? 'target="' . $attr['target'] . '"' : ''}}><i class="fa fa-fw fa-@$attr['icon']:"></i> {{LANG[$menu]}}</a>
             </li>
             @endforeach:
         </ul>

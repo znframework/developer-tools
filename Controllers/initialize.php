@@ -32,7 +32,7 @@ class Initialize extends Controller
         }
 
         define('LANG', lang('Dashboard'));
-        define('DASHBOARD_VERSION', '1.0.0');
+        define('DASHBOARD_VERSION', 'Alpha - 1.0.0');
 
         $projects = Folder::files(PROJECTS_DIR, 'dir');
         $projects = Arrays::deleteElement($projects, CURRENT_PROJECT);
@@ -43,19 +43,50 @@ class Initialize extends Controller
 
         define('PROJECT_LIST', $projects);
         define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : DEFAULT_PROJECT);
+        define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
         define('LANGUAGES', ['EN', 'TR']);
+        define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
 
-        $menus =
-        [
-            'home'          => ['icon' => 'home',       'href' => 'home/main'],
-            'controllers'   => ['icon' => 'gears',      'href' => 'generate/controller'],
-            'models'        => ['icon' => 'database',   'href' => 'generate/model'],
-            'migrations'    => ['icon' => 'cubes',      'href' => 'generate/migration'],
-            'sqlConverter'  => ['icon' => 'refresh',    'href' => 'system/converter'],
-            'documentation' => ['icon' => 'book',       'href' => 'home/docs'],
-            'systemLogs'    => ['icon' => 'cogs',       'href' => 'system/log'],
-            'systemInfo'    => ['icon' => 'info',       'href' => 'system/info']
-        ];
+        $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
+
+        if( IS_CONTAINER )
+        {
+            $databaseConfigPath = str_replace(SELECT_PROJECT, IS_CONTAINER, $databaseConfigPath);
+        }
+
+        Config::set('Database', import($databaseConfigPath));
+
+        define('CURRENT_DATABASE', Config::get('Database', 'database')['database']);
+
+        $menus['home']          = ['icon' => 'home',       'href' => 'home'];
+
+        if( IS_CONTAINER === FALSE )
+        {
+            $menus['configs']   = ['icon' => 'cog',        'href' => 'generate/config'];
+        }
+
+        $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
+
+        if( IS_CONTAINER === FALSE )
+        {
+            $menus['models']    = ['icon' => 'database',   'href' => 'generate/model'];
+            $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
+            $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
+            $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
+        }
+
+        $menus['datatables']    = ['icon' => 'table',     'href' => 'datatables'];
+
+        $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
+        $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
+        $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
+        $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
+        $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
+
+        if( IS_CONTAINER === FALSE )
+        {
+            $menus['terminal']      = ['icon' => 'terminal',   'href' => 'system/terminal'];
+        }
 
         define('MENUS', $menus);
     }

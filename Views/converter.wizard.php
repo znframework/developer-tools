@@ -17,14 +17,14 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['supportQueries']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> {{LANG['supportQueries']}}</h3>
             </div>
             <div class="panel-body">
                 <div class="list-group">
 
                     @foreach( $supportQueries as $query ):
                     <a href="/#" class="list-group-item">
-                        <i class="fa fa-fw fa-folder"></i> @$query:
+                        <i class="fa fa-fw fa-code"></i> @$query:
                     </a>
                     @endforeach:
 

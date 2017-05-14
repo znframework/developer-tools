@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Folder, Session, Json, Uri;
+use Restful, Method, Validation, File, Folder, Session, Json, Uri, Security, Http;
 
 class Home extends Controller
 {
@@ -99,6 +99,40 @@ class Home extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------
+    // Save File
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function saveFile()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $link    = Method::post('link');
+        $content = Method::post('content');
+        $data    = str_replace
+        (
+            '&nbsp;', ' ', Security::htmlDecode
+            (
+                Security::htmlTagClean
+                (
+                    str_replace
+                    (
+                        '<br>', EOL, Security::htmlDecode($content)
+                    )
+                )
+            )
+        );
+
+        File::write($link, $data);
+    }
+
+
+    //--------------------------------------------------------------------------------------------------------
     // Delete
     //--------------------------------------------------------------------------------------------------------
     //
@@ -142,6 +176,25 @@ class Home extends Controller
                 Session::delete('project');
                 Folder::delete($path);
             }
+        }
+
+        redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Delete
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function deleteBackup($backup = NULL)
+    {
+        $path = $path = STORAGE_DIR . 'ProjectBackup' . DS . $backup;
+
+        if( Folder::exists($path) )
+        {
+            Folder::delete($path);
         }
 
         redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
