@@ -93,12 +93,10 @@
 
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
-function dropTable()
+function dropTable(table)
 {
     if( confirm("@@LANG['areYouSure']:") )
     {
-        table = $('/#tableName').val();
-
         $.ajax
         ({
             url/:"@@siteUrl('datatables/dropTable'):",
@@ -123,11 +121,8 @@ function dropTable()
     }
 }
 
-function deleteRow(column, value)
+function deleteRow(table, column, value, id)
 {
-    table     = $('/#tableName').val();
-    id        = $('/#tableNameID').val();
-
     if( confirm("@@LANG['areYouSure']:") )
     {
         $.ajax
@@ -144,12 +139,8 @@ function deleteRow(column, value)
     }
 }
 
-function updateRow(ids)
+function updateRow(table, ids, id, uniqueKey)
 {
-    table     = $('/#tableName').val();
-    id        = $('/#tableNameID').val();
-    uniqueKey = $('/#uniqueKey').val();
-
     $.ajax
     ({
         url/:"@@siteUrl('datatables/updateRow'):",
@@ -173,12 +164,8 @@ function updateRow(ids)
 
 }
 
-function updateRows()
+function updateRows(table, id, uniqueKey)
 {
-    table     = $('/#tableName').val();
-    id        = $('/#tableNameID').val();
-    uniqueKey = $('/#uniqueKey').val();
-
     $.ajax
     ({
         url/:"@@siteUrl('datatables/updateRows'):",
@@ -201,11 +188,8 @@ function updateRows()
     });
 }
 
-function addRow()
+function addRow(table, id)
 {
-    table = $('/#tableName').val();
-    id    = $('/#tableNameID').val();
-
     $.ajax
     ({
         url/:"@@siteUrl('datatables/addRow'):",
