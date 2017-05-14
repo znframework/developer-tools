@@ -93,10 +93,12 @@
 
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
-function dropTable(table)
+function dropTable()
 {
     if( confirm("@@LANG['areYouSure']:") )
     {
+        table = $('/#tableName').val();
+
         $.ajax
         ({
             url/:"@@siteUrl('datatables/dropTable'):",
@@ -121,8 +123,11 @@ function dropTable(table)
     }
 }
 
-function deleteRow(table, column, value, id)
+function deleteRow(column, value)
 {
+    table     = $('/#tableName').val();
+    id        = $('/#tableNameID').val();
+
     if( confirm("@@LANG['areYouSure']:") )
     {
         $.ajax
@@ -139,12 +144,45 @@ function deleteRow(table, column, value, id)
     }
 }
 
-function updateRows(table, uniqueKey, id)
+function updateRow(ids)
 {
+    table     = $('/#tableName').val();
+    id        = $('/#tableNameID').val();
+    uniqueKey = $('/#uniqueKey').val();
+
+    $.ajax
+    ({
+        url/:"@@siteUrl('datatables/updateRow'):",
+    	data/:$('/#' + table).serialize() + '&uniqueKey=' + uniqueKey + '&table=' + table + '&ids=' + ids,
+    	method/:"post",
+
+    	success/:function(data)
+    	{
+            $(id).html(data);
+
+            if( ! data )
+            {
+                $('/#success-process-' + table).removeClass('hide');
+            }
+            else
+            {
+                $('/#error-process-' + table).removeClass('hide');
+            }
+    	}
+    });
+
+}
+
+function updateRows()
+{
+    table     = $('/#tableName').val();
+    id        = $('/#tableNameID').val();
+    uniqueKey = $('/#uniqueKey').val();
+
     $.ajax
     ({
         url/:"@@siteUrl('datatables/updateRows'):",
-    	data/:$('#' + table).serialize() + '&table=' + table + '&uniqueKey=' + uniqueKey,
+    	data/:$('/#' + table).serialize() + '&table=' + table + '&uniqueKey=' + uniqueKey,
     	method/:"post",
 
     	success/:function(data)
@@ -163,8 +201,11 @@ function updateRows(table, uniqueKey, id)
     });
 }
 
-function addRow(table, id)
+function addRow()
 {
+    table = $('/#tableName').val();
+    id    = $('/#tableNameID').val();
+
     $.ajax
     ({
         url/:"@@siteUrl('datatables/addRow'):",

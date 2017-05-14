@@ -151,6 +151,23 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    public function updateRow()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $table   = Method::post('table');
+        $column  = Method::post('uniqueKey');
+        $ids     = Method::post('ids');
+        $columns = $_POST['updateColumns'][$ids]; // Origin Data
+
+        DB::where($column, $ids)->update('ignore:' . $table, $columns);
+
+        Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
+    }
+
     public function paginationRow()
     {
         if( ! Http::isAjax() )
