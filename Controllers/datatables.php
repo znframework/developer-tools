@@ -129,23 +129,8 @@ class Datatables extends Controller
 
         $columns = $post['addColumns'];
         $table   = $post['table'];
-        $newData = [];
 
-        $i = 0;
-
-        foreach( $columns as $key => $values )
-        {
-            foreach( $values as $value )
-            {
-                $newData[$i][$key] = $value;
-
-                DB::insert($table, $newData[$i]);
-
-                $i++;
-            }
-
-            $i = 0;
-        }
+        DB::insert('ignore:' . $table, $columns);
 
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }

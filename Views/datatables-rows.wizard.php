@@ -37,7 +37,7 @@
 
                         <tr>
                             @foreach( $columns as $key => $column):
-                                <th>@@Form::disabled()->class('form-control')->text('addColumns['.$column.']', $column):</th>
+                                <th>@@Form::disabled()->class('form-control')->text('addColumn', $column):</th>
                             @endforeach:
 
                         </tr>
@@ -55,8 +55,8 @@
                                 }
                             ]}
                             <td>{{ $columnData[$column]->maxLength > 255
-                                                         ? Form::class('form-control')->textarea('addColumns['.$column.'][]')
-                                                         : Form::class('form-control')->text('addColumns['.$column.'][]') }}
+                                                         ? Form::class('form-control')->textarea('addColumns['.$column.']')
+                                                         : Form::class('form-control')->text('addColumns['.$column.']') }}
                             </td>
                             @endforeach:
 
