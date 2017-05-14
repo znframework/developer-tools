@@ -14,7 +14,7 @@
             <th>@$column:</th>
             @endforeach:
             <th>
-                <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable()" title="Delete Datatable"></i></span>
+                <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('{{$table}}')" title="Delete Datatable"></i></span>
                 <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#edit-@$table:"  class="fa fa-edit fa-fw" title="Edit Datatable"></i></span>
                 <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#add-@$table:"  class="fa fa-plus fa-fw" title="Add Data"></i></span>
 
@@ -69,7 +69,7 @@
 
                         <tr>
                             <td colspan="{{count($columns) + 1}}">
-                                @@Form::onclick('addRow()')->class('form-control btn btn-info')->button('update', LANG['addButton']):
+                                @@Form::onclick('addRow(\''.$table.'\', \'/#table-'.$table.'\')')->class('form-control btn btn-info')->button('update', LANG['addButton']):
                             </td>
 
                         <tr>
@@ -135,7 +135,7 @@
                         <tr>
                             <td colspan="{{count($columns) + 1}}">
 
-                                @@Form::onclick('updateRows()')->class('form-control btn btn-info')->button('update', LANG['updateButton']):
+                                @@Form::onclick('updateRows(\''.$table.'\', \'/#table-'.$table.'\', \''.$uniqueKey.'\')')->class('form-control btn btn-info')->button('update', LANG['updateButton']):
 
                             </td>
 
@@ -155,12 +155,12 @@
             <td>@@Limiter::word((string) $row[$column], 10):</td>
             @endforeach:
             <td>
-                <span style="cursor: pointer;" class="pull-right"><i onclick="deleteRow('@@Arrays::getFirst($columns):', '@@Arrays::getFirst($row):')" class="fa fa-trash-o fa-fw" title="Delete"></i></span>
-                <span data-target="/#updateColumn{{$row[$uniqueKey]}}" data-toggle="collapse" style="cursor: pointer;" class="pull-right"><i class="fa fa-edit fa-fw" title="Edit Column"></i></span>
+                <span style="cursor: pointer;" class="pull-right"><i onclick="deleteRow('{{$table}}', '@@Arrays::getFirst($columns):', '@@Arrays::getFirst($row):', '/#table-{{$table}}')" class="fa fa-trash-o fa-fw" title="Delete"></i></span>
+                <span data-target="/#{{$table}}updateColumn{{$row[$uniqueKey]}}" data-toggle="collapse" style="cursor: pointer;" class="pull-right"><i class="fa fa-edit fa-fw" title="Edit Column"></i></span>
 
             </td>
         </tr>
-        <tr id="updateColumn{{$row[$uniqueKey]}}" class="collapse">
+        <tr id="{{$table}}updateColumn{{$row[$uniqueKey]}}" class="collapse">
             @foreach( $columns as $column):
             {[
                 if( $columnData[$column]->primaryKey == 1 )
@@ -177,7 +177,7 @@
             @endforeach:
 
             <td>
-                @@Form::onclick('updateRow(\''.$row[$uniqueKey].'\')')->class('form-control btn btn-info')->button('update', LANG['updateButton']):
+                @@Form::onclick('updateRow(\''.$table.'\', \''.$row[$uniqueKey].'\', \'/#table-'.$table.'\', \''.$uniqueKey.'\')')->class('form-control btn btn-info')->button('update', LANG['updateButton']):
             </td>
         </tr>
         @endforeach:
