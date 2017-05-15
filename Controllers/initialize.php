@@ -49,7 +49,7 @@ class Initialize extends Controller
         define('DATATYPES',
          [
             0 => 'Data Type', 'INT' => 'NUMBER', 'CHAR' => 'CHAR', 'VARCHAR' => 'VARCHAR', 'BLOB' => 'TEXT', 'DECIMAL' => 'DECIMAL',
-            DB::date() => DB::date(), DB::datetime() => DB::datetime(), DB::timestamp() => DB::timestamp()
+            'DATE' => 'DATE', 'DATETIME' => 'DATETIME', 'TIMESTAMP' => 'TIMESTAMP'
         ]);
         define('NULLTYPES', [DB::null() => DB::null(), DB::notNull() => DB::notNull()]);
 
