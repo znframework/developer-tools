@@ -1,3 +1,6 @@
+<div class="hide" id="loadingDiv">
+
+</div>
 <div id="wrapper"><?php
 
 Import::view('top.wizard');
@@ -47,6 +50,15 @@ redirectDeleteData('success'); ?>
 </div>
 
 <script>
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('#loadingDiv').removeClass('hide');
+});
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('#loadingDiv').addClass('hide');
+});
+
 function deleteProcess(link)
 {
     if( confirm('<?php echo LANG['areYouSure']; ?>') )

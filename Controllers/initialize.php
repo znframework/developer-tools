@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation, Session;
+use Folder, Arrays, Form, Config, Route, Validation, Session, DB;
 
 class Initialize extends Controller
 {
@@ -46,6 +46,14 @@ class Initialize extends Controller
         define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
         define('LANGUAGES', ['EN', 'TR']);
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
+        define('DATATYPES',
+         [
+            0 => 'Data Type', 'INT' => 'NUMBER', 'CHAR' => 'CHAR', 'VARCHAR' => 'VARCHAR', 'BLOB' => 'TEXT', 'DECIMAL' => 'DECIMAL',
+            DB::date() => DB::date(), DB::datetime() => DB::datetime(), DB::timestamp() => DB::timestamp()
+        ]);
+        define('NULLTYPES', [DB::null() => DB::null(), DB::notNull() => DB::notNull()]);
+
+        define('DATATYPESCHANGE', ['VAR_STRING' => 'VARCHAR', 'LONG' => 'INT', 'TINY' => 'CHAR', 'BLOB' => 'BLOB', 'NEWDECIMAL' => 'DECIMAL']);
 
         $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
 

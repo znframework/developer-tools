@@ -6,6 +6,7 @@
             $get        = DB::get($table);
             $columns    = $get->columns();
             $columnData = $get->columnData();
+            $columnCount= count($columns);
             $uniqueKey  = 'id';
         ]}
 
@@ -13,13 +14,26 @@
 
             @foreach( $columns as $column):
             {[
-                if( $columnData[$column]->primaryKey != 1 )
+                $columnDetail = $columnData[$column];
+                if( $columnDetail->primaryKey != 1 )
                 {
-                    $dropColumn = '<span onclick="dropColumn(\''.$table.'\', \''.$column.'\', \'/#table-'.$table.'\')" class="pull-right " style="cursor:pointer"><i class="fa fa-trash-o fa-fw"></i></span>';
+                    $dropColumn   = '<span title="Drop Column" onclick="dropColumn(\''.$table.'\', \''.$column.'\', \'/#table-'.$table.'\')" class="pull-right " style="cursor:pointer"><i class="fa fa-trash-o fa-fw"></i></span>';
+                    $modifyColumn = '<span title="Modify Column" data-target="/#modifyColumn'.$table.$column.'" data-toggle="collapse" class="pull-right " style="cursor:pointer"><i class="fa fa-edit fa-fw"></i></span>';
                 }
             ]}
-            <th>@$column: {{$dropColumn ?? NULL}}</th>
+            <th>@$column:<span class="text-muted">({{$columnDetail->type}})</span> {{$dropColumn ?? NULL}} {{$modifyColumn ?? NULL}}
+                <div class="collapse" id="modifyColumn{{$table.$column}}">
+                    @@Form::class('form-control')->id($table.$column.'columnName')->text('columnName', $column):
+                    @@Form::class('form-control')->id($table.$column.'type')->select('type', DATATYPES, DATATYPESCHANGE[$columnDetail->type] ?? $columnDetail->type):
+                    @@Form::class('form-control')->id($table.$column.'maxLength')->placeholder('Length')->text('maxLength', $columnDetail->maxLength):
+                    @@Form::class('form-control')->id($table.$column.'isNull')->select('isNull', NULLTYPES):
+                    @@Form::class('form-control')->id($table.$column.'default')->placeholder('Default')->text('default'):
+                    @@Form::class('form-control btn btn-info')->onclick('modifyColumn(\''.$table.'\', \''.$column.'\', \'/#table-'.$table.'\')')->button('modifyColumnButton', LANG['modifyColumnButton']):
+                </div>
+            </th>
+
             @endforeach:
+
             <th>
                 <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('{{$table}}')" title="Delete Datatable"></i></span>
                 <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#edit-@$table:"  class="fa fa-edit fa-fw" title="Edit Datatable"></i></span>
