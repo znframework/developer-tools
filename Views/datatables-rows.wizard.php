@@ -21,10 +21,10 @@
                     $modifyColumn = '<span title="Modify Column" data-target="/#modifyColumn'.$table.$column.'" data-toggle="collapse" class="pull-right " style="cursor:pointer"><i class="fa fa-edit fa-fw"></i></span>';
                 }
             ]}
-            <th>@$column:<span class="text-muted">({{$columnDetail->type}})</span> {{$dropColumn ?? NULL}} {{$modifyColumn ?? NULL}}
+            <th>@$column:<span class="text-muted">({{$dataTypesChange = DATATYPESCHANGE[$columnDetail->type] ?? $columnDetail->type}})</span> {{$dropColumn ?? NULL}} {{$modifyColumn ?? NULL}}
                 <div class="collapse" id="modifyColumn{{$table.$column}}">
                     @@Form::class('form-control')->id($table.$column.'columnName')->text('columnName', $column):
-                    @@Form::class('form-control')->id($table.$column.'type')->select('type', DATATYPES, DATATYPESCHANGE[$columnDetail->type] ?? $columnDetail->type):
+                    @@Form::class('form-control')->id($table.$column.'type')->select('type', DATATYPES, $dataTypesChange):
                     @@Form::class('form-control')->id($table.$column.'maxLength')->placeholder('Length')->text('maxLength', $columnDetail->maxLength):
                     @@Form::class('form-control')->id($table.$column.'isNull')->select('isNull', NULLTYPES):
                     @@Form::class('form-control')->id($table.$column.'default')->placeholder('Default')->text('default'):

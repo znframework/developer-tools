@@ -48,12 +48,12 @@ class Initialize extends Controller
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
         define('DATATYPES',
          [
-            0 => 'Data Type', 'INT' => 'NUMBER', 'CHAR' => 'CHAR', 'VARCHAR' => 'VARCHAR', 'BLOB' => 'TEXT', 'DECIMAL' => 'DECIMAL',
+            0 => 'Data Type', 'INT' => 'INT', 'BIGINT' => 'BIGINT', 'CHAR' => 'CHAR', 'VARCHAR' => 'VARCHAR', 'BLOB' => 'TEXT', 'ENUM' => 'ENUM', 'DECIMAL' => 'DECIMAL',
             'DATE' => 'DATE', 'DATETIME' => 'DATETIME', 'TIMESTAMP' => 'TIMESTAMP'
         ]);
         define('NULLTYPES', [DB::null() => DB::null(), DB::notNull() => DB::notNull()]);
 
-        define('DATATYPESCHANGE', ['VAR_STRING' => 'VARCHAR', 'LONG' => 'INT', 'TINY' => 'CHAR', 'BLOB' => 'BLOB', 'NEWDECIMAL' => 'DECIMAL']);
+        define('DATATYPESCHANGE', ['STRING' => 'ENUM', 'VAR_STRING' => 'VARCHAR', 'LONG' => 'INT', 'LONGLONG' => 'BIGINT', 'TINY' => 'CHAR', 'BLOB' => 'BLOB', 'NEWDECIMAL' => 'DECIMAL']);
 
         $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
 
