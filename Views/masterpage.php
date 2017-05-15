@@ -1,6 +1,6 @@
-<div class="hide" id="loadingDiv">
 
-</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
 <div id="wrapper"><?php
 
 Import::view('top.wizard');
@@ -49,15 +49,10 @@ redirectDeleteData('success'); ?>
 
 </div>
 
+
+
 <script>
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
+
 
 function deleteProcess(link)
 {

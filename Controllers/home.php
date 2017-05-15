@@ -114,21 +114,8 @@ class Home extends Controller
 
         $link    = Method::post('link');
         $content = Method::post('content');
-        $data    = str_replace
-        (
-            '&nbsp;', ' ', Security::htmlDecode
-            (
-                Security::htmlTagClean
-                (
-                    str_replace
-                    (
-                        '<br>', EOL, Security::htmlDecode($content)
-                    )
-                )
-            )
-        );
 
-        File::write($link, $data);
+        File::write($link, Security::htmlDecode($content));
     }
 
 

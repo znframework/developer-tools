@@ -1,3 +1,5 @@
+<div class="hide" id="loadingDiv"></div>
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
@@ -65,8 +67,8 @@
     </div>
 </div>
 
-<script>hljs.initHighlightingOnLoad();</script>
 <script>
+
 function dropTable(table)
 {
     if( confirm("@@LANG['areYouSure']:") )
@@ -272,4 +274,15 @@ function paginationRow(table, start, id)
     	}
     });
 }
+
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('#loadingDiv').addClass('hide');
+});
+
 </script>
