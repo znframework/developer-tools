@@ -53,16 +53,6 @@
                             <th>@@Form::onclick('alterTable(\'modifyColumn\', \'modify-column\')')->class('form-control btn btn-warning')->button('update', LANG['modifyColumnButton']):</th>
                         </tr>
 
-                        <tr>
-                            <th><pre><code id="dropTableProcess" contenteditable="true">@Import::view('drop-table'):</code></pre></th>
-                            <th><pre><code id="dropColumnProcess" contenteditable="true">@Import::view('drop-column'):</code></pre></th>
-                        </tr>
-                        <tr>
-                            <th>@@Form::onclick('alterTable(\'dropTable\', \'drop-table\')')->class('form-control btn btn-danger')->button('update', LANG['dropButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'dropColumn\', \'drop-column\')')->class('form-control btn btn-danger')->button('update', LANG['dropColumnButton']):</th>
-                        </tr>
-
-
                     </thead>
                 </table>
             </div>
@@ -116,6 +106,24 @@ function dropTable(table)
                     $('/#error-process').removeClass('hide');
                     $('/#error-process-content').text(data.error);
                 }
+        	}
+        });
+    }
+}
+
+function dropColumn(table, column, id)
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        $.ajax
+        ({
+            url/:"@@siteUrl('datatables/dropColumn'):",
+        	data/:{"table":table, "column":column},
+        	method/:"post",
+
+        	success/:function(data)
+        	{
+                $(id).html(data);
         	}
         });
     }

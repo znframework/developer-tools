@@ -151,6 +151,22 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    public function dropColumn()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $table  = Method::post('table');
+        $column = Method::post('column');
+
+        DBForge::dropColumn($table, $column);
+
+        Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
+    }
+
+
     public function updateRow()
     {
         if( ! Http::isAjax() )

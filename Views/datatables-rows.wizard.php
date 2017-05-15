@@ -3,15 +3,22 @@
 
     <thead>
         {[
-            $columns = DB::get($table)->columns();
-            echo Form::id('tableName')->hidden('tableName', $table);
-            echo Form::id('tableNameID')->hidden('tableNameID', '/#table-'.$table);
-            $uniqueKey = 'id';
+            $get        = DB::get($table);
+            $columns    = $get->columns();
+            $columnData = $get->columnData();
+            $uniqueKey  = 'id';
         ]}
 
         <tr>
+
             @foreach( $columns as $column):
-            <th>@$column:</th>
+            {[
+                if( $columnData[$column]->primaryKey != 1 )
+                {
+                    $dropColumn = '<span onclick="dropColumn(\''.$table.'\', \''.$column.'\', \'/#table-'.$table.'\')" class="pull-right " style="cursor:pointer"><i class="fa fa-trash-o fa-fw"></i></span>';
+                }
+            ]}
+            <th>@$column: {{$dropColumn ?? NULL}}</th>
             @endforeach:
             <th>
                 <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('{{$table}}')" title="Delete Datatable"></i></span>
@@ -34,12 +41,6 @@
                 <table class="table table-bordered table-hover table-striped">
 
                     <thead>
-                        {[
-                            $columns = DB::get($table)->columns();
-                            $columnData = DB::get($table)->columnData();
-                        ]}
-
-
                         <tr>
                             @foreach( $columns as $key => $column):
                                 <th>@@Form::disabled()->class('form-control')->text('addColumn', $column):</th>
