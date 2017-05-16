@@ -49,7 +49,7 @@
                     <pre id="b@$key:" class="collapse"><div id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
-                        editor.setTheme("ace/theme/monokai");
+                        editor.setTheme("ace/theme/tomorrow_night_eighties");
                         editor.getSession().setMode("ace/mode/php");
                     </script>
 

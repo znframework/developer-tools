@@ -277,12 +277,12 @@ function paginationRow(table, start, id)
 
 $(document).ajaxSend(function(e, jqXHR)
 {
-  $('#loadingDiv').removeClass('hide');
+  $('/#loadingDiv').removeClass('hide');
 });
 
 $(document).ajaxComplete(function(e, jqXHR)
 {
-  $('#loadingDiv').addClass('hide');
+  $('/#loadingDiv').addClass('hide');
 });
 
 </script>
