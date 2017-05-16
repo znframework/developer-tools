@@ -69,6 +69,51 @@
 
 <script>
 
+var i = 0;
+
+function addColumnInNewTable()
+{
+    i++;
+    $('/#newTableColumnContent').append('<tr>' + $('.newTableColumn').html() + '</tr>');
+}
+
+function dropColumnInNewTable(obj)
+{
+    if( i > 0 )
+    {
+        $(obj).closest('tr').remove();
+        i--;
+    }
+}
+
+function createNewDatatable()
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        $.ajax
+        ({
+            url/:"@@siteUrl('datatables/createNewDatatable'):",
+        	data/:$('/#newDatatableForm').serialize(),
+        	method/:"post",
+            dataType/:"json",
+        	success/:function(data)
+        	{
+                $('/#tables').html(data.result);
+
+                if( data.status )
+                {
+                    $('/#success-process').removeClass('hide');
+                }
+                else
+                {
+                    $('/#error-process').removeClass('hide');
+                    $('/#error-process-content').text(data.error);
+                }
+        	}
+        });
+    }
+}
+
 function dropTable(table)
 {
     if( confirm("@@LANG['areYouSure']:") )

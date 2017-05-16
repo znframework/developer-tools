@@ -109,7 +109,6 @@ class Datatables extends Controller
 
         $i = 0;
 
-
         foreach( $columns as $key => $values )
         {
             foreach( $values as $value )
@@ -173,6 +172,64 @@ class Datatables extends Controller
         DBForge::dropColumn($table, $column);
 
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
+    }
+
+    public function createNewDatatable()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+
+        $table   = Method::post('table');
+        $columns = Arrays::removeFirst(Method::post());
+        $newData = [];
+        $i       = 0;
+
+        foreach( $columns as $key => $values )
+        {
+            foreach( $values as $value )
+            {
+                $newData[$i][$key] = $value;
+
+                $i++;
+            }
+
+            $i = 0;
+        }
+
+        $newColumns = [];
+
+        foreach( $newData as $data )
+        {
+            $maxLength = $data['maxLength'];
+            $type      = $data['type'];
+
+            if( Arrays::valueExists(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+            {
+                $maxLength = 0;
+            }
+
+            $newColumns[$data['columnName']] =
+            [
+                $type.( ! empty($maxLength ) ? '('.$maxLength .')' : '' ),
+                ! empty($data['primaryKey'])      ? DB::primaryKey()    : NULL,
+                ! empty($data['autoIncrement'])   ? DB::autoIncrement() : NULL,
+                $data['isNull'] === DB::notNull() ? DB::notNull()       : '',
+                ! empty($default)                 ? 'DEFAULT '.$default : ''
+            ];
+        }
+
+        $status = DBForge::createTable($table, $newColumns, DB::encoding());
+        $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
+
+        echo Json::encode
+        ([
+            'status' => $status,
+            'result' => $result,
+            'error'  => DBForge::error()
+        ]);
     }
 
     public function modifyColumn()

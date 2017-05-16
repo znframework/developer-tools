@@ -1,4 +1,5 @@
 <div id="newDatatable" class="collapse panel panel-default">
+    {{Form::id('newDatatableForm')->open()}}
     <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['newDatatable']}}</h3>
     </div>
@@ -14,27 +15,26 @@
                         <th>Auto Increment</th>
                         <th>Is NULL</th>
                         <th>Default Value</th>
+                        <th></th>
                     </tr>
                 </thead>
+                <tbody id="newTableColumnContent">
+                    <td colspan="8">{{Form::class('form-control')->placeholder('Table Name')->text('table')}}</td>
+                </tbody>
+                <tbody id="newTableColumnContent">
+                    @Import::view('add-column.wizard'):
+                </tbody>
                 <tbody>
                     <tr>
-                        <td>{{Form::class('form-control')->text('columnName')}}</td>
-                        <td>{{Form::class('form-control')->id('type')->select('type', DATATYPES)}}</td>
-                        <td>{{Form::class('form-control')->text('length')}}</td>
-                        <td>{{Form::class('form-control')->select('primaryKey', [0, 1])}}</td>
-                        <td>{{Form::class('form-control')->select('autoIncrement', [0, 1])}}</td>
-                        <td>{{Form::class('form-control')->id('isNull')->select('isNull', NULLTYPES)}}</td>
-                        <td>{{Form::class('form-control')->text('columnName')}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">{{Form::class('form-control btn btn-info')->button('createNewDatatable', LANG['createButton'])}}</td>
+                        <td colspan="7">{{Form::onclick('createNewDatatable()')->class('form-control btn btn-info')->button('createDatatable', LANG['createButton'])}}</td>
+                        <td colspan="1">{{Form::onclick('addColumnInNewTable()')->class('form-control btn btn-success')->button('addColumn', LANG['addColumnButton'])}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    {{Form::close()}}
 </div>
-
 
 @foreach( $tables as $key => $table ):
 
