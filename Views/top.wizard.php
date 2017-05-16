@@ -20,6 +20,20 @@
                 @endforeach:
             </ul>
         </li>
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-font"></i> @@EDITOR_THEMES[SELECT_EDITOR_THEME]: <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                @foreach( EDITOR_THEMES as $key => $theme ):
+                    @if($theme !== SELECT_EDITOR_THEME):
+                    <li style="width:200px">
+                        <a href="@@siteUrl('home/editorTheme/' . $key):"> @$theme:</a>
+                    </li>
+                    @endif:
+                @endforeach:
+            </ul>
+        </li>
+
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i>  @$upperLang = strtoupper(getLang()): <b class="caret"></b></a>
             <ul class="dropdown-menu">

@@ -1,3 +1,5 @@
+<div class="hide" id="loadingDiv"></div>
+
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">
@@ -14,7 +16,7 @@
                 <h3 class="panel-title">
                     <i class="fa fa-table fa-fw"></i>
 
-                    {{LANG['alterTableProcess']}}
+                    ORM & SQL
 
                     <span><i class="fa fa-angle-down fa-fw"></i></span>
                 </h3>
@@ -25,44 +27,15 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><pre><code id="createTableProcess" contenteditable="true">@Import::view('create-table'):</code></pre></th>
-                            <th><pre><code id="addColumnProcess" contenteditable="true">@Import::view('add-column'):</code></pre></th>
+                            <th><pre><code id="RunORMCode" contenteditable="true"><br>Run ORM<br><br></code></pre></th>
+                            <th><pre><code id="RunSQLCode" contenteditable="true"><br>Run SQL<br><br></code></pre></th>
 
                         </tr>
                         <tr>
-                            <th>@@Form::onclick('alterTable(\'createTable\', \'create-table\')')->class('form-control btn btn-success')->button('update', LANG['createTableButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'addColumn\', \'add-column\')')->class('form-control btn btn-success')->button('update', LANG['addColumnButton']):</th>
+                            <th>@@Form::onclick('alterTable(\'orm\', \'RunORMCode\')')->class('form-control btn btn-info')->button('update', LANG['runORMButton']):</th>
+                            <th>@@Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton']):</th>
 
                         </tr>
-                        <tr>
-                            <th><pre><code id="renameTableProcess" contenteditable="true">@Import::view('rename-table'):</code></pre></th>
-                            <th><pre><code id="renameColumnProcess" contenteditable="true">@Import::view('rename-column'):</code></pre></th>
-
-                        </tr>
-                        <tr>
-                            <th>@@Form::onclick('alterTable(\'renameTable\', \'rename-table\')')->class('form-control btn btn-info')->button('update', LANG['renameButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'renameColumn\', \'rename-column\')')->class('form-control btn btn-info')->button('update', LANG['renameColumnButton']):</th>
-                        </tr>
-                        <tr>
-                            <th><pre><code id="truncateTableProcess" contenteditable="true">@Import::view('truncate-table'):</code></pre></th>
-                            <th><pre><code id="modifyColumnProcess" contenteditable="true">@Import::view('modify-column'):</code></pre></th>
-
-                        </tr>
-                        <tr>
-                            <th>@@Form::onclick('alterTable(\'truncateTable\', \'truncate-table\')')->class('form-control btn btn-warning')->button('update', LANG['truncateButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'modifyColumn\', \'modify-column\')')->class('form-control btn btn-warning')->button('update', LANG['modifyColumnButton']):</th>
-                        </tr>
-
-                        <tr>
-                            <th><pre><code id="dropTableProcess" contenteditable="true">@Import::view('drop-table'):</code></pre></th>
-                            <th><pre><code id="dropColumnProcess" contenteditable="true">@Import::view('drop-column'):</code></pre></th>
-                        </tr>
-                        <tr>
-                            <th>@@Form::onclick('alterTable(\'dropTable\', \'drop-table\')')->class('form-control btn btn-danger')->button('update', LANG['dropButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'dropColumn\', \'drop-column\')')->class('form-control btn btn-danger')->button('update', LANG['dropColumnButton']):</th>
-                        </tr>
-
-
                     </thead>
                 </table>
             </div>
@@ -77,7 +50,10 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['datatables']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['datatables']}}
+                    <span href="/#newDatatable" data-toggle="collapse" style="cursor:pointer" class="pull-right"><i class="fa fa-plus fa-fw" title="Add Datatable"></i></span>
+
+                </h3>
             </div>
             <div class="panel-body">
                 <div id="tables" class="list-group">
@@ -91,8 +67,53 @@
     </div>
 </div>
 
-<script>hljs.initHighlightingOnLoad();</script>
 <script>
+
+var i = 0;
+
+function addColumnInNewTable()
+{
+    i++;
+    $('/#newTableColumnContent').append('<tr>' + $('.newTableColumn').html() + '</tr>');
+}
+
+function dropColumnInNewTable(obj)
+{
+    if( i > 0 )
+    {
+        $(obj).closest('tr').remove();
+        i--;
+    }
+}
+
+function createNewDatatable()
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        $.ajax
+        ({
+            url/:"@@siteUrl('datatables/createNewDatatable'):",
+        	data/:$('/#newDatatableForm').serialize(),
+        	method/:"post",
+            dataType/:"json",
+        	success/:function(data)
+        	{
+                $('/#tables').html(data.result);
+
+                if( data.status )
+                {
+                    $('/#success-process').removeClass('hide');
+                }
+                else
+                {
+                    $('/#error-process').removeClass('hide');
+                    $('/#error-process-content').text(data.error);
+                }
+        	}
+        });
+    }
+}
+
 function dropTable(table)
 {
     if( confirm("@@LANG['areYouSure']:") )
@@ -116,6 +137,53 @@ function dropTable(table)
                     $('/#error-process').removeClass('hide');
                     $('/#error-process-content').text(data.error);
                 }
+        	}
+        });
+    }
+}
+
+function dropColumn(table, column, id)
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        $.ajax
+        ({
+            url/:"@@siteUrl('datatables/dropColumn'):",
+        	data/:{"table":table, "column":column},
+        	method/:"post",
+
+        	success/:function(data)
+        	{
+                $(id).html(data);
+        	}
+        });
+    }
+}
+
+function modifyColumn(table, column, id)
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        var obj = '/#' + table + column;
+        $.ajax
+        ({
+            url/:"@@siteUrl('datatables/modifyColumn'):",
+        	data/:
+            {
+                "table"/:table,
+                "column"/:column,
+                "columnName"/:$(obj + 'columnName').val(),
+                "type"/:$(obj + 'type').val(),
+                "maxLength"/:$(obj + 'maxLength').val(),
+                "isNull"/:$(obj + 'isNull').val(),
+                "default"/:$(obj + 'default').val(),
+            },
+
+        	method/:"post",
+
+        	success/:function(data)
+        	{
+                $(id).html(data);
         	}
         });
     }
@@ -212,12 +280,12 @@ function addRow(table, id)
     });
 }
 
-function alterTable(type, page)
+function alterTable(type, id)
 {
     $.ajax
     ({
         url/:"@@siteUrl('datatables/alterTable'):",
-    	data/:'content=' + $('/#' + type + 'Process').text() + '&page=' + page,
+    	data/:'content=' + $('/#' + id).text() + '&type=' + type,
     	method/:"post",
         dataType/:"json",
     	success/:function(data)
@@ -251,4 +319,15 @@ function paginationRow(table, start, id)
     	}
     });
 }
+
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('/#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('/#loadingDiv').addClass('hide');
+});
+
 </script>

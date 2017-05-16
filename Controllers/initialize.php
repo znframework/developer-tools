@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation, Session;
+use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB;
 
 class Initialize extends Controller
 {
@@ -24,28 +24,86 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        $ips = Config::get('Dashboard', 'ip');
+        define('DASHBOARD_CONFIG', Config::get('Dashboard'));
+        define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
-        if( ! Arrays::valueExists($ips, ipv4()) )
+        if( ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], ipv4()) )
         {
             Route::redirectInvalidRequest();
         }
 
         define('LANG', lang('Dashboard'));
-        define('DASHBOARD_VERSION', 'Alpha - 1.0.0');
 
-        $projects = Folder::files(PROJECTS_DIR, 'dir');
-        $projects = Arrays::deleteElement($projects, CURRENT_PROJECT);
-        $projects = Arrays::combine($projects, $projects);
-        $default  = PROJECTS_CONFIG['directory']['default'];
+        $projects        = Folder::files(PROJECTS_DIR, 'dir');
+        $projects           = Arrays::combine($projects, $projects);
+        $default            = PROJECTS_CONFIG['directory']['default'];
+        $currentProject     = Session::select('project');
+        $currentEditorTheme = Cookie::select('editorTheme');
 
-        $currentProject = Session::select('project');
+        if( ! $currentEditorTheme )
+        {
+            $currentEditorTheme = DASHBOARD_CONFIG['editor']['theme'];
+        }
 
+        define('SELECT_EDITOR_THEME', $currentEditorTheme);
         define('PROJECT_LIST', $projects);
         define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : DEFAULT_PROJECT);
         define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
         define('LANGUAGES', ['EN', 'TR']);
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
+        define('DATATYPES',
+        [
+            0 => 'Data Type', 'INT' => 'INT', 'BIGINT' => 'BIGINT',
+            'CHAR' => 'CHAR', 'VARCHAR' => 'VARCHAR', 'BLOB' => 'TEXT',
+            'ENUM' => 'ENUM', 'DECIMAL' => 'DECIMAL',
+            'DATE' => 'DATE', 'DATETIME' => 'DATETIME', 'TIMESTAMP' => 'TIMESTAMP'
+        ]);
+        define('NULLTYPES', [DB::null() => DB::null(), DB::notNull() => DB::notNull()]);
+        define('DATATYPESCHANGE',
+        [
+            'STRING' => 'ENUM', 'VAR_STRING' => 'VARCHAR', 'LONG' => 'INT',
+            'LONGLONG' => 'BIGINT', 'TINY' => 'CHAR',
+            'BLOB' => 'BLOB', 'NEWDECIMAL' => 'DECIMAL'
+        ]);
+        define('EDITOR_THEMES',
+        [
+            'ambiance'                  => 'Ambiance',
+            'chaos'                     => 'Chaos',
+            'chrome'                    => 'Chrome',
+            'clouds'                    => 'Clouds',
+            'clouds_midnight'           => 'Clouds Midnight',
+            'cobalt'                    => 'Cobalt',
+            'crimson_editor'            => 'Crimson Editor',
+            'dawn'                      => 'Dawn',
+            'dreamweaver'               => 'Dreamweaver',
+            'eclipse'                   => 'Eclipse',
+            'github'                    => 'Github',
+            'gob'                       => 'Gob',
+            'gruvbox'                   => 'Gruvbox',
+            'idle_fingers'              => 'Idle Fingers',
+            'iplastic'                  => 'Iplastic',
+            'katzenmilch'               => 'Katzenmilch',
+            'kr_theme'                  => 'Kr Theme',
+            'kuroir'                    => 'Kuroir',
+            'merbivore'                 => 'Merbivore',
+            'merbivore_soft'            => 'Merbivore Soft',
+            'mono_industrial'           => 'Mono Industrial',
+            'monokai'                   => 'Monokai',
+            'pastel_on_dark'            => 'Pastel On Dark',
+            'solarized_dark'            => 'Solarized Dark',
+            'solarized_light'           => 'Solarized Light',
+            'sqlserver'                 => 'SQLServer',
+            'terminal'                  => 'Terminal',
+            'textmate'                  => 'Textmate',
+            'tomorrow'                  => 'Tomorrow',
+            'tomorrow_night'            => 'Tomorrow Night',
+            'tomorrow_night_blue'       => 'Tomorrow Night Blue',
+            'tomorrow_night_bright'     => 'Tomorrow Night Bright',
+            'tomorrow_night_eighties'   => 'Tomorrow Night Eighties',
+            'twilight'                  => 'Twilight',
+            'vibrant_ink'               => 'Vibrant Ink',
+            'xcode'                     => 'Xcode'
+        ]);
 
         $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
 
@@ -66,6 +124,7 @@ class Initialize extends Controller
         }
 
         $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
+        $menus['views']         = ['icon' => 'file-code-o',    'href' => 'generate/view'];
 
         if( IS_CONTAINER === FALSE )
         {

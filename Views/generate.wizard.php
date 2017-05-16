@@ -32,6 +32,7 @@
                 <div class="list-group">
 
                     @foreach( $files as $key => $file ):
+
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i> @$file:
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
@@ -39,28 +40,34 @@
                         <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
 
-                    <pre id="b@$key:" class="collapse"><code onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event);" contenteditable="true" class="html">@@str_replace("\t", '&nbsp;&nbsp;&nbsp;&nbsp;', Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file)))):</code></pre>
-                    @endforeach:
-                    
-                </div>
+                    <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</div></pre>
+                    <script>
+                        var editor = ace.edit("editor{{$key}}");
+                        editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
+                        editor.getSession().setMode("ace/mode/php");
+                    </script>
 
+                    @endforeach:
+                </div>
             </div>
         </div>
     </div>
 </div>
 @endif:
 
-<script>hljs.initHighlightingOnLoad();</script>
 <script>
 
-function saveProcess(link, e, evt)
+function saveProcess(link, e, evt, key)
 {
+    var editor = ace.edit("editor" + key);
+    var code   = editor.getValue();
+
     $.ajax
     ({
         'url'/:'@@siteUrl('home/saveFile'):',
-        'data'/:'link=' + link + '&content=' + encodeURIComponent($(e).html()),
+        'data'/:'link=' + link + '&content=' + code,
         'type'/:'post',
-        'success'/:function()
+        'success'/:function(data)
         {
 
         }

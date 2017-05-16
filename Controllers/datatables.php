@@ -53,15 +53,24 @@ class Datatables extends Controller
         }
 
         $content = Security::htmlDecode(Method::post('content'));
-        $page    = Method::post('page');
-        $status  = eval('?><?php ' . suffix($content, ';'));
+        $type    = Method::post('type');
+
+        if( $type === 'orm' )
+        {
+            $status  = eval('?><?php ' . suffix($content, ';'));
+        }
+        else
+        {
+            $status = DB::query($content);
+        }
+
         $result  = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
         echo Json::encode
         ([
             'status' => $status,
             'result' => $result,
-            'error'  => DBForge::error()
+            'error'  => DBForge::error() . DB::error() . DBTool::error()
         ]);
     }
 
@@ -99,7 +108,6 @@ class Datatables extends Controller
         $newData = [];
 
         $i = 0;
-
 
         foreach( $columns as $key => $values )
         {
@@ -150,6 +158,127 @@ class Datatables extends Controller
 
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
+
+    public function dropColumn()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $table  = Method::post('table');
+        $column = Method::post('column');
+
+        DBForge::dropColumn($table, $column);
+
+        Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
+    }
+
+    public function createNewDatatable()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+
+        $table   = Method::post('table');
+        $columns = Arrays::removeFirst(Method::post());
+        $newData = [];
+        $i       = 0;
+
+        foreach( $columns as $key => $values )
+        {
+            foreach( $values as $value )
+            {
+                $newData[$i][$key] = $value;
+
+                $i++;
+            }
+
+            $i = 0;
+        }
+
+        $newColumns = [];
+
+        foreach( $newData as $data )
+        {
+            $maxLength = $data['maxLength'];
+            $type      = $data['type'];
+
+            if( Arrays::valueExists(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+            {
+                $maxLength = 0;
+            }
+
+            $newColumns[$data['columnName']] =
+            [
+                $type.( ! empty($maxLength ) ? '('.$maxLength .')' : '' ),
+                ! empty($data['primaryKey'])      ? DB::primaryKey()    : NULL,
+                ! empty($data['autoIncrement'])   ? DB::autoIncrement() : NULL,
+                $data['isNull'] === DB::notNull() ? DB::notNull()       : '',
+                ! empty($default)                 ? 'DEFAULT '.$default : ''
+            ];
+        }
+
+        $status = DBForge::createTable($table, $newColumns, DB::encoding());
+        $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
+
+        echo Json::encode
+        ([
+            'status' => $status,
+            'result' => $result,
+            'error'  => DBForge::error()
+        ]);
+    }
+
+    public function modifyColumn()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $table      = Method::post('table');
+        $column     = Method::post('column');
+        $columnName = Method::post('columnName');
+        $type       = trim(Method::post('type'));
+        $maxLength  = Method::post('maxLength');
+        $isNull     = Method::post('isNull');
+        $default    = Method::post('defaul');
+
+        if( Arrays::valueExists(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+        {
+            $maxLength = 0;
+        }
+
+        $columns =
+        [
+            $type.( ! empty($maxLength) ? '('.$maxLength.')' : '' ),
+            $isNull === DB::notNull() ? DB::notNull()  : '',
+            ! empty($default) ? 'DEFAULT '.$default    : ''
+        ];
+
+        if( $column !== 'add-column')
+        {
+            if( $column !== $columnName )
+            {
+                DBForge::renameColumn($table, [$column . ' ' . $columnName => $columns]);
+            }
+            else
+            {
+                DBForge::modifyColumn($table, [$column => $columns]);
+            }
+        }
+        else
+        {
+
+            DBForge::addColumn($table, [$columnName => $columns]);
+        }
+
+        Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
+    }
+
 
     public function updateRow()
     {

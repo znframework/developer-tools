@@ -1,3 +1,6 @@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
 <div id="wrapper"><?php
 
 Import::view('top.wizard');
@@ -46,7 +49,11 @@ redirectDeleteData('success'); ?>
 
 </div>
 
+
+
 <script>
+
+
 function deleteProcess(link)
 {
     if( confirm('<?php echo LANG['areYouSure']; ?>') )

@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Folder, Session, Json, Uri, Security, Http, BS;
+use Restful, Method, Validation, File, Folder, Session, Cookie, Json, Uri, Security, Http, BS;
 
 class Home extends Controller
 {
@@ -114,21 +114,8 @@ class Home extends Controller
 
         $link    = Method::post('link');
         $content = Method::post('content');
-        $data    = str_replace
-        (
-            '&nbsp;', ' ', Security::htmlDecode
-            (
-                Security::htmlTagClean
-                (
-                    str_replace
-                    (
-                        '<br>', EOL, Security::htmlDecode($content)
-                    )
-                )
-            )
-        );
 
-        File::write($link, $data);
+        File::write($link, Security::htmlDecode($content));
     }
 
 
@@ -223,6 +210,19 @@ class Home extends Controller
     public function project($project = NULL)
     {
         Session::insert('project', $project);
+        redirect((string) prevUrl());
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Lang
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function editorTheme($theme = NULL)
+    {
+        Cookie::insert('editorTheme', $theme);
         redirect((string) prevUrl());
     }
 }
