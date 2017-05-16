@@ -13,6 +13,9 @@
 
     'success' => 'İşlem Başarılı.',
     'controllerName' => 'Kontrolcü Adı',
+    'viewName' => 'Görünüm Adı',
+    'template' => 'Şablon',
+    'type' => 'Tür',
     'commandName' => 'Komut Adı',
     'configName' => 'Yapılandırma Adı',
     'routeName' => 'Rota Adı',

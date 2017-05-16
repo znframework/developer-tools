@@ -268,6 +268,75 @@ class Generate extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------
+    // Model
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function view(String $params = NULL)
+    {
+        $templates = Folder::files(TEMPLATES_DIR, 'php');
+        $templates = Arrays::combine($templates, $templates);
+        $templates['none'] = 'none';
+
+
+        define('VIEW_TEMPLATES', $templates);
+
+        if( Method::post('generate') )
+        {
+            Validation::rules('view', ['required', 'alpha'], LANG['viewName']);
+
+            if( ! $error = Validation::error('string') )
+            {
+                $viewName = Method::post('view');
+
+                if( Method::post('type') === 'Wizard' )
+                {
+                    $viewName = suffix($viewName, '.wizard');
+                }
+
+                $viewPath = SELECT_PROJECT_DIR . 'Views/' . suffix($viewName, '.php');
+                $template = Method::post('template');
+
+
+
+                if( $template === 'none' )
+                {
+                    $content = '';
+                }
+                else
+                {
+                    $content = File::read(TEMPLATES_DIR.$template);
+                }
+
+                File::write($viewPath, $content);
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $path = 'Views/';
+
+        $this->masterpage->page  = 'generate';
+        $this->masterpage->pdata['content'] = 'view';
+        $this->masterpage->pdata['deletePath'] = $path;
+
+        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Folder::exists($modelFullPath) )
+        {
+            $files = Folder::files($modelFullPath, 'php');
+        }
+
+        $this->masterpage->pdata['files'] = $files ?? [];
+    }
+
+    //--------------------------------------------------------------------------------------------------------
     // Migration
     //--------------------------------------------------------------------------------------------------------
     //

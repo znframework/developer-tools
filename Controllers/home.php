@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Folder, Session, Json, Uri, Security, Http, BS;
+use Restful, Method, Validation, File, Folder, Session, Cookie, Json, Uri, Security, Http, BS;
 
 class Home extends Controller
 {
@@ -210,6 +210,19 @@ class Home extends Controller
     public function project($project = NULL)
     {
         Session::insert('project', $project);
+        redirect((string) prevUrl());
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Lang
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function editorTheme($theme = NULL)
+    {
+        Cookie::insert('editorTheme', $theme);
         redirect((string) prevUrl());
     }
 }

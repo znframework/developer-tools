@@ -32,13 +32,7 @@
                 <div class="list-group">
 
                     @foreach( $files as $key => $file ):
-                    <style>
-                    /#editor{{$key}} {
 
-                            width/:100%;
-                            height/:800px;
-                        }
-                    </style>
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i> @$file:
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
@@ -46,17 +40,15 @@
                         <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
 
-                    <pre id="b@$key:" class="collapse"><div id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</div></pre>
+                    <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
-                        editor.setTheme("ace/theme/tomorrow_night_eighties");
+                        editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
                         editor.getSession().setMode("ace/mode/php");
                     </script>
 
                     @endforeach:
-
                 </div>
-
             </div>
         </div>
     </div>
