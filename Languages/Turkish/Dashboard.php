@@ -68,6 +68,7 @@
     'systemLogs' => 'Sistem Logları',
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
+    'languages' => 'Diller',
     'migrations' => 'Göçler',
     'views' => 'Görünümler',
     'commands' => 'Komutlar',

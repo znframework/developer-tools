@@ -69,6 +69,7 @@
     'systemLogs' => 'System Logs',
     'models' => 'Models',
     'controllers' => 'Controllers',
+    'languages' => 'Languages',
     'views' => 'Views',
     'migrations' => 'Migrations',
     'commands' => 'Commands',

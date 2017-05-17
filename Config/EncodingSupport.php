@@ -84,8 +84,8 @@
             //----------------------------------------------------------------------------------------------
             'styleElement' =>
             [
-                '#ML_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
-                '#ML_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
+                //'#ML_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
+                //'#ML_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
             ],
 
             //------------------------------------------------------------------------------------------
@@ -98,13 +98,12 @@
             //------------------------------------------------------------------------------------------
             'attributes'    =>
             [
-                'table'         => ['width' => '100%', 'cellspacing' => 0, 'cellpadding' => 10, 'style' => 'border:solid 1px #ddd; font-family:Arial; color:#888; font-size:14px;'],
-                'add'           => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-                'update'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-                'delete'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-                'clear'         => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-                'textbox'       => ['style' => 'height:30px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px']
-
+                'table'         => ['class' => 'table table-bordered table-hover table-striped'],
+                'add'           => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+                'update'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+                'delete'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+                'clear'         => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+                'textbox'       => ['style' => 'height:30px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px']
             ],
 
             //------------------------------------------------------------------------------------------
