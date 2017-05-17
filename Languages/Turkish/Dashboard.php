@@ -69,6 +69,7 @@
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
     'migrations' => 'Göçler',
+    'views' => 'Görünümler',
     'commands' => 'Komutlar',
     'configs' => 'Yapılandırmalar',
     'routes' => 'Rotalar',
