@@ -16,20 +16,6 @@ use Validation, Folder, File, Config;
 
 class Generate extends Controller
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->masterpage->plugin['name'] = array_merge
-        (
-            Config::get('Masterpage', 'plugin')['name'],
-            [
-                'Dashboard/highlight/styles/agate.css',
-                'Dashboard/highlight/highlight.pack.js'
-            ]
-        );
-    }
-
     //--------------------------------------------------------------------------------------------------------
     // Controller
     //--------------------------------------------------------------------------------------------------------
