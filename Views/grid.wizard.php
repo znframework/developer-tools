@@ -43,8 +43,7 @@
             <div id="joinsCollapse" class="collapse panel-body">
 
                 <div id="joinMainColumn" class="form-group col-lg-2">
-
-                    @@Form::class('form-control')->id('joinMainColumn')->select('column', $columns):
+                    @@Form::class('form-control')->id('column')->select('column', $columns, $column):
                 </div>
 
                 @for( $i = 1; $i <= 10; $i++ ):
@@ -61,9 +60,8 @@
 
         </div>
     </div>
-
 </div>
-
+@@Form::close():
 
 <div class="row">
     <div class="col-lg-12">
