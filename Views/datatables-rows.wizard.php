@@ -46,7 +46,7 @@
     <tbody>
 
         {[
-            $get = DB::limit($start ?? NULL, 10)->get($table);
+            $get = DB::limit($start ?? NULL, DASHBOARD_CONFIG['limits']['datatable'])->get($table);
             $result = $get->resultArray();
         ]}
 

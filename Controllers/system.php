@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form;
 
 class System extends Controller
 {
@@ -66,9 +66,110 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function language(String $params = NULL)
     {
-        $this->masterpage->pdata['table'] = \MLS::limit(20)->create();
+        $this->masterpage->pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
 
         $this->masterpage->page  = 'language';
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Converter
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function grid(String $params = NULL)
+    {
+        $tables = DBTool::listTables();
+
+        $tables['none'] = 'none';
+
+        $sessionSelectTable = Session::select('gridSelectTable');
+        $joinColumns = Session::select('gridJoinColumns');
+        $columns = Session::select('gridColumns');
+        $selectTable = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
+
+        $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
+
+        if( Method::post('show') )
+        {
+            Session::delete('gridJoinColumns');
+            Session::delete('gridColumns');
+
+            $joinColumns    = [];
+            $columns        = [];
+            $selectTable    = Method::post('table');
+            $postColumn     = Method::post('column');
+            $joinMainColumn = Method::post('joinMainColumn');
+            $joinMainTable  = Method::post('joinMainTable');
+            $joinTypes      = Method::post('joinTypes');
+
+            Session::insert('gridSelectTable', $selectTable);
+
+            if( ! empty($joinMainColumn) )
+            {
+                if( count($joinMainColumn) > count($joinTypes) )
+                {
+                    $joinMainColumn = Arrays::removeFirst($joinMainColumn);
+                }
+
+                foreach( $joinMainColumn as $key => $column )
+                {
+                    if( $joinMainTable[$key] !== 'none' && ! empty($column) )
+                    {
+                        $columns = array_merge($columns, DB::get($joinMainTable[$key])->columns());
+
+                        $joinColumns[] = [$joinMainTable[$key].'.'.$column, $selectTable . '.' . $postColumn, $joinTypes[$key]];
+                    }
+                }
+            }
+        }
+
+        if( empty($columns) )
+        {
+            $columns = DB::get($selectTable)->columns();
+        }
+
+        \DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
+
+        if( ! empty($joinColumns) )
+        {
+            Session::insert('gridJoinColumns', $joinColumns);
+            Session::insert('gridColumns', $columns);
+
+            \DBGrid::joins(...$joinColumns);
+        }
+
+        \DBGrid::search(...$columns);
+
+        $this->masterpage->pdata['table'] = \DBGrid::create($selectTable);
+
+        $this->masterpage->pdata['selectTable'] = $selectTable;
+        $this->masterpage->pdata['columns'] = Arrays::combine($columns, $columns);
+        $this->masterpage->page  = 'grid';
+    }
+
+    public function gridSelectJoinTableAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $table = Method::post('table');
+        $type  = Method::post('type');
+
+        if( $table === 'none' )
+        {
+            return false;
+        }
+
+        $columns = DB::get($table)->columns();
+
+        $str  = Form::class('form-control')->select('joinMainColumn[]', Arrays::combine($columns, $columns));
+        $str .= $type === 'sub' ? Form::class('form-control')->select('joinTypes[]', ['left' => 'Left', 'right' => 'Right', 'inner' => 'Inner']) : NULL;
+
+        echo $str;
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -90,6 +191,7 @@ class System extends Controller
             {
                 foreach( $return as $file => $content )
                 {
+                    Folder::create(pathInfos($file, 'dirname'));
                     File::write($file, $content);
                 }
 

@@ -92,5 +92,12 @@
     'databaseBackup' => 'Get a database backup?',
     'terminal' => 'Terminal',
     'backupLocation' => 'Backup Location',
-    'datatables' => 'Datatables'
+    'datatables' => 'Datatables',
+    'grids' => 'Grids',
+    'parameters' => 'Parameters',
+    'selectTable' => 'Select Table',
+    'showButton' => 'SHOW',
+    'joins' => 'Joins',
+    'table' => 'Table',
+    'column' => 'Column'
 ];

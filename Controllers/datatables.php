@@ -24,15 +24,6 @@ class Datatables extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        $this->masterpage->plugin['name'] = array_merge
-        (
-            Config::get('Masterpage', 'plugin')['name'],
-            [
-                'Dashboard/highlight/styles/agate.css',
-                'Dashboard/highlight/highlight.pack.js'
-            ]
-        );
-
         $this->masterpage->pdata['tables'] = DBTool::listTables();
 
         $this->masterpage->page = 'datatables';

@@ -90,5 +90,12 @@
     'databaseBackup' => 'Veritabanı yedeği alınsın mı?',
     'terminal' => 'Terminal',
     'backupLocation' => 'Yedeğin Konumu',
-    'datatables' => 'Veri Tabloları'
+    'datatables' => 'Veri Tabloları',
+    'grids' => 'Izgaralar',
+    'parameters' => 'Parametreler',
+    'selectTable' => 'Tablo Seç',
+    'showButton' => 'GÖSTER',
+    'joins' => 'Birleştirmeler',
+    'table' => 'Tablo',
+    'column' => 'Kolon'
 ];

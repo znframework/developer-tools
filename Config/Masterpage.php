@@ -124,7 +124,8 @@
             'Dashboard/js/bootstrap.min.js',
             'Dashboard/js/plugins/morris/raphael.min.js',
             'Dashboard/js/plugins/morris/morris.min.js',
-            'Dashboard/js/plugins/morris/morris-data.js'
+            'Dashboard/js/plugins/morris/morris-data.js',
+            'Dashboard/ace/ace.js'
         ],
         'recursive' => false
     ],

@@ -118,7 +118,7 @@
                 'style' =>
                 [
                     'links' => 'color:#0085B2;
-                                width:20px; height:20px;
+                                width:30px; height:30px;
                                 text-align:center;
                                 padding-top:4px;
                                 display:inline-block;
