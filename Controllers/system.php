@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid;
 
 class System extends Controller
 {
@@ -80,14 +80,13 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function grid(String $params = NULL)
     {
-        $tables = DBTool::listTables();
-
-        $tables['none'] = 'none';
-
+        $tables             = DBTool::listTables();
+        $tables['none']     = 'none';
         $sessionSelectTable = Session::select('gridSelectTable');
-        $joinColumns = Session::select('gridJoinColumns');
-        $columns = Session::select('gridColumns');
-        $selectTable = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
+        $joinColumns        = Session::select('gridJoinColumns');
+        $columns            = Session::select('gridColumns');
+        $postColumn         = Session::select('gridColumn');
+        $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
 
         $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
 
@@ -95,6 +94,7 @@ class System extends Controller
         {
             Session::delete('gridJoinColumns');
             Session::delete('gridColumns');
+            Session::delete('gridColumn');
 
             $joinColumns    = [];
             $columns        = [];
@@ -117,36 +117,33 @@ class System extends Controller
                 {
                     if( $joinMainTable[$key] !== 'none' && ! empty($column) )
                     {
-                        $columns = array_merge($columns, DB::get($joinMainTable[$key])->columns());
-
+                        $columns       = array_merge($columns, DB::get($joinMainTable[$key])->columns());
                         $joinColumns[] = [$joinMainTable[$key].'.'.$column, $selectTable . '.' . $postColumn, $joinTypes[$key]];
                     }
                 }
             }
         }
 
-        if( empty($columns) )
-        {
-            $columns = DB::get($selectTable)->columns();
-        }
+        $columns = DB::get($selectTable)->columns();
 
-        \DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
+        DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
 
         if( ! empty($joinColumns) )
         {
             Session::insert('gridJoinColumns', $joinColumns);
-            Session::insert('gridColumns', $columns);
+            Session::insert('gridColumns'    , $columns);
+            Session::insert('gridColumn'     , $postColumn);
 
-            \DBGrid::joins(...$joinColumns);
+            DBGrid::joins(...$joinColumns);
         }
 
-        \DBGrid::search(...$columns);
+        DBGrid::search(...$columns);
 
-        $this->masterpage->pdata['table'] = \DBGrid::create($selectTable);
-
+        $this->masterpage->pdata['table']       = DBGrid::create($selectTable);
         $this->masterpage->pdata['selectTable'] = $selectTable;
-        $this->masterpage->pdata['columns'] = Arrays::combine($columns, $columns);
-        $this->masterpage->page  = 'grid';
+        $this->masterpage->pdata['column']      = $postColumn;
+        $this->masterpage->pdata['columns']     = Arrays::combine($columns, $columns);
+        $this->masterpage->page                 = 'grid';
     }
 
     public function gridSelectJoinTableAjax()
@@ -166,7 +163,7 @@ class System extends Controller
 
         $columns = DB::get($table)->columns();
 
-        $str  = Form::class('form-control')->select('joinMainColumn[]', Arrays::combine($columns, $columns));
+        $str  = Form::class('form-control')->select($type === 'sub' ? 'joinMainColumn[]' : 'column', Arrays::combine($columns, $columns));
         $str .= $type === 'sub' ? Form::class('form-control')->select('joinTypes[]', ['left' => 'Left', 'right' => 'Right', 'inner' => 'Inner']) : NULL;
 
         echo $str;
@@ -182,7 +179,6 @@ class System extends Controller
     public function info(String $params = NULL)
     {
         $return = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
-
         $return = Separator::decodeArray($return);
 
         if( Method::post('upgrade') )
@@ -204,8 +200,7 @@ class System extends Controller
         }
 
         $this->masterpage->pdata['upgrades'] = Arrays::keys($return);
-
-        $this->masterpage->page  = 'info';
+        $this->masterpage->page              = 'info';
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -218,10 +213,8 @@ class System extends Controller
     public function log(String $params = NULL)
     {
         $project = SELECT_PROJECT;
-
-        $path = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
-
-        $files = Folder::files($path, 'log');
+        $path    = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
+        $files   = Folder::files($path, 'log');
 
         if( empty($files) )
         {
@@ -290,8 +283,7 @@ class System extends Controller
             return false;
         }
 
-        $command = Method::post('command');
-
+        $command          = Method::post('command');
         $previousCommands = NULL;
 
         if( $command === 'clear' )
@@ -356,8 +348,7 @@ class System extends Controller
     public function backup(String $params = NULL)
     {
         $project = SELECT_PROJECT;
-
-        $path = STORAGE_DIR . 'ProjectBackup' . DS;
+        $path    = STORAGE_DIR . 'ProjectBackup' . DS;
 
         if( ! Folder::exists($path) )
         {
@@ -408,9 +399,7 @@ class System extends Controller
         if( preg_match('/' . $query . '/i', $replace))
         {
             $replace = suffix($replace, ';');
-
-            $syntax = '/'.$query.'(\w+)/si';
-
+            $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::createDatabase(\'$1\')', $replace);
         }
     }
@@ -429,9 +418,7 @@ class System extends Controller
         if( preg_match('/' . $query . '/i', $replace))
         {
             $replace = suffix($replace, ';');
-
-            $syntax = '/'.$query.'(\w+)/si';
-
+            $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::dropDatabase(\'$1\')', $replace);
         }
     }
@@ -450,9 +437,7 @@ class System extends Controller
         if( preg_match('/' . $query . '/i', $replace))
         {
             $replace = suffix($replace, ';');
-
-            $syntax = '/'.$query.'(\w+)/si';
-
+            $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::dropTable(\'$1\')', $replace);
         }
     }
@@ -471,13 +456,11 @@ class System extends Controller
         if( preg_match('/' . $query . '/i', $replace))
         {
             $replace = suffix($replace, ';');
-
-            $syntax = '/'.$query.'(.*?)\s*\((.*)\)/si';
+            $syntax  = '/'.$query.'(.*?)\s*\((.*)\)/si';
 
             preg_match($syntax, $replace, $match);
 
             $columns = explode(',', $match[2] ?? NULL);
-
             $options = '[';
 
             foreach( $columns as $val )
@@ -509,11 +492,10 @@ class System extends Controller
 
         if( preg_match('/' . $update . '/i', $replace))
         {
-            $replaceEx = explode('where', $replace);
+            $replaceEx   = explode('where', $replace);
             $whereClause = $replaceEx[1] ?? NULL;
-            $replace   = suffix($replaceEx[0], ';');
-
-            $syntax = '/'.$update.'(.*?)\s+set\s+(.*?)(\s+|\;)$/si';
+            $replace     = suffix($replaceEx[0], ';');
+            $syntax      = '/'.$update.'(.*?)\s+set\s+(.*?)(\s+|\;)$/si';
 
             preg_match($syntax, $replace, $match);
 
@@ -523,7 +505,6 @@ class System extends Controller
             }
 
             $columns = explode(',', $match[2] ?? NULL);
-
             $options = '[';
 
             foreach( $columns as $val )
@@ -533,9 +514,9 @@ class System extends Controller
                 $options .= presuffix(trim($valEx[0]), '\'') . ' => ' . trim($valEx[1]) . ', ';
             }
 
-            $options = rtrim($options, ', ');
+            $options  = rtrim($options, ', ');
             $options .= ']';
-            $replace = preg_replace($syntax, 'DB::' . trim($where) . 'update(\'$1\', '.$options.')', $replace);
+            $replace  = preg_replace($syntax, 'DB::' . trim($where) . 'update(\'$1\', '.$options.')', $replace);
         }
     }
 
@@ -548,19 +529,17 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     protected function _cinsert(&$replace)
     {
-        $insert  = '^insert\s+';
+        $insert = '^insert\s+';
 
         if( preg_match('/' . $insert . '/i', $replace))
         {
             $replace = suffix($replace, ';');
-
-            $syntax = '/'.$insert.'into\s+(.*?)\s*\((.*?)\)\s+values\s*\((.*?)\)/si';
+            $syntax  = '/'.$insert.'into\s+(.*?)\s*\((.*?)\)\s+values\s*\((.*?)\)/si';
 
             preg_match($syntax, $replace, $match);
 
             $columns = explode(',', $match[2] ?? NULL);
             $values  = explode(',', $match[3] ?? NULL);
-
             $options = '[';
 
             foreach( $columns as $key => $val )
@@ -568,9 +547,9 @@ class System extends Controller
                 $options .= presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
             }
 
-            $options = rtrim($options, ', ');
+            $options  = rtrim($options, ', ');
             $options .= ']';
-            $replace = preg_replace($syntax, 'DB::insert(\'$1\', '.$options.')', $replace);
+            $replace  = preg_replace($syntax, 'DB::insert(\'$1\', '.$options.')', $replace);
         }
     }
 
@@ -662,11 +641,8 @@ class System extends Controller
     {
         preg_match($getRegex, $replace, $match);
 
-        $get = $match[0] ?? NULL;
-
+        $get     = $match[0] ?? NULL;
         $replace = $class . preg_replace($getRegex, '', $replace) . $get;
-
         $replace = str_replace('DB->', 'DB::', $replace);
     }
-
 }

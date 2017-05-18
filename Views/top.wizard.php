@@ -46,6 +46,19 @@
                 @endforeach:
             </ul>
         </li>
+
+        @if( Session::select('isLogin') ):
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i>  @@Session::select('username'): <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+
+                    <li>
+                        <a href="@@siteUrl('login/out'):"> Logout</a>
+                    </li>
+
+            </ul>
+        </li>
+        @endif:
     </ul>
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
