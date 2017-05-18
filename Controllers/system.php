@@ -86,6 +86,7 @@ class System extends Controller
 
         $sessionSelectTable = Session::select('gridSelectTable');
         $joinColumns = Session::select('gridJoinColumns');
+        $columns = Session::select('gridColumns');
         $selectTable = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
 
         $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
@@ -93,8 +94,10 @@ class System extends Controller
         if( Method::post('show') )
         {
             Session::delete('gridJoinColumns');
+            Session::delete('gridColumns');
 
             $joinColumns    = [];
+            $columns        = [];
             $selectTable    = Method::post('table');
             $postColumn     = Method::post('column');
             $joinMainColumn = Method::post('joinMainColumn');
@@ -114,19 +117,26 @@ class System extends Controller
                 {
                     if( $joinMainTable[$key] !== 'none' && ! empty($column) )
                     {
+                        $columns = array_merge($columns, DB::get($joinMainTable[$key])->columns());
+
                         $joinColumns[] = [$joinMainTable[$key].'.'.$column, $selectTable . '.' . $postColumn, $joinTypes[$key]];
                     }
                 }
             }
         }
 
-        $columns = DB::get($selectTable)->columns();
+        if( empty($columns) )
+        {
+            $columns = DB::get($selectTable)->columns();
+        }
 
         \DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
 
         if( ! empty($joinColumns) )
         {
             Session::insert('gridJoinColumns', $joinColumns);
+            Session::insert('gridColumns', $columns);
+
             \DBGrid::joins(...$joinColumns);
         }
 
