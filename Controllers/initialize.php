@@ -27,9 +27,9 @@ class Initialize extends Controller
         define('DASHBOARD_CONFIG', Config::get('Dashboard'));
         define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
-        if( ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], ipv4()) )
+        if( strtolower(CURRENT_CONTROLLER) !== 'login' && ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], ipv4()) && ! Session::select('isLogin') )
         {
-            Route::redirectInvalidRequest();
+            redirect('login');
         }
 
         define('LANG', lang('Dashboard'));
