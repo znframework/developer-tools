@@ -65,7 +65,7 @@ function saveProcess(link, e, evt, key)
     $.ajax
     ({
         'url'/:'@@siteUrl('home/saveFile'):',
-        'data'/:'link=' + link + '&content=' + code,
+        'data'/:'link=' + link + '&content=' + encodeURIComponent(code),
         'type'/:'post',
         'success'/:function(data)
         {

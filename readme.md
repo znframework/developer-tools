@@ -13,7 +13,7 @@
 ## Screenshot
 
 
-![Dashboard](https://cloud.teslaerp.com/tesla/Application/Resources/Uploads/znframework/gallery/zn/1494259501_dashboard.png)
+![Developer Tools](https://cloud.teslaerp.com/tesla/Application/Resources/Uploads/znframework/gallery/zn/1495141581_developer-tools.png)
 
 ## What is Dashboard?
 
