@@ -1,4 +1,3 @@
-
 @@Form::open():
 
 <div class="row">
@@ -34,13 +33,13 @@
                     @foreach( $files as $key => $file ):
 
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
-                        <i class="fa fa-fw fa-file-text-o"></i> @$file:
+                        <i class="fa fa-fw fa-file-text-o"></i> {{$relativePath = absoluteRelativePath($file)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
-                        <span class="pull-right"><i onclick="deleteProcess('home/deleteFile/{{SELECT_PROJECT . '/' . $deletePath . $file}}');" class="fa fa-trash-o fa-fw"></i></span>
+                        <span class="pull-right"><i onclick="deleteProcess('generate/deleteFile/{{$relativePath}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
 
-                    <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($fullPath . $file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($fullPath . $file))):</div></pre>
+                    <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
                         editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
