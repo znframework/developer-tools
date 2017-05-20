@@ -215,11 +215,16 @@ function deleteJoin()
             if( data )
             {
                 document.documentElement.innerHTML = data;
+<<<<<<< HEAD
             }
+=======
+            }  
+>>>>>>> origin/master
     	}
     });
 }
 
+<<<<<<< HEAD
 $(document).ajaxSend(function(e, jqXHR)
 {
   $('/#loadingDiv').removeClass('hide');
@@ -230,4 +235,6 @@ $(document).ajaxComplete(function(e, jqXHR)
   $('/#loadingDiv').addClass('hide');
 });
 
+=======
+>>>>>>> origin/master
 </script>
