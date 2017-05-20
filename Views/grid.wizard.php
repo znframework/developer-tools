@@ -18,13 +18,13 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['parameters']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['table']}}</h3>
             </div>
             <div class="panel-body">
 
                 <div class="form-group">
                     <label>{{LANG['selectTable']}}</label>
-                    @@Form::class('form-control')->onchange('getColumns(this, \'/#joinMainColumn\', \'main\')')->select('table', $tables, $selectTable):
+                    @@Form::class('form-control')->select('table', $tables, $selectTable):
                 </div>
             </div>
         </div>
@@ -37,30 +37,39 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div style="cursor:pointer" data-target="/#joinsCollapse" data-toggle="collapse" class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['joins']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-random fa-fw"></i> {{LANG['joins']}}</h3>
             </div>
 
             <div id="joinsCollapse" class="collapse panel-body">
-
-                <div id="joinMainColumn" class="form-group col-lg-2">
-                    @@Form::class('form-control')->id('column')->select('column', $columns, $column):
-                </div>
-
-                @for( $i = 1; $i <= 10; $i++ ):
-                <div class="form-group col-lg-1">
-
-                    @@Form::class(($i > 1 ? 'hide ' /: '').'form-control')->onchange('getColumns(this, \'/#joinMainColumn'.$i.'\', \'sub\', \'/#joinMainTable'.($i+1).'\')')->id('joinMainTable' . $i)->select('joinMainTable[]', $tables, 'none'):
-                    <div id="joinMainColumn{{$i}}">
-
-                    </div>
-                </div>
-                @endfor:
-
+                @if( ! empty($joinCollapse) ):
+                    {{$joinCollapse}}
+                @else:
+                    @Import::view('add-join-column.wizard', ['tables' => $tables, 'selectTable' => $selectTable]):
+                @endif:
             </div>
 
         </div>
     </div>
 </div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div style="cursor:pointer" data-target="/#columnsCollapse" data-toggle="collapse" class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-eye fa-fw"></i> {{LANG['viewColumns']}}</h3>
+            </div>
+
+            <div id="columnsCollapse" class="collapse panel-body">
+                <div class="form-group">
+                    @@Form::class('form-control')->placeholder('table.column as Columns, table2.column2 as Columns2')->text('viewColumns', $viewColumns):
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @@Form::close():
 
 <div class="row">
@@ -84,22 +93,39 @@
 
 <script>
 
-function getColumns(obj, id, type, next)
+function addJoinColumn(id)
 {
-    $(next).removeClass('hide').attr('style', 'display/:contents');
+    $(id).removeClass('hide');
+}
+
+function removeJoinColumn(id, index)
+{
+    $(id).addClass('hide');
+    $('#' + 'joinTable' + index).val('none');
+    $('#' + 'joinColumn' + index).val('none');
+    $('#' + 'joinOtherTable' + index).val('none');
+    $('#' + 'joinOtherColumn' + index).val('none');
+}
+
+function changeSelected(obj)
+{
+    var optionValue = $(obj).val();
+
+    $(obj).val(optionValue).find("option").removeAttr('selected')
+    $(obj).val(optionValue).find("option[value=" + optionValue +"]").attr('selected', true);
+}
+
+function getColumns(obj, id, type)
+{
+    changeSelected(obj);
 
     $.ajax
     ({
-        url/:"@@siteUrl('system/gridSelectJoinTableAjax'):",
+        url/:"@@siteUrl('system/gridGetColumnsAjax'):",
     	data/:'table=' + $(obj).val() + '&type=' + type,
     	method/:"post",
     	success/:function(data)
     	{
-            if( ! data )
-            {
-                $(next).attr('style', 'display/:none;');
-            }
-
             $(id).html(data);
     	}
     });
@@ -110,7 +136,7 @@ function submitPage(e)
     $.ajax
     ({
         url/:"@@siteUrl('system/grid'):",
-    	data/:$('/#gridForm').serialize(),
+    	data/:$('/#gridForm').serialize() + '&joinsCollapse=' + encodeURIComponent($('/#joinsCollapse').html()),
         method/:"post",
     	success/:function(data)
     	{

@@ -97,5 +97,9 @@
     'showButton' => 'GÖSTER',
     'joins' => 'Birleştirmeler',
     'table' => 'Tablo',
-    'column' => 'Kolon'
+    'column' => 'Kolon',
+    'columns' => 'Kolonlar',
+    'viewColumns' => 'Gösterilecek Kolonlar',
+    'removeButton' => 'KALDIR',
+    'processColumn' => 'İşlem Kolonu'
 ];
