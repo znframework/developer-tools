@@ -158,11 +158,13 @@ class System extends Controller
             DBGrid::columns($viewColumns);
         }
 
+        $saves = Folder::files( FILES_DIR . 'Grids');
         $this->masterpage->pdata['table']        = DBGrid::create($selectTable);
         $this->masterpage->pdata['selectTable']  = $selectTable;
         $this->masterpage->pdata['viewColumns']  = $viewColumns;
         $this->masterpage->pdata['columns']      = Arrays::combine($columns, $columns);
         $this->masterpage->pdata['joinCollapse'] = $joinCollapse;
+        $this->masterpage->pdata['saves']        = Arrays::combine($saves, $saves);
         $this->masterpage->page                  = 'grid';
     }
 
@@ -186,6 +188,62 @@ class System extends Controller
         $str .= Form::class('form-control')->onchange('changeSelected(this)')->select($type === 'join1' ? 'joinColumns[]' : 'joinOtherColumns[]', Arrays::combine($columns, $columns));
 
         echo $str;
+    }
+
+    public function gridSaveAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $content  = Method::post('content');
+        $saveName = Method::post('saveName');
+
+        if( empty($saveName) )
+        {
+            $saveName = 'unnamed';
+        }
+
+        File::write(FILES_DIR . 'Grids/' . $saveName, Security::htmlDecode($content));
+
+        $this->grid();
+    }
+
+    public function gridLoadAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $saves = Method::post('saves');
+
+        $path = FILES_DIR . 'Grids/' . $saves;
+
+        if( File::exists($path) )
+        {
+            echo File::read($path);
+        }
+    }
+
+    public function gridDeleteAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $delete = Method::post('delete');
+
+        $path = FILES_DIR . 'Grids/' . $delete;
+
+        if( File::exists($path) )
+        {
+            File::delete(FILES_DIR . 'Grids/' . $delete);
+
+            $this->grid();
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Method, Arrays, Generate as Gen;
-use Validation, Folder, File, Config;
+use Validation, Folder, File, Config, Uri;
 
 class Generate extends Controller
 {
@@ -54,13 +54,13 @@ class Generate extends Controller
             }
         }
 
-        $path = 'Controllers/';
+        $path = 'Controllers';
 
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'controller';
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -106,13 +106,13 @@ class Generate extends Controller
             }
         }
 
-        $path = 'Commands/';
+        $path = 'Commands';
 
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'command';
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class Generate extends Controller
             redirect();
         }
 
-        $path = 'Routes/';
+        $path = 'Routes';
 
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
@@ -141,7 +141,7 @@ class Generate extends Controller
             {
                 $functions = explode(',', Method::post('functions'));
 
-                File::create($fullPath . suffix(Method::post('route'), '.php'));
+                File::create($fullPath . suffix(prefix(Method::post('route')), '.php'));
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
@@ -154,7 +154,7 @@ class Generate extends Controller
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'route';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ class Generate extends Controller
             redirect();
         }
 
-        $path = 'Config/';
+        $path = 'Config';
 
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
@@ -183,7 +183,9 @@ class Generate extends Controller
             {
                 $functions = explode(',', Method::post('functions'));
 
-                File::create($fullPath . suffix(Method::post('config'), '.php'));
+                $configContent = '<?php return' . EOL . '[' . EOL . HT . '\'key\' => \'value\'' . EOL . '];';
+
+                File::write($fullPath . suffix(prefix(Method::post('config')), '.php'), $configContent);
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
@@ -196,7 +198,7 @@ class Generate extends Controller
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'config';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::files($fullPath, 'php');
+        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -237,20 +239,21 @@ class Generate extends Controller
             }
         }
 
-        $path = 'Models/';
+        $path = 'Models';
 
-        $this->masterpage->page  = 'generate';
-        $this->masterpage->pdata['content'] = 'model';
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'model';
         $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
-        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
-
-        if( Folder::exists($modelFullPath) )
+        if( Folder::exists($fullPath) )
         {
-            $files = Folder::files($modelFullPath, 'php');
+            $files = Folder::allFiles($fullPath, true);
         }
 
         $this->masterpage->pdata['files'] = $files ?? [];
+
+
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -271,7 +274,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('view', ['required', 'alpha'], LANG['viewName']);
+            Validation::rules('view', ['required'], LANG['viewName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -296,6 +299,7 @@ class Generate extends Controller
                     $content = File::read(TEMPLATES_DIR.$template);
                 }
 
+                Folder::create(pathInfos($viewPath, 'dirname'));
                 File::write($viewPath, $content);
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
@@ -306,17 +310,16 @@ class Generate extends Controller
             }
         }
 
-        $path = 'Views/';
+        $path = 'Views';
 
         $this->masterpage->page  = 'generate';
         $this->masterpage->pdata['content'] = 'view';
         $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
-        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
-
-        if( Folder::exists($modelFullPath) )
+        if( Folder::exists($fullPath) )
         {
-            $files = Folder::files($modelFullPath, 'php');
+            $files = Folder::allFiles($fullPath, true);
         }
 
         $this->masterpage->pdata['files'] = $files ?? [];
@@ -354,19 +357,37 @@ class Generate extends Controller
             }
         }
 
-        $path = 'Models/Migrations/';
-
-        $this->masterpage->page  = 'generate';
-        $this->masterpage->pdata['content'] = 'migration';
+        $path                                  = 'Models'. DS .'Migrations';
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'migration';
         $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
-        $this->masterpage->pdata['fullPath']   = $modelFullPath = SELECT_PROJECT_DIR . $path;
-
-        if( Folder::exists($modelFullPath) )
+        if( Folder::exists($fullPath) )
         {
-            $files = Folder::files($modelFullPath, ['php', 'dir']);
+            $files = Folder::allFiles($fullPath, true);
         }
 
         $this->masterpage->pdata['files'] = $files ?? [];
     }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Delete
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function deleteFile()
+    {
+        $file = Uri::get('deleteFile', 'all');
+
+        if( File::exists($file) )
+        {
+            File::delete($file);
+        }
+
+        redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
+    }
+
 }

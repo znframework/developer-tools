@@ -103,5 +103,9 @@
     'columns' => 'Columns',
     'viewColumns' => 'View Columns',
     'removeButton' => 'REMOVE',
-    'processColumn' => 'Process Column'
+    'processColumn' => 'Process Column',
+    'saveButton' => 'SAVE',
+    'save' => 'Save',
+    'loadButton' => 'LOAD',
+    'deleteButton' => 'DELETE',
 ];
