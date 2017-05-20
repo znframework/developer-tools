@@ -99,5 +99,9 @@
     'showButton' => 'SHOW',
     'joins' => 'Joins',
     'table' => 'Table',
-    'column' => 'Column'
+    'column' => 'Column',
+    'columns' => 'Columns',
+    'viewColumns' => 'View Columns',
+    'removeButton' => 'REMOVE',
+    'processColumn' => 'Process Column'
 ];

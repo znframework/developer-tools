@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security;
 
 class System extends Controller
 {
@@ -81,90 +81,109 @@ class System extends Controller
     public function grid(String $params = NULL)
     {
         $tables             = DBTool::listTables();
-        $tables['none']     = 'none';
         $sessionSelectTable = Session::select('gridSelectTable');
-        $joinColumns        = Session::select('gridJoinColumns');
-        $columns            = Session::select('gridColumns');
-        $postColumn         = Session::select('gridColumn');
+        $joinings           = Session::select('joinings');
+        $searching          = Session::select('searching');
+        $viewColumns        = Session::select('viewColumns');
         $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
+        $joinCollapse       = Session::select('joinCollapse');
 
         $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
 
         if( Method::post('show') )
         {
-            Session::delete('gridJoinColumns');
-            Session::delete('gridColumns');
-            Session::delete('gridColumn');
+            Session::delete('joinings');
+            Session::delete('searching');
+            Session::delete('viewColumns');
+            Session::delete('joinCollapse');
 
-            $joinColumns    = [];
-            $columns        = [];
-            $selectTable    = Method::post('table');
-            $postColumn     = Method::post('column');
-            $joinMainColumn = Method::post('joinMainColumn');
-            $joinMainTable  = Method::post('joinMainTable');
-            $joinTypes      = Method::post('joinTypes');
+            $joinCollapse = Security::htmlDecode(Method::post('joinsCollapse'));
+            Session::insert('joinCollapse', $joinCollapse);
+
+            $joinings        = [];
+            $columns         = [];
+            $searching       = [];
+
+            $selectTable     = Method::post('table');
+            $joinTypes       = Method::post('joinTypes');
+            $viewColumns     = Method::post('viewColumns');
+            $joinTables      = Arrays::deleteElement(Method::post('joinTables'), 'none');
+            $joinColumns     = Arrays::deleteElement(Method::post('joinColumns'), 'none');
+            $joinOtherTables = Arrays::deleteElement(Method::post('joinOtherTables'), 'none');
+            $joinOtherColumns= Arrays::deleteElement(Method::post('joinOtherColumns'), 'none');
 
             Session::insert('gridSelectTable', $selectTable);
 
-            if( ! empty($joinMainColumn) )
+            if( ! empty($joinOtherTables) )
             {
-                if( count($joinMainColumn) > count($joinTypes) )
+                foreach( $joinOtherTables as $key => $table )
                 {
-                    $joinMainColumn = Arrays::removeFirst($joinMainColumn);
-                }
-
-                foreach( $joinMainColumn as $key => $column )
-                {
-                    if( $joinMainTable[$key] !== 'none' && ! empty($column) )
-                    {
-                        $columns       = array_merge($columns, DB::get($joinMainTable[$key])->columns());
-                        $joinColumns[] = [$joinMainTable[$key].'.'.$column, $selectTable . '.' . $postColumn, $joinTypes[$key]];
-                    }
+                    $searching  = array_merge($searching, DB::get($joinTables[$key])->columns(), DB::get($table)->columns());
+                    $joinings[] = [$joinTables[$key] . '.' . $joinColumns[$key], $table . '.' . $joinOtherColumns[$key], $joinTypes[$key]];
                 }
             }
         }
 
-        $columns = DB::get($selectTable)->columns();
+        $get     = DB::get($selectTable);
+        $columns = $get->columns();
 
         DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
 
-        if( ! empty($joinColumns) )
+        if( ! empty($joinings) )
         {
-            Session::insert('gridJoinColumns', $joinColumns);
-            Session::insert('gridColumns'    , $columns);
-            Session::insert('gridColumn'     , $postColumn);
+            Session::insert('joinings', $joinings);
+            Session::insert('searching', $searching);
 
-            DBGrid::joins(...$joinColumns);
+            DBGrid::joins(...$joinings);
+            $searchValues  = $searching;
+        }
+        else
+        {
+            $searchValues  = $columns;
         }
 
-        DBGrid::search(...$columns);
+        DBGrid::search(...$searchValues);
 
-        $this->masterpage->pdata['table']       = DBGrid::create($selectTable);
-        $this->masterpage->pdata['selectTable'] = $selectTable;
-        $this->masterpage->pdata['column']      = $postColumn;
-        $this->masterpage->pdata['columns']     = Arrays::combine($columns, $columns);
-        $this->masterpage->page                 = 'grid';
+        foreach( $get->columnData() as $col )
+        {
+            if( $col->primaryKey === 1 )
+            {
+                DBGrid::processColumn($col->name ?? 'id');
+            }
+        }
+
+        if( ! empty($viewColumns) )
+        {
+            Session::insert('viewColumns', $viewColumns);
+            DBGrid::columns($viewColumns);
+        }
+
+        $this->masterpage->pdata['table']        = DBGrid::create($selectTable);
+        $this->masterpage->pdata['selectTable']  = $selectTable;
+        $this->masterpage->pdata['viewColumns']  = $viewColumns;
+        $this->masterpage->pdata['columns']      = Arrays::combine($columns, $columns);
+        $this->masterpage->pdata['joinCollapse'] = $joinCollapse;
+        $this->masterpage->page                  = 'grid';
     }
 
-    public function gridSelectJoinTableAjax()
+    public function gridGetColumnsAjax()
     {
         if( ! Http::isAjax() )
         {
             return false;
         }
 
-        $table = Method::post('table');
-        $type  = Method::post('type');
+        $table   = Method::post('table');
+        $type    = Method::post('type');
+        $columns = ['none'];
 
-        if( $table === 'none' )
+        if( $table !== 'none' )
         {
-            return false;
+            $columns = DB::get($table)->columns();
         }
 
-        $columns = DB::get($table)->columns();
-
-        $str  = Form::class('form-control')->select($type === 'sub' ? 'joinMainColumn[]' : 'column', Arrays::combine($columns, $columns));
-        $str .= $type === 'sub' ? Form::class('form-control')->select('joinTypes[]', ['left' => 'Left', 'right' => 'Right', 'inner' => 'Inner']) : NULL;
+        $str = '<label>' . LANG['column'] . '</label>';
+        $str .= Form::class('form-control')->onchange('changeSelected(this)')->select($type === 'join1' ? 'joinColumns[]' : 'joinOtherColumns[]', Arrays::combine($columns, $columns));
 
         echo $str;
     }
