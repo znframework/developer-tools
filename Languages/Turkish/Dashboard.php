@@ -101,5 +101,9 @@
     'columns' => 'Kolonlar',
     'viewColumns' => 'Gösterilecek Kolonlar',
     'removeButton' => 'KALDIR',
-    'processColumn' => 'İşlem Kolonu'
+    'processColumn' => 'İşlem Kolonu',
+    'saveButton' => 'KAYDET',
+    'save' => 'Kaydet',
+    'loadButton' => 'YÜKLE',
+    'deleteButton' => 'SİL',
 ];
