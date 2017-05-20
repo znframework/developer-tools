@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['selectTable']}}</label>
-                    @@Form::class('form-control')->select('table', $tables, $selectTable):
+                    @@Form::class('form-control')->onchange('changeDefaultJoinTable(this)')->select('table', $tables, $selectTable):
                 </div>
             </div>
         </div>
@@ -119,6 +119,13 @@
 </div>
 
 <script>
+
+changeDefaultJoinTable('select[name="table"]');
+
+function changeDefaultJoinTable(obj)
+{
+    $('/#joinOtherTable1').attr('style', 'background:/#ddd').val($(obj).val()).trigger('change');
+}
 
 function addJoinColumn(id)
 {
