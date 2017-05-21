@@ -134,11 +134,12 @@ function addJoinColumn(id)
 
 function removeJoinColumn(id, index)
 {
-    $(id).addClass('hide');
     $('#' + 'joinTable' + index).val('none');
     $('#' + 'joinColumn' + index).val('none');
     $('#' + 'joinOtherTable' + index).val('none');
     $('#' + 'joinOtherColumn' + index).val('none');
+
+    $(id).addClass('hide');
 }
 
 function changeSelected(obj)

@@ -111,7 +111,7 @@ class System extends Controller
             $joinColumns     = Arrays::deleteElement(Method::post('joinColumns'), 'none');
             $joinOtherTables = Arrays::deleteElement(Method::post('joinOtherTables'), 'none');
             $joinOtherColumns= Arrays::deleteElement(Method::post('joinOtherColumns'), 'none');
-        
+
             Session::insert('gridSelectTable', $selectTable);
 
             if( ! empty($joinTables) )
