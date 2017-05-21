@@ -114,7 +114,7 @@ class System extends Controller
 
             Session::insert('gridSelectTable', $selectTable);
 
-            if( ! empty($joinOtherTables) )
+            if( ! empty($joinTables) )
             {
                 foreach( $joinOtherTables as $key => $table )
                 {

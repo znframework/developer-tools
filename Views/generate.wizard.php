@@ -1,4 +1,3 @@
-
 @@Form::open():
 
 <div class="row">

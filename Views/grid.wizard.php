@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['selectTable']}}</label>
-                    @@Form::class('form-control')->select('table', $tables, $selectTable):
+                    @@Form::class('form-control')->onchange('changeDefaultJoinTable(this)')->select('table', $tables, $selectTable):
                 </div>
             </div>
         </div>
@@ -120,6 +120,13 @@
 
 <script>
 
+changeDefaultJoinTable('select[name="table"]');
+
+function changeDefaultJoinTable(obj)
+{
+    $('/#joinOtherTable1').attr('style', 'background:/#ddd').val($(obj).val()).trigger('change');
+}
+
 function addJoinColumn(id)
 {
     $(id).removeClass('hide');
@@ -127,11 +134,12 @@ function addJoinColumn(id)
 
 function removeJoinColumn(id, index)
 {
-    $(id).addClass('hide');
     $('#' + 'joinTable' + index).val('none');
     $('#' + 'joinColumn' + index).val('none');
     $('#' + 'joinOtherTable' + index).val('none');
     $('#' + 'joinOtherColumn' + index).val('none');
+
+    $(id).addClass('hide');
 }
 
 function changeSelected(obj)
@@ -215,9 +223,19 @@ function deleteJoin()
             if( data )
             {
                 document.documentElement.innerHTML = data;
-            }  
+            }
     	}
     });
 }
+
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('/#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('/#loadingDiv').addClass('hide');
+});
 
 </script>

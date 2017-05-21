@@ -39,4 +39,10 @@
 
 @@Form::close():
 
+@Import::plugin(array
+(
+	'Dashboard/highlight/styles/agate.css',
+	'Dashboard/highlight/highlight.pack.js'
+)):
+
 <script>hljs.initHighlightingOnLoad();</script>

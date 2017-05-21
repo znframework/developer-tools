@@ -1,4 +1,4 @@
-
+<div class="hide" id="loadingDiv"></div>
 <div id="wrapper"><?php
 
 Import::view('top.wizard');
@@ -50,7 +50,6 @@ redirectDeleteData('success'); ?>
 
 
 <script>
-
 
 function deleteProcess(link)
 {
