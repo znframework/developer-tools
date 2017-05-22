@@ -397,6 +397,54 @@ class Generate extends Controller
     }
 
     //--------------------------------------------------------------------------------------------------------
+    // Model
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function starting(String $params = NULL)
+    {
+        if( Method::post('generate') )
+        {
+            Validation::rules('file', ['required'], LANG['fileName']);
+
+            if( ! $error = Validation::error('string') )
+            {
+                $viewName = Method::post('file');
+
+                $path = Method::post('type') . DS;
+
+                $path = 'Starting' . DS . $path;
+
+                $viewPath = SELECT_PROJECT_DIR . $path . suffix($viewName, '.php');
+
+                File::write($viewPath, '<?php');
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $path = 'Starting';
+
+        $this->masterpage->page  = 'generate';
+        $this->masterpage->pdata['content'] = 'starting';
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+
+        if( Folder::exists($fullPath) )
+        {
+            $files = Folder::allFiles($fullPath, true);
+        }
+
+        $this->masterpage->pdata['files'] = $files ?? [];
+    }
+
+    //--------------------------------------------------------------------------------------------------------
     // Migration
     //--------------------------------------------------------------------------------------------------------
     //

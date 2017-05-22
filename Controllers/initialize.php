@@ -130,10 +130,11 @@ class Initialize extends Controller
         {
             $menus['models']    = ['icon' => 'database',   'href' => 'generate/model'];
             $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
+            $menus['libraries'] = ['icon' => 'book',       'href' => 'generate/library'];
             $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
             $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
-            $menus['libraries'] = ['icon' => 'book',       'href' => 'generate/library'];
             $menus['languages'] = ['icon' => 'flag',       'href' => 'system/language'];
+            $menus['starting']  = ['icon' => 'renren',     'href' => 'generate/starting'];
         }
 
         $menus['datatables']    = ['icon' => 'table',      'href' => 'datatables'];

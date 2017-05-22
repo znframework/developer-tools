@@ -8,7 +8,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['controllerName']}}</label>
-                    @@Form::required()->class('form-control')->placeholder('Controllers/ControllerName')->text('library'):
+                    @@Form::required()->class('form-control')->placeholder('Libraries/LibraryName')->text('library'):
                 </div>
 
                 <div class="form-group">
