@@ -132,6 +132,7 @@ class Initialize extends Controller
             $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
             $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
             $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
+            $menus['libraries'] = ['icon' => 'book',       'href' => 'generate/library'];
             $menus['languages'] = ['icon' => 'flag',       'href' => 'system/language'];
         }
 

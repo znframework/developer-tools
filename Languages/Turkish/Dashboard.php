@@ -17,6 +17,8 @@
     'template' => 'Şablon',
     'type' => 'Tür',
     'commandName' => 'Komut Adı',
+    'libraryName' => 'Kütüphane Adı',
+    'newLibrary' => 'Yeni Kütüphane',
     'configName' => 'Yapılandırma Adı',
     'routeName' => 'Rota Adı',
     'migrationName' => 'Göç Adı',
@@ -25,6 +27,7 @@
     'extends' => 'Extends(Uzantı)',
     'projects' => 'Projeler',
     'functions' => 'Fonskiyonlar',
+    'libraries' => 'Kütüphane',
     'home' => 'Anasayfa',
     'overview' => 'Genel Bakış',
     'downloadCount' => 'İndirme Sayısı',
@@ -106,4 +109,6 @@
     'save' => 'Kaydet',
     'loadButton' => 'YÜKLE',
     'deleteButton' => 'SİL',
+    'withView' => 'Görünümünüde Oluştur',
+    'withGrandModel' => 'Grand Modelinide Oluştur',
 ];

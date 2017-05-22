@@ -19,6 +19,8 @@
     'type' => 'Type',
     'modelName' => 'Model Name',
     'commandName' => 'Command Name',
+    'newLibrary' => 'New Library',
+    'libraryName' => 'Library Name',
     'configName' => 'Config Name',
     'routeName' => 'Route Name',
     'migrationName' => 'Migration Name',
@@ -26,6 +28,7 @@
     'extends' => 'Extends',
     'projects' => 'Projects',
     'functions' => 'Functions',
+    'libraries' => 'Libraries',
     'home' => 'Home',
     'overview' => 'Overview',
     'downloadCount' => 'Download Count',
@@ -108,4 +111,6 @@
     'save' => 'Save',
     'loadButton' => 'LOAD',
     'deleteButton' => 'DELETE',
+    'withView' => 'With View',
+    'withGrandModel' => 'With Grand Model',
 ];

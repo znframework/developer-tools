@@ -38,7 +38,28 @@ class Generate extends Controller
                     $functions = Arrays::addFirst($functions, 'main');
                 }
 
-                $status = Gen::controller(Method::post('controller'),
+                $controller = Method::post('controller');
+
+                if( Method::post('withView') )
+                {
+                    foreach( $functions as $view )
+                    {
+                        $view = trim($view);
+
+                        if( $view === 'main' )
+                        {
+                            $view = $controller;
+                        }
+                        else
+                        {
+                            $view = $controller . '-' . $view;
+                        }
+
+                        File::create(SELECT_PROJECT_DIR . 'Views/' . suffix($view, '.php'));
+                    }
+                }
+
+                $status = Gen::controller($controller,
                 [
                     'application' => SELECT_PROJECT,
                     'namespace'   => 'Project\Controllers',
@@ -58,6 +79,52 @@ class Generate extends Controller
 
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'controller';
+        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $this->masterpage->pdata['deletePath'] = $path;
+        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Controller
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function library(String $params = NULL)
+    {
+        if( Method::post('generate') )
+        {
+            Validation::rules('library', ['required', 'alpha'], LANG['libraryName']);
+
+            if( ! $error = Validation::error('string') )
+            {
+                $functions = explode(',', Method::post('functions'));
+
+                if( ! Arrays::valueExists($functions, 'main') )
+                {
+                    $functions = Arrays::addFirst($functions, 'main');
+                }
+
+                $status = Gen::library(Method::post('library'),
+                [
+                    'application' => SELECT_PROJECT,
+                    'functions'   => $functions
+                ]);
+
+                redirect(currentUri(), 0, ['success' => LANG['success']]);
+            }
+            else
+            {
+                $this->masterpage->error = $error;
+            }
+        }
+
+        $path = 'Libraries';
+
+        $this->masterpage->page                = 'generate';
+        $this->masterpage->pdata['content']    = 'library';
+        $this->masterpage->pdata['title']      = 'libraries';
         $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
         $this->masterpage->pdata['deletePath'] = $path;
         $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
@@ -198,7 +265,11 @@ class Generate extends Controller
         $this->masterpage->page                = 'generate';
         $this->masterpage->pdata['content']    = 'config';
         $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+
+        $files = Folder::allFiles($fullPath, true);
+        $files = Arrays::addFirst($files, 'Projects/Projects.php');
+
+        $this->masterpage->pdata['files']      = $files;
     }
 
     //--------------------------------------------------------------------------------------------------------
