@@ -34,7 +34,8 @@ class Initialize extends Controller
 
         define('LANG', lang('Dashboard'));
 
-        $projects        = Folder::files(PROJECTS_DIR, 'dir');
+        $projects           = Folder::files(PROJECTS_DIR, 'dir');
+        $projects           = Arrays::addLast($projects, 'External');
         $projects           = Arrays::combine($projects, $projects);
         $default            = PROJECTS_CONFIG['directory']['default'];
         $currentProject     = Session::select('project');
@@ -48,7 +49,18 @@ class Initialize extends Controller
         define('SELECT_EDITOR_THEME', $currentEditorTheme);
         define('PROJECT_LIST', $projects);
         define('SELECT_PROJECT', ! empty($currentProject) ? $currentProject : DEFAULT_PROJECT);
-        define('SELECT_PROJECT_DIR', PROJECTS_DIR . SELECT_PROJECT .DS);
+        define('IS_EXTERNAL', SELECT_PROJECT === 'External');
+
+        if( ! IS_EXTERNAL )
+        {
+            $selectProjectDir = PROJECTS_DIR . SELECT_PROJECT;
+        }
+        else
+        {
+            $selectProjectDir = 'External';
+        }
+
+        define('SELECT_PROJECT_DIR', $selectProjectDir . DS);
         define('LANGUAGES', ['EN', 'TR']);
         define('IS_CONTAINER', PROJECTS_CONFIG['containers'][SELECT_PROJECT] ?? FALSE);
         define('DATATYPES',
@@ -112,7 +124,10 @@ class Initialize extends Controller
             $databaseConfigPath = str_replace(SELECT_PROJECT, IS_CONTAINER, $databaseConfigPath);
         }
 
-        Config::set('Database', import($databaseConfigPath));
+        if( SELECT_PROJECT !== 'External' )
+        {
+            Config::set('Database', import($databaseConfigPath));
+        }
 
         define('CURRENT_DATABASE', Config::get('Database', 'database')['database']);
 
@@ -123,8 +138,12 @@ class Initialize extends Controller
             $menus['configs']   = ['icon' => 'cog',        'href' => 'generate/config'];
         }
 
-        $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
-        $menus['views']         = ['icon' => 'file-code-o',    'href' => 'generate/view'];
+        if( ! IS_EXTERNAL )
+        {
+            $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
+            $menus['views']         = ['icon' => 'file-code-o',    'href' => 'generate/view'];
+        }
+
 
         if( IS_CONTAINER === FALSE )
         {
