@@ -158,7 +158,12 @@ class System extends Controller
             DBGrid::columns($viewColumns);
         }
 
-        $saves = Folder::files( FILES_DIR . 'Grids');
+        $path = FILES_DIR . 'Grids';
+
+        Folder::create($path);
+
+        $saves = Folder::files($path);
+
         $this->masterpage->pdata['table']        = DBGrid::create($selectTable);
         $this->masterpage->pdata['selectTable']  = $selectTable;
         $this->masterpage->pdata['viewColumns']  = $viewColumns;
@@ -205,7 +210,9 @@ class System extends Controller
             $saveName = 'unnamed';
         }
 
-        File::write(FILES_DIR . 'Grids/' . $saveName, Security::htmlDecode($content));
+        $path = FILES_DIR . 'Grids' . DS;
+
+        File::write($path . $saveName, Security::htmlDecode($content));
 
         $this->grid();
     }
