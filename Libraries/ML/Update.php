@@ -1,6 +1,6 @@
 <?php namespace ML;
 
-class Update implements InsertInterface
+class Update
 {
     //--------------------------------------------------------------------------------------------------------
     //

@@ -1,6 +1,6 @@
 <?php
 
-class InternalMLS extends FactoryController implements InternalMLSInterface
+class InternalMLS extends FactoryController
 {
     //--------------------------------------------------------------------------------------------------------
     //
