@@ -146,7 +146,9 @@
                     <a href="/#" class="list-group-item">
 
                         <i class="fa fa-fw fa-folder"></i> @$project:
+                        @if( $project !== 'External' ):
                         <span class="pull-right"><i onclick="deleteProcess('home/delete/{{$project}}');" class="fa fa-trash-o fa-fw"></i></span>
+                        @endif:
                     </a>
 
                     @endforeach:

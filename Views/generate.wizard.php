@@ -36,7 +36,9 @@
                         <i class="fa fa-fw fa-file-text-o"></i> {{$relativePath = absoluteRelativePath($file)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
+                        @if( $file !== 'Projects/Projects.php' ):
                         <span class="pull-right"><i onclick="deleteProcess('generate/deleteFile/{{$relativePath}}');" class="fa fa-trash-o fa-fw"></i></span>
+                        @endif:
                     </a>
 
                     <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
