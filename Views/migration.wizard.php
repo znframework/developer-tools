@@ -7,7 +7,7 @@
             <div class="panel-body">
 
                 <div class="form-group">
-                    <label>{{LANG['controllerName']}}</label>
+                    <label>{{LANG['migrationName']}}</label>
                     @@Form::required()->class('form-control')->placeholder('Models/Migrations/MigrationName')->text('migration'):
                 </div>
 
