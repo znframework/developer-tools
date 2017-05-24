@@ -18,7 +18,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="newTableColumnContent">
+                <tbody>
                     <td colspan="8">{{Form::class('form-control')->placeholder('Table Name')->text('table')}}</td>
                 </tbody>
                 <tbody id="newTableColumnContent">

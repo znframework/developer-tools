@@ -84,6 +84,8 @@ function dropColumnInNewTable(obj)
     }
 }
 
+
+
 function createNewDatatable()
 {
     if( confirm("@@LANG['areYouSure']:") )
