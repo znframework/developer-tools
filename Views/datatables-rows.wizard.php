@@ -8,6 +8,11 @@
             $columnData = $get->columnData();
             $columnCount= count($columns);
             $uniqueKey  = 'id';
+
+            if( ! Arrays::valueExists($columns, $uniqueKey) )
+            {
+                $uniqueKey = $columns[0];
+            }
         ]}
 
         <tr>
