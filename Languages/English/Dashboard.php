@@ -24,6 +24,7 @@
     'modelName' => 'Model Name',
     'commandName' => 'Command Name',
     'newLibrary' => 'New Library',
+    'newView' => 'New View',
     'libraryName' => 'Library Name',
     'configName' => 'Config Name',
     'routeName' => 'Route Name',
@@ -126,5 +127,6 @@
     'loadButton' => 'LOAD',
     'deleteButton' => 'DELETE',
     'withView' => 'With View',
+    'withWizard' => 'With Wizard',
     'withGrandModel' => 'With Grand Model',
 ];

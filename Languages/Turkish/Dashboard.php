@@ -24,6 +24,7 @@
     'commandName' => 'Komut Adı',
     'libraryName' => 'Kütüphane Adı',
     'newLibrary' => 'Yeni Kütüphane',
+    'newView' => 'Yeni Görünüm',
     'configName' => 'Yapılandırma Adı',
     'routeName' => 'Rota Adı',
     'migrationName' => 'Göç Adı',
@@ -124,5 +125,6 @@
     'loadButton' => 'YÜKLE',
     'deleteButton' => 'SİL',
     'withView' => 'Görünümünüde Oluştur',
+    'withWizard' => 'Sihirbaz Görünümünüde Oluştur',
     'withGrandModel' => 'Grand Modelinide Oluştur',
 ];
