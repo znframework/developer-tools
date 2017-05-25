@@ -29,8 +29,13 @@ class Api extends Controller
 
                 foreach( $explode as $value )
                 {
-                    $valueEx = explode(':', trim($value));
-                    $newData[$valueEx[0]] = $valueEx[1] ?? NULL;
+
+                    $valueEx = explode(':', trim(str_replace(EOL, NULL, $value)));
+
+                    if( isset($valueEx[1]) )
+                    {
+                        $newData[$valueEx[0]] = $valueEx[1];
+                    }
                 }
 
                 Restful::data($data);

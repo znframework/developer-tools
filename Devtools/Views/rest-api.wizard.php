@@ -41,7 +41,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['sendData']}}</label>
-                    @@Form::class('form-control')->placeholder('data1/:value1,data2/:value2')->text('data', Validation::postBack('data')):
+                    @@Form::class('form-control')->placeholder('data1/:value1,data2/:value2')->textarea('data', Validation::postBack('data')):
                 </div>
 
             </div>
