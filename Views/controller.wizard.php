@@ -17,8 +17,10 @@
                 </div>
 
                 <div class="form-group">
-                    @@Form::checkbox('withView', 1):
+                    @@Form::radio('withView', 'normal'):
                     <label>{{LANG['withView']}}</label>
+                    @@Form::radio('withView', 'wizard'):
+                    <label>{{LANG['withWizard']}}</label>
                 </div>
             </div>
         </div>

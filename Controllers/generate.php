@@ -40,7 +40,7 @@ class Generate extends Controller
 
                 $controller = Method::post('controller');
 
-                if( Method::post('withView') )
+                if( $type = Method::post('withView') )
                 {
                     foreach( $functions as $view )
                     {
@@ -55,7 +55,7 @@ class Generate extends Controller
                             $view = $controller . '-' . $view;
                         }
 
-                        File::create(SELECT_PROJECT_DIR . 'Views/' . suffix($view, '.php'));
+                        File::create(SELECT_PROJECT_DIR . 'Views/' . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php'));
                     }
                 }
 
