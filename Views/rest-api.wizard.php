@@ -31,6 +31,10 @@
                 </div>
 
                 <div class="form-group">
+                    @if( Validation::postback('sslVerifyPeer') ):
+                        @Form::checked():
+                    @endif:
+
                     @@Form::checkbox('sslVerifyPeer', 1):
                     <label>{{LANG['sslVerifyPeer']}}</label>
                 </div>

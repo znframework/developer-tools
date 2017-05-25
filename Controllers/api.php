@@ -36,6 +36,11 @@ class Api extends Controller
                 Restful::data($data);
             }
 
+            if( $ssl = Method::post('sslVerifyPeer') )
+            {
+                Restful::sslVerifyPeer((bool) $ssl);
+            }
+
             $this->masterpage->pdata['results'] = Restful::$type(Method::post('url'));
 
             $infos = Restful::info('all');
