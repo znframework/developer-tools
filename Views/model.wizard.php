@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['newModel']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-database fa-fw"></i> {{LANG['newModel']}}</h3>
             </div>
             <div class="panel-body">
 

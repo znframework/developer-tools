@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-list fa-fw"></i> {{LANG['restApi']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-exchange fa-fw"></i> {{LANG['restApi']}}</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">

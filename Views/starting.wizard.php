@@ -3,7 +3,7 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['newFile']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-renren fa-fw"></i> {{LANG['newFile']}}</h3>
             </div>
 
             <div class="panel-body">
