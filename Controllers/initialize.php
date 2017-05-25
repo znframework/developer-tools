@@ -158,7 +158,7 @@ class Initialize extends Controller
 
         $menus['datatables']    = ['icon' => 'table',      'href' => 'datatables'];
         $menus['grids']         = ['icon' => 'th',         'href' => 'system/grid'];
-
+        $menus['restApi']       = ['icon' => 'exchange',   'href' => 'api'];
         $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
         $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
         $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
