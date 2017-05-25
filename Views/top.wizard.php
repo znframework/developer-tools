@@ -3,8 +3,10 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
 
-        @@Html::class('navbar-brand')->image(FILES_DIR . 'ico.png'):
-        <a class="navbar-brand" href="@@siteUrl():"> ZN Framework</a>
+        <div style="float:left; margin-left:10px; margin-top:8px;">
+        @@Html::image(FILES_DIR . 'ico.png'):
+        </div>
+        <a class="navbar-brand" href="@@siteUrl():"><span style="color:/#2C5072">DEV</span> <span style="color:/#00BFFF">TOOLS</span></a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
