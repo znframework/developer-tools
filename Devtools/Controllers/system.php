@@ -452,7 +452,7 @@ class System extends Controller
                 \DBTool::backup('*', 'db.sql', $fullPath);
             }
 
-            Folder::copy(SELECT_PROJECT_DIR, $fullPath);
+            Folder::copy(rtrim(SELECT_PROJECT_DIR, DS), $fullPath);
 
             redirect(currentUri(), 0, ['success' => LANG['success']]);
         }
