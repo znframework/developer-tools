@@ -161,8 +161,13 @@ class Initialize extends Controller
         $menus['restApi']       = ['icon' => 'exchange',   'href' => 'api/main'];
         $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
         $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
-        $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
-        $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
+
+        if( ! IS_EXTERNAL )
+        {
+            $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
+            $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
+        }
+        
         $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
 
         if( IS_CONTAINER === FALSE )
