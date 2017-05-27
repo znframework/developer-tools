@@ -50,7 +50,7 @@
 
 </div>
 
-@if( ! empty($results) ):
+@if( ! empty($results) && ! is_scalar($results) ):
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -77,7 +77,7 @@
 
 @endif:
 
-@if( ! empty($infos) ):
+@if( ! empty($infos) && ! is_scalar($infos) ):
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
