@@ -27,7 +27,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['type']}}</label>
-                    @@Form::class('form-control')->select('type', ['post' => 'POST', 'get' => 'GET', 'put' => 'PUT', 'delete' => 'DELETE']):
+                    @@Form::class('form-control')->select('type', ['post' => 'POST', 'get' => 'GET', 'put' => 'PUT', 'delete' => 'DELETE'], Validation::postBack('type')):
                 </div>
 
                 <div class="form-group">
