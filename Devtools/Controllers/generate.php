@@ -55,7 +55,12 @@ class Generate extends Controller
                             $view = $controller . '-' . $view;
                         }
 
-                        File::create(SELECT_PROJECT_DIR . 'Views/' . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php'));
+                        $viewPath = SELECT_PROJECT_DIR . 'Views/' . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php');
+
+                        if( ! File::exists($viewPath) )
+                        {
+                            File::create($viewPath);
+                        }
                     }
                 }
 
@@ -208,7 +213,12 @@ class Generate extends Controller
             {
                 $functions = explode(',', Method::post('functions'));
 
-                File::create($fullPath . suffix(prefix(Method::post('route')), '.php'));
+                $routePath = $fullPath . suffix(prefix(Method::post('route')), '.php');
+
+                if( ! File::exists($routePath) )
+                {
+                    File::create($routePath);
+                }
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
@@ -252,7 +262,12 @@ class Generate extends Controller
 
                 $configContent = '<?php return' . EOL . '[' . EOL . HT . '\'key\' => \'value\'' . EOL . '];';
 
-                File::write($fullPath . suffix(prefix(Method::post('config')), '.php'), $configContent);
+                $configPath = $fullPath . suffix(prefix(Method::post('config')), '.php');
+
+                if( ! File::exists($configPath) )
+                {
+                    File::write($configPath, $configContent);
+                }
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
@@ -359,8 +374,6 @@ class Generate extends Controller
                 $viewPath = SELECT_PROJECT_DIR . 'Views/' . suffix($viewName, '.php');
                 $template = Method::post('template');
 
-
-
                 if( $template === 'none' )
                 {
                     $content = '';
@@ -371,7 +384,11 @@ class Generate extends Controller
                 }
 
                 Folder::create(pathInfos($viewPath, 'dirname'));
-                File::write($viewPath, $content);
+
+                if( ! File::exists($viewPath) )
+                {
+                    File::write($viewPath, $content);
+                }
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }
@@ -419,7 +436,10 @@ class Generate extends Controller
 
                 $viewPath = SELECT_PROJECT_DIR . $path . suffix($viewName, '.php');
 
-                File::write($viewPath, '<?php');
+                if( ! File::exists($viewpath) )
+                {
+                    File::write($viewPath, '<?php');
+                }
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }

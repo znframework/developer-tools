@@ -54,7 +54,7 @@ class Datatables extends Controller
             $status = DB::query($content);
         }
 
-        $result  = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
+        $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
         echo Json::encode
         ([
