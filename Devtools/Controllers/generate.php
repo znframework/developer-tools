@@ -480,7 +480,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('migration', ['required', 'alpha'], LANG['migrationName']);
+            Validation::rules('migration', ['required', 'specialChar'], LANG['migrationName']);
 
             if( ! $error = Validation::error('string') )
             {
