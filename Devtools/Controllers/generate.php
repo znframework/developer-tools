@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Method, Arrays, Generate as Gen;
-use Validation, Folder, File, Config, Uri;
+use Validation, Folder, File, Config, Uri, Security, Http;
 
 class Generate extends Controller
 {
@@ -529,4 +529,49 @@ class Generate extends Controller
         redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
     }
 
+    //--------------------------------------------------------------------------------------------------------
+    // Rename File
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function renameFile()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $old = Method::post('old');
+        $new = Method::post('new');
+
+        $controlOld = pathInfos($old, 'dirname');
+        $controlNew = pathInfos($new, 'dirname');
+
+        if( $controlOld === $controlNew )
+        {
+            File::rename($old, $new);
+        }    
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Save File
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param string $params NULL
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function saveFile()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        $link    = Method::post('link');
+        $content = Method::post('content');
+
+        File::write($link, Security::htmlDecode($content));
+    }
 }

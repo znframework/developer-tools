@@ -33,11 +33,14 @@
                     @foreach( $files as $key => $file ):
 
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
-                        <i class="fa fa-fw fa-file-text-o"></i> {{$relativePath = absoluteRelativePath($file)}}
+                        <i class="fa fa-fw fa-file-text-o"></i>
+                        {[$relativePath = absoluteRelativePath($file)]}
+                        {{Form::id('renameId' . $key)->style('width:20%; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
                         @if( $file !== 'Projects/Projects.php' ):
                         <span class="pull-right"><i onclick="deleteProcess('generate/deleteFile/{{$relativePath}}');" class="fa fa-trash-o fa-fw"></i></span>
+                        <span class="pull-right"><i onclick="renameProcess('{{$relativePath}}', '/#renameId{{$key}}');" title="{{LANG['renameFile']}}" class="fa fa-edit fa-fw"></i></span>
                         @endif:
                     </a>
 
@@ -58,6 +61,23 @@
 
 <script>
 
+function renameProcess(oldname, newname)
+{
+    if( confirm("@@LANG['areYouSure']:") )
+    {
+        $.ajax
+        ({
+            'url'/:'@@siteUrl('generate/renameFile'):',
+            'data'/:'old=' + oldname + '&new=' + $(newname).val() + '&current={{CURRENT_CFUNCTION}}',
+            'type'/:'post',
+            'success'/:function()
+            {
+                window.location.reload();
+            }
+        });
+    }
+}
+
 function saveProcess(link, e, evt, key)
 {
     var editor = ace.edit("editor" + key);
@@ -65,7 +85,7 @@ function saveProcess(link, e, evt, key)
 
     $.ajax
     ({
-        'url'/:'@@siteUrl('home/saveFile'):',
+        'url'/:'@@siteUrl('generate/saveFile'):',
         'data'/:'link=' + link + '&content=' + encodeURIComponent(code),
         'type'/:'post',
         'success'/:function(data)

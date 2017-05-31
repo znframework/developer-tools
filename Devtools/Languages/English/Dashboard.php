@@ -52,6 +52,7 @@
     'modifyButton' => 'MODIFY TABLE',
     'truncateButton' => 'TRUNCATE TABLE',
     'renameButton' => 'RENAME TABLE',
+    'renameFile' => 'Rename File',
     'dropButton' => 'DROP TABLE',
     'runORMButton' => 'RUN ORM CODE',
     'runSQLButton' => 'RUN SQL CODE',

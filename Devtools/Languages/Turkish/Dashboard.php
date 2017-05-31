@@ -53,6 +53,7 @@
     'modifyButton' => 'DEĞİŞTİR',
     'truncateButton' => 'TABLOYU BOŞALT',
     'renameButton' => 'TABLOYU YENİDEN ADLANDIR',
+    'renameFile' => 'Dosyayı Yeniden Adlandır',
     'dropButton' => 'TABLOYU SİL',
     'dropColumnButton' => 'KOLONU SİL',
     'addColumnButton' => 'KOLON EKLE',
