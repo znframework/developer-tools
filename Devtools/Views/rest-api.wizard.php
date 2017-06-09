@@ -65,7 +65,7 @@
                         </thead>
                         <tbody>
                             @foreach( $results as $key => $val ):
-                            <tr><td>{{$key}}</td><td>{{ is_array($val) ? output($val) : $val}}</td></tr>
+                            <tr><td>{{$key}}</td><td>{{ ! is_scalar($val) ? output($val) : $val}}</td></tr>
                             @endforeach:
                         </tbody>
                     </table>
@@ -91,7 +91,7 @@
                     </thead>
                     <tbody>
                         @foreach( $infos as $key => $val ):
-                        <tr><td>{{$key}}</td><td>{{ is_array($val) ? output($val) : $val}}</td></tr>
+                        <tr><td>{{$key}}</td><td>{{ ! is_scalar($val) ? output($val) : $val}}</td></tr>
                         @endforeach:
                     </tbody>
                 </table>
