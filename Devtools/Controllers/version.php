@@ -24,9 +24,13 @@ class Version extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function notes(String $params = NULL)
     {
-        Import::handload('Functions');
+        if( ! $versions = Restful::post('https://api.znframework.com/statistics/versions') )
+        {
+            redirect();
+        }
 
-        $this->masterpage->pdata['notes'] = Restful::post('https://api.znframework.com/statistics/versions');
+        Import::handload('Functions');
+        $this->masterpage->pdata['notes'] = $versions;
         $this->masterpage->page           = 'versions-notes';
     }
 }

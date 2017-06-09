@@ -24,7 +24,12 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        define('LASTEST_VERSION', Restful::post('https://api.znframework.com/statistics/versions')[0]->version);
+        if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
+        {
+            $lastVersionData = $versions[0]->version ?? NULL;
+        }
+
+        define('LASTEST_VERSION', $lastVersionData ?? ZN_VERSION);
         define('DASHBOARD_CONFIG', Config::get('Dashboard'));
         define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
@@ -133,7 +138,6 @@ class Initialize extends Controller
         define('CURRENT_DATABASE', Config::get('Database', 'database')['database']);
 
         $menus['versionNotes']  = ['icon' => 'arrow-circle-o-right',   'href' => 'version/notes'];
-
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
 
         if( IS_CONTAINER === FALSE )
