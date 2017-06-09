@@ -132,6 +132,8 @@ class Initialize extends Controller
 
         define('CURRENT_DATABASE', Config::get('Database', 'database')['database']);
 
+        $menus['versionNotes']  = ['icon' => 'arrow-circle-o-right',   'href' => 'version/notes'];
+
         $menus['home']          = ['icon' => 'home',       'href' => 'home/main'];
 
         if( IS_CONTAINER === FALSE )

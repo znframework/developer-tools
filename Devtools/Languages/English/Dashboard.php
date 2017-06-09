@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'versionNotes' => 'Version Notes',
     'lastestVersion' => 'Lastest Version',
     'success' => 'Operation succeeded.',
     'error' => 'Operation failed!',

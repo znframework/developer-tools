@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'versionNotes' => 'Versiyon Notları',
     'lastestVersion' => 'En Son Versiyon',
     'success' => 'İşlem Başarılı.',
     'controllerName' => 'Kontrolcü Adı',
