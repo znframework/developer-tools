@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'lastestVersion' => 'Lastest Version',
     'success' => 'Operation succeeded.',
     'error' => 'Operation failed!',
     'controllerName' => 'Controller Name',

@@ -1,4 +1,5 @@
 <!-- Page Heading -->
+@@Form::open():
 <div class="row">
     <div class="col-lg-11">
         <h1 class="page-header">
@@ -9,9 +10,7 @@
 
     <div class="col-lg-1">
         <h1 class="page-header">
-            @@Form::open():
             @@Form::class('btn btn-info')->submit('upgrade', LANG['upgradeButton']):
-            @@Form::close():
         </h1>
     </div>
 </div>
@@ -23,7 +22,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> {{LANG['updatedFiles']}}</h3>
+                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> ZN {{LASTEST_VERSION . ' - ' . LANG['updatedFiles']}}</h3>
             </div>
             <div class="panel-body">
                 <div class="list-group">
@@ -90,3 +89,4 @@
     </div>
 </div>
 <!-- /.container-fluid -->
+@@Form::close():

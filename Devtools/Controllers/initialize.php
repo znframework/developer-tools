@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB;
+use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful;
 
 class Initialize extends Controller
 {
@@ -24,6 +24,7 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
+        define('LASTEST_VERSION', Restful::post('https://api.znframework.com/statistics/versions')[0]->version);
         define('DASHBOARD_CONFIG', Config::get('Dashboard'));
         define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
@@ -167,8 +168,8 @@ class Initialize extends Controller
             $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
             $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
         }
-        
-        $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info'];
+
+        $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
 
         if( IS_CONTAINER === FALSE )
         {

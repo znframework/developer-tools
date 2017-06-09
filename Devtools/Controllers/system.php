@@ -262,8 +262,8 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function info(String $params = NULL)
     {
-        $return = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
-        $return = Separator::decodeArray($return);
+        $return   = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
+        $return   = Separator::decodeArray($return);
 
         if( Method::post('upgrade') )
         {

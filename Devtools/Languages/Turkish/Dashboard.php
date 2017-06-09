@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'lastestVersion' => 'En Son Versiyon',
     'success' => 'İşlem Başarılı.',
     'controllerName' => 'Kontrolcü Adı',
     'viewName' => 'Görünüm Adı',
