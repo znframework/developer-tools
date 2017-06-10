@@ -271,7 +271,12 @@ class System extends Controller
             {
                 foreach( $return as $file => $content )
                 {
-                    Folder::create(pathInfos($file, 'dirname'));
+                    $dirname = pathInfos($file, 'dirname');
+
+                    Folder::permission($dirname, 0777);
+                    File::permission($file, 0777);
+
+                    Folder::create($dirname);
                     File::write($file, $content);
                 }
 
