@@ -1,8 +1,8 @@
 {
     "name": "znframework/developer-tools",
     "type": "project",
-    "description": "ZN Dashboard",
-    "keywords": ["zn", "zeroneed", "dashboard", "dev-tool"],
+    "description": "ZN Developer Tools",
+    "keywords": ["zn devtools", "zeroneed devtools", "developer tools", "dev-tool"],
     "homepage": "https://github.com/znframework/developer-tools",
     "license": "MIT",
     "require": 
