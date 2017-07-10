@@ -38,6 +38,8 @@ class Generate extends Controller
                     $functions = Arrays::addFirst($functions, 'main');
                 }
 
+                $viewObjectConfig = import(SELECT_PROJECT_DIR . 'Config' . DS . 'ViewObjects.php');
+
                 $controller = Method::post('controller');
 
                 if( $type = Method::post('withView') )
@@ -46,16 +48,27 @@ class Generate extends Controller
                     {
                         $view = trim($view);
 
-                        if( $view === 'main' )
+                        $viewsDir = SELECT_PROJECT_DIR . 'Views' . DS;
+
+                        if( ($viewObjectConfig['viewNameType'] ?? NULL) === 'directory' )
                         {
-                            $view = $controller;
+                            $viewControllerDir = $controller . DS;
+
+                            Folder::create($viewsDir . $viewControllerDir);
+
+                            $view = $viewControllerDir . $view;
                         }
                         else
                         {
+                            if( $view === 'main' )
+                            {
+                                $view = $controller;
+                            }
+
                             $view = $controller . '-' . $view;
                         }
 
-                        $viewPath = SELECT_PROJECT_DIR . 'Views/' . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php');
+                        $viewPath = $viewsDir . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php');
 
                         if( ! File::exists($viewPath) )
                         {
@@ -282,7 +295,17 @@ class Generate extends Controller
         $this->masterpage->pdata['deletePath'] = $path;
 
         $files = Folder::allFiles($fullPath, true);
-        $files = Arrays::addFirst($files, 'Projects/Projects.php');
+
+        if( defined('SETTINGS_DIR') )
+        {
+            $projects = SETTINGS_DIR . 'Projects.php';
+        }
+        else
+        {
+            $projects =  'Projects/Projects.php';
+        }
+
+        $files = Arrays::addFirst($files, $projects);
 
         $this->masterpage->pdata['files']      = $files;
     }
@@ -552,7 +575,7 @@ class Generate extends Controller
         if( $controlOld === $controlNew )
         {
             File::rename($old, $new);
-        }    
+        }
     }
 
     //--------------------------------------------------------------------------------------------------------
