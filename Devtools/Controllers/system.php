@@ -345,6 +345,7 @@ class System extends Controller
 
         $this->masterpage->pdata['supportCommands'] =
         [
+            '<b>command-list</b>',
             '<b>run-uri</b> controller/function/p1/p2 ... /pN',
             '<b>run-controller</b> controller/function',
             '<b>run-class</b> controller:function p1 p2 ... pN',

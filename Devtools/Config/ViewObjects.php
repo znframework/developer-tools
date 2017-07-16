@@ -1,4 +1,4 @@
-<?php return
+<?php $lang = lang('ViewObjects'); return
 [
     //--------------------------------------------------------------------------------------------------
     // View Objects
@@ -12,6 +12,28 @@
     //--------------------------------------------------------------------------------------------------
 
     //--------------------------------------------------------------------------------------------------
+    // Vew Name Type -> 5.0.0
+    //--------------------------------------------------------------------------------------------------
+    //
+    // Kontrolcüler kendi ismiyle aynı isimli bir görünüm dosyası olursa bu görünümü otomatik olarak
+    // yükler. Ancak kontrolcüler alt yöntemleri ile birden fazla görünümü aynı kontrolcü içinde
+    // çalıştırabileceğil için görünüm yapınız her kontrolcü için birden fazla dosya da içerebileceği
+    // için görünümlerinizi kontrolcü ismiyle aynı isme sahip bir dizin altında toplamak
+    // isteyebilirsiniz. İşte bu ayar bu duruma yardımcı olmak için kullanılır.
+    //
+    // Kullanılabilir Seçenekler
+    //
+    // file: Kontrolcü adı ile aynı görünüm adı olmalıdır. Kontrolcü main dışında alt yöntemlerde
+    // içeriyorsa görünüm adı kontrolcuadi-yontemadi formatında oluşturulmalıdır.
+    //
+    // directory: Görünüm dizininde kontrolcü adı ile aynı isimli görünüm dizini olmalıdır. Örnek
+    // olarak example.php kontrolcünüz varsa view yapısı söyle olmalıdır. example/main.php,
+    // example/altyontem.php
+    //
+    //--------------------------------------------------------------------------------------------------
+    'viewNameType' => 'directory',
+
+    //--------------------------------------------------------------------------------------------------
     // Wizard
     //--------------------------------------------------------------------------------------------------
     //
@@ -19,6 +41,7 @@
     //
     // keywords : for, if, while, foreach gibi kullanımlara izin ver.
     // printable: @@function:, @variable: kullanımına izin ver.
+    // functions: @function: kullanımına izin ver.
     // comments : {-- yorum satırı --} kullanımına izin ver.
     // tags     : {[ php codes ]} php tagları olarak kullanımına izin ver.
     // html     : #html kodlarını # kare symbolü ile kullanıma izin ver.
@@ -26,12 +49,12 @@
     //--------------------------------------------------------------------------------------------------
     'wizard' =>
     [
-        'keywords'      => true,
-        'printable'     => true,
-        'functions'     => true,
-        'comments'      => true,
-        'tags'          => true,
-        'html'          => true
+        'keywords'  => true,
+        'printable' => true,
+        'functions' => true,
+        'comments'  => true,
+        'tags'      => true,
+        'html'      => false
     ],
 
     //--------------------------------------------------------------------------------------------------
@@ -218,24 +241,6 @@
         ]
     ],
 
-    //----------------------------------------------------------------------------------------------------
-    // Terminal
-    //----------------------------------------------------------------------------------------------------
-    //
-    // Genel Kullanımı: Ön tanımlı konsol ayarı yapmak için kullanılır.
-    //
-    //----------------------------------------------------------------------------------------------------
-    'terminal' =>
-    [
-    	'width' 		=> '800px',
-    	'height' 		=> '350px',
-    	'bgColor' 		=> '#000',
-    	'barBgColor' 	=> '#222',
-    	'textColor' 	=> '#ccc',
-    	'textType' 		=> 'Consolas, monospace',
-    	'textSize' 		=> '12px'
-    ],
-
     //--------------------------------------------------------------------------------------------------
     // DataGrid
     //--------------------------------------------------------------------------------------------------
@@ -254,14 +259,14 @@
         //----------------------------------------------------------------------------------------------
         'buttonNames' =>
         [
-            'add'           => lang('ViewObjects', 'dbgrid:addButton'),
-            'edit'          => lang('ViewObjects', 'dbgrid:editButton'),
-            'update'        => lang('ViewObjects', 'dbgrid:updateButton'),
-            'save'          => lang('ViewObjects', 'dbgrid:saveButton'),
-            'close'         => lang('ViewObjects', 'dbgrid:closeButton'),
-            'delete'        => lang('ViewObjects', 'dbgrid:deleteButton'),
-            'deleteSelected'=> lang('ViewObjects', 'dbgrid:deleteSelectedName'),
-            'deleteAll'     => lang('ViewObjects', 'dbgrid:deleteAllName')
+            'add'           => $lang['dbgrid:addButton'],
+            'edit'          => $lang['dbgrid:editButton'],
+            'update'        => $lang['dbgrid:updateButton'],
+            'save'          => $lang['dbgrid:saveButton'],
+            'close'         => $lang['dbgrid:closeButton'],
+            'delete'        => $lang['dbgrid:deleteButton'],
+            'deleteSelected'=> $lang['dbgrid:deleteSelectedName'],
+            'deleteAll'     => $lang['dbgrid:deleteAllName']
         ],
 
         //----------------------------------------------------------------------------------------------
@@ -274,8 +279,8 @@
         //----------------------------------------------------------------------------------------------
         'placeHolders' =>
         [
-            'search'    => lang('ViewObjects', 'dbgrid:searchHolder'),
-            'inputs'    => lang('ViewObjects', 'dbgrid:inputsHolder'),
+            'search'    => $lang['dbgrid:searchHolder'],
+            'inputs'    => $lang['dbgrid:inputsHolder'],
         ],
 
         //----------------------------------------------------------------------------------------------
@@ -287,8 +292,8 @@
         //----------------------------------------------------------------------------------------------
         'styleElement' =>
         [
-            //'#DBGRID_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
-            //'#DBGRID_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
+            '#DBGRID_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
+            '#DBGRID_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
         ],
 
         //----------------------------------------------------------------------------------------------
@@ -301,22 +306,22 @@
         //----------------------------------------------------------------------------------------------
         'attributes'    =>
         [
-            'table'         => ['class' => 'table table-bordered table-hover table-striped'],
+            'table'         => ['width' => '100%', 'cellspacing' => 0, 'cellpadding' => 10, 'style' => 'margin-top:15px; margin-bottom:15px; border:solid 1px #ddd; font-family:Arial; color:#888; font-size:14px;'],
             'editTables'    => ['style' => 'font-family:Arial; color:#888; font-size:14px;'],
-            'columns'       => [],
-            'search'        => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px; border-radius:4px'],
-            'add'           => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'deleteSelected'=> ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'deleteAll'     => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'save'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'update'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'delete'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
-            'edit'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer; border-radius:4px'],
+            'columns'       => ['height' => 75, 'style' => 'text-decoration:none; color:#0085B2'],
+            'search'        => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
+            'add'           => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'deleteSelected'=> ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'deleteAll'     => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'save'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'update'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'delete'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'edit'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
             'listTables'    => [],
             'inputs'        =>
             [
-                'text'      => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px; border-radius:4px'],
-                'textarea'  => ['style' => 'height:120px; width:290px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px; border-radius:4px'],
+                'text'      => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
+                'textarea'  => ['style' => 'height:120px; width:290px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
                 'radio'     => [],
                 'checkbox'  => [],
                 'select'    => []
@@ -338,7 +343,7 @@
             'style' =>
             [
                 'links' => 'color:#0085B2;
-                            width:30px; height:30px;
+                            width:20px; height:20px;
                             text-align:center;
                             padding-top:4px;
                             display:inline-block;
