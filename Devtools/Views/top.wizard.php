@@ -37,7 +37,7 @@
         </li>
 
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i>  @$upperLang = mb_strtoupper(getLang()): <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag"></i>  @$upperLang = \Autoloader::upper(getLang()): <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @foreach( LANGUAGES as $lang ):
                     @if($lang !== $upperLang):
