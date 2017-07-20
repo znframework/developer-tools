@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security, Config;
 
 class System extends Controller
 {
@@ -391,7 +391,7 @@ class System extends Controller
             Session::insert('commands', [$command]);
         }
 
-        exec('php zerocore project-name ' . SELECT_PROJECT. ' '.$command.' 2>&1', $response);
+        exec(Config::get('Services', 'processor')['path'] . ' zerocore project-name ' . SELECT_PROJECT. ' '.$command.' 2>&1', $response);
 
         $string = NULL;
 
