@@ -339,7 +339,7 @@
             'inputs'        =>
             [
                 'text'      => ['style' => 'height:30px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px'],
-                'textarea'  => ['style' => 'height:30px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px'],
+                'textarea'  => ['style' => 'height:100px; width:300px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px'],
                 'radio'     => [],
                 'checkbox'  => [],
                 'select'    => []

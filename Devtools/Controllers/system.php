@@ -85,7 +85,7 @@ class System extends Controller
         $joinings           = Session::select('joinings');
         $searching          = Session::select('searching');
         $viewColumns        = Session::select('viewColumns');
-        $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : $tables[0];
+        $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : ($tables[0] ?? NULL);
         $joinCollapse       = Session::select('joinCollapse');
 
         $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
