@@ -310,8 +310,8 @@
         //----------------------------------------------------------------------------------------------
         'styleElement' =>
         [
-            '#DBGRID_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
-            '#DBGRID_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
+            //'#DBGRID_TABLE tr:nth-child(even)' => ['background' => '#E6F9FF'],
+            //'#DBGRID_TABLE tr:nth-child(odd)'  => ['background' => '#FFF']
         ],
 
         //----------------------------------------------------------------------------------------------
@@ -324,22 +324,22 @@
         //----------------------------------------------------------------------------------------------
         'attributes'    =>
         [
-            'table'         => ['width' => '100%', 'cellspacing' => 0, 'cellpadding' => 10, 'style' => 'margin-top:15px; margin-bottom:15px; border:solid 1px #ddd; font-family:Arial; color:#888; font-size:14px;'],
-            'editTables'    => ['style' => 'font-family:Arial; color:#888; font-size:14px;'],
-            'columns'       => ['height' => 75, 'style' => 'text-decoration:none; color:#0085B2'],
-            'search'        => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
-            'add'           => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'deleteSelected'=> ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'deleteAll'     => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'save'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'update'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'delete'        => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
-            'edit'          => ['style' => 'height:34px; color:#0085B2; background:none; border:solid 1px #0085B2; cursor:pointer'],
+            'table'         => ['class' => 'table table-bordered table-hover table-striped'],
+            'editTables'    => [],
+            'columns'       => [],
+            'search'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'add'           => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'deleteSelected'=> ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'deleteAll'     => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'save'          => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'update'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'delete'        => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
+            'edit'          => ['style' => 'height:30px; color:#0085B2; background:none; border:solid 1px #ccc; cursor:pointer; border-radius:4px'],
             'listTables'    => [],
             'inputs'        =>
             [
-                'text'      => ['style' => 'height:34px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
-                'textarea'  => ['style' => 'height:120px; width:290px; color:#0085B2; border:solid 1px #0085B2; text-indent:10px'],
+                'text'      => ['style' => 'height:30px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px'],
+                'textarea'  => ['style' => 'height:30px; color:#0085B2; border:solid 1px #ccc; text-indent:10px; border-radius:4px'],
                 'radio'     => [],
                 'checkbox'  => [],
                 'select'    => []
