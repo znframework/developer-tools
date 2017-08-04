@@ -86,6 +86,12 @@ class System extends Controller
         $searching          = Session::select('searching');
         $viewColumns        = Session::select('viewColumns');
         $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : ($tables[0] ?? NULL);
+
+        if( empty($selectTable) )
+        {
+            return $this->masterpage->error = lang('DevtoolsErrors', 'gridError');
+        }
+
         $joinCollapse       = Session::select('joinCollapse');
 
         $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
