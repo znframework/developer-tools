@@ -31,7 +31,8 @@ class Generate extends Controller
 
             if( ! $error = Validation::error('string') )
             {
-                $functions = explode(',', Method::post('functions'));
+                $functions = Method::post('functions');
+                $functions = explode(',', empty($functions) ? 'main' : $functions);
 
                 if( ! Arrays::valueExists($functions, 'main') )
                 {
