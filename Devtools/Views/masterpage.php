@@ -10,7 +10,14 @@ Import::view('top.wizard');
 
 <?php
 
-Import::view(suffix($page, '.wizard'), $pdata ?? NULL);
+if( isset($page) )
+{
+    Import::view(suffix($page, '.wizard'), $pdata ?? NULL);
+}
+else
+{
+    echo '<br>';
+}
 
 ?>
 

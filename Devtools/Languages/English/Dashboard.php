@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'tools' => 'Tools',
     'versionNotes' => 'Version Notes',
     'lastestVersion' => 'Lastest Version',
     'success' => 'Operation succeeded.',
@@ -64,7 +65,7 @@
     'addButton' => 'ADD',
     'renameColumnButton' => 'RENAME COLUMN',
     'modifyColumnButton' => 'MODIFY COLUMN',
-    'systemBackup' => 'System Backup',
+    'systemBackup' => 'Backup',
     'backupList' => 'Backup List',
     'newProject' => 'New Project',
     'newController' => 'New Controller',
@@ -78,7 +79,7 @@
     'dashboardVersion' => 'Dashboard Version',
     'version' => 'Version',
     'systemInfo' => 'System Info',
-    'systemLogs' => 'System Logs',
+    'systemLogs' => 'Logs',
     'models' => 'Models',
     'controllers' => 'Controllers',
     'languages' => 'Languages',

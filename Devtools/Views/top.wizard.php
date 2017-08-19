@@ -24,12 +24,39 @@
         </li>
 
         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-navicon"></i>
+                {[
+                    $currentUri = str_replace('/main', '', CURRENT_CFURI);
+
+                    if( Arrays::valueExists(TOOLS, $currentUri) )
+                    {
+                        $trans = Arrays::flip(TOOLS);
+
+                        echo LANG[$trans[$currentUri]];
+                    }
+                    else
+                    {
+                        echo LANG['tools'];
+                    }
+                ]}
+
+                <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                @foreach( TOOLS as $key => $tool ):
+                    <li>
+                        <a  href="@@siteUrl($tool):"> @@LANG[$key]:</a>
+                    </li>
+                @endforeach:
+            </ul>
+        </li>
+
+        <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-font"></i> @@EDITOR_THEMES[SELECT_EDITOR_THEME]: <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @foreach( EDITOR_THEMES as $key => $theme ):
                     @if($theme !== SELECT_EDITOR_THEME):
                     <li style="width:200px">
-                        <a href="@@siteUrl('home/editorTheme/' . $key):"> @$theme:</a>
+                        </i> <a href="@@siteUrl('home/editorTheme/' . $key):"> @$theme:</a>
                     </li>
                     @endif:
                 @endforeach:

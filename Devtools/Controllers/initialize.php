@@ -159,29 +159,30 @@ class Initialize extends Controller
             $menus['libraries'] = ['icon' => 'book',       'href' => 'generate/library'];
             $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
             $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
-            $menus['languages'] = ['icon' => 'flag',       'href' => 'system/language'];
+            $tools['languages'] = 'system/language';
             $menus['starting']  = ['icon' => 'renren',     'href' => 'generate/starting'];
         }
 
-        $menus['datatables']    = ['icon' => 'table',      'href' => 'datatables'];
-        $menus['grids']         = ['icon' => 'th',         'href' => 'system/grid'];
-        $menus['restApi']       = ['icon' => 'exchange',   'href' => 'api/main'];
-        $menus['sqlConverter']  = ['icon' => 'refresh',    'href' => 'system/converter'];
-        $menus['documentation'] = ['icon' => 'book',       'href' => 'home/docs'];
+        $tools['datatables']    = 'datatables';
+        $tools['grids']         = 'system/grid';
+        $tools['restApi']       = 'api';
+        $tools['sqlConverter']  = 'system/converter';
+        $tools['documentation'] = 'home/docs';
 
         if( ! IS_EXTERNAL )
         {
-            $menus['systemLogs']    = ['icon' => 'cogs',       'href' => 'system/log'];
-            $menus['systemBackup']  = ['icon' => 'floppy-o',   'href' => 'system/backup'];
+            $tools['systemLogs']    = 'system/log';
+            $tools['systemBackup']  = 'system/backup';
         }
 
-        $menus['systemInfo']    = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
+        $menus['systemInfo'] = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
 
         if( IS_CONTAINER === FALSE )
         {
-            $menus['terminal']      = ['icon' => 'terminal',   'href' => 'system/terminal'];
+            $tools['terminal']      = 'system/terminal';
         }
 
+        define('TOOLS', $tools);
         define('MENUS', $menus);
     }
 }

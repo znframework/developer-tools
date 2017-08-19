@@ -11,10 +11,12 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'tools' => 'Araçlar',
     'versionNotes' => 'Versiyon Notları',
     'lastestVersion' => 'En Son Versiyon',
     'success' => 'İşlem Başarılı.',
     'controllerName' => 'Kontrolcü Adı',
+    'error' => 'İşlem başarısız!',
     'viewName' => 'Görünüm Adı',
     'fileName' => 'Dosya Adı',
     'newFile' => 'Yeni Dosya',
@@ -62,7 +64,7 @@
     'addButton' => 'EKLE',
     'renameColumnButton' => 'KOLONU YENİDEN ADLANDIR',
     'modifyColumnButton' => 'KOLONU DEĞİŞTİR',
-    'systemBackup' => 'Sistem Yedekleme',
+    'systemBackup' => 'Yedekleme',
     'alterTableProcess' => 'Tablo Düzenleme İşlemleri',
     'backupList' => 'Yedek Listesi',
     'newProject' => 'Yeni Proje',
@@ -77,7 +79,7 @@
     'dashboardVersion' => 'Panel Versiyon',
     'version' => 'Versiyon',
     'systemInfo' => 'Sistem Bilgisi',
-    'systemLogs' => 'Sistem Logları',
+    'systemLogs' => 'Loglar',
     'models' => 'Modeller',
     'controllers' => 'Kontrolcüler',
     'languages' => 'Diller',

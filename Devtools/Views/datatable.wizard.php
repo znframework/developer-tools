@@ -41,7 +41,6 @@
     </div>
 </div>
 
-
 @Import::view('alert-bar.wizard'):
 
 <div class="row">
