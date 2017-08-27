@@ -351,15 +351,7 @@ class System extends Controller
 
         $this->masterpage->pdata['supportCommands'] =
         [
-            '<b>command-list</b>',
-            '<b>run-uri</b> controller/function/p1/p2 ... /pN',
-            '<b>run-controller</b> controller/function',
-            '<b>run-class</b> controller:function p1 p2 ... pN',
-            '<b>run-model</b> model:function p1 p2 p3 ... pN'   ,
-            '<b>run-function</b> function p1 p2 p 3 ... pN ',
-            '<b>run-command</b> command:method p1 p2 p 3 ... pN ',
-            '<b>run-external-command</b> command:method p1 p2 p 3 ... pN ',
-            '<b>clear</b>'
+            '<b>command-list</b> : ' . LANG['allCommandList']
         ];
 
         $this->masterpage->page  = 'terminal';
@@ -407,31 +399,6 @@ class System extends Controller
         }
 
         echo $string;
-    }
-
-    //--------------------------------------------------------------------------------------------------------
-    // Terminal Ajax
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
-    public function terminalArrowAjax()
-    {
-        if( ! Http::isAjax() )
-        {
-            return false;
-        }
-
-        $index    = Method::post('index');
-        $commands = Session::select('commands');
-
-        if( ! empty($commands[$index]) )
-        {
-            echo $commands[$index]; exit;
-        }
-
-        echo NULL;
     }
 
     //--------------------------------------------------------------------------------------------------------

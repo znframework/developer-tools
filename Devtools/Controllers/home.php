@@ -33,7 +33,6 @@ class Home extends Controller
                 $source = FILES_DIR . 'Default.zip';
                 $target = PROJECTS_DIR . Method::post('project');
 
-
                 File::zipExtract($source, $target);
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);

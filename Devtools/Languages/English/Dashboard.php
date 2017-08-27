@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'allCommandList' => 'Run the command-list command to see all supported commands.',
     'tools' => 'Tools',
     'versionNotes' => 'Version Notes',
     'lastestVersion' => 'Lastest Version',

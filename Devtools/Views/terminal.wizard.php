@@ -129,59 +129,40 @@
                             }
                         });
 
-                        var i = 0;
+                        var i   = -1;
+                        var obj = {{Json::encode(Session::select('commands'))}};
 
                         $('/#command').keyup(function(e)
                         {
-                            if(e.keyCode == 38)
+                            if( e.keyCode === 38 )
                             {
-                                $.ajax
-                                ({
-                                    'url'/: '@@siteUrl('system/terminalArrowAjax'):',
-                                    'type'/:'post',
-                                    'data'/:'index=' + i,
-                                    'success'/:function(data)
-                                    {
-                                        if( ! data )
-                                        {
-                                            i = 0;
-                                        }
-                                        else
-                                        {
-                                            $('/#command').val(data);
-                                            i++;
-                                        }
-                                    }
-                                });
+                                i++;
 
-
+                                if( data = obj[i] )
+                                {
+                                    $('/#command').val(data);
+                                }
+                                else
+                                {
+                                    i--;
+                                }
                             }
                         });
 
                         $('/#command').keyup(function(e)
                         {
-                            if(e.keyCode == 40)
+                            if( e.keyCode === 40 )
                             {
-                                $.ajax
-                                ({
-                                    'url'/: '@@siteUrl('system/terminalArrowAjax'):',
-                                    'type'/:'post',
-                                    'data'/:'index=' + i,
-                                    'success'/:function(data)
-                                    {
-                                        if( ! data )
-                                        {
-                                            i = 0;
-                                        }
-                                        else
-                                        {
-                                            $('/#command').val(data);
-                                            i--;
-                                        }
-                                    }
-                                });
+                                i--;
 
-
+                                if( data = obj[i] )
+                                {
+                                    $('/#command').val(data);
+                                }
+                                else
+                                {
+                                    i++;
+                                }
                             }
                         });
 

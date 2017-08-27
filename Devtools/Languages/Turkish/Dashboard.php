@@ -11,6 +11,7 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'allCommandList' => 'Desteklenen tüm komutları görmek için command-list komutunu çalıştırın.',
     'tools' => 'Araçlar',
     'versionNotes' => 'Versiyon Notları',
     'lastestVersion' => 'En Son Versiyon',
