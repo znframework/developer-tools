@@ -111,6 +111,9 @@
                     <script type="text/javascript">
                         $('/#command').focus();
 
+                        var obj = {{Json::encode(Session::select('commands'))}};
+                        var   i = -1;
+
                         $('/#command').keyup(function(e)
                         {
                             if(e.keyCode == 13)
@@ -124,13 +127,22 @@
                                     {
                                         $('/#command').val("");
                                         $('/#terminal pre').html(data);
+
+                                        $.ajax
+                                        ({
+                                            'url'/: '@@siteUrl('system/backDataAjax'):',
+                                            'type'/:'post',
+                                            'dataType'/:'json',
+                                            'success'/:function(data)
+                                            {
+                                                obj = data;
+                                                i   = data.length - 2;
+                                            }
+                                        });
                                     }
                                 });
                             }
                         });
-
-                        var i   = -1;
-                        var obj = {{Json::encode(Session::select('commands'))}};
 
                         $('/#command').keyup(function(e)
                         {

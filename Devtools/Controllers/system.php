@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security, Config;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security, Config, Json;
 
 class System extends Controller
 {
@@ -399,6 +399,23 @@ class System extends Controller
         }
 
         echo $string;
+    }
+
+    //--------------------------------------------------------------------------------------------------------
+    // Terminal Ajax
+    //--------------------------------------------------------------------------------------------------------
+    //
+    // @param void
+    //
+    //--------------------------------------------------------------------------------------------------------
+    public function backDataAjax()
+    {
+        if( ! Http::isAjax() )
+        {
+            return false;
+        }
+
+        echo Json::encode(Session::select('commands'));
     }
 
     //--------------------------------------------------------------------------------------------------------
