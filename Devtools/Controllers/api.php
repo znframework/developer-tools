@@ -37,8 +37,8 @@ class Api extends Controller
                         $newData[$valueEx[0]] = $valueEx[1];
                     }
                 }
-
-                Restful::data($data);
+                
+                Restful::data($newData);
             }
 
             if( $ssl = Method::post('sslVerifyPeer') )
