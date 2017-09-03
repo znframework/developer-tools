@@ -165,6 +165,7 @@ class Initialize extends Controller
 
         $tools['datatables']    = 'datatables';
         $tools['grids']         = 'system/grid';
+        $tools['packages'] =      'packages';
         $tools['restApi']       = 'api';
         $tools['sqlConverter']  = 'system/converter';
         $tools['documentation'] = 'home/docs';

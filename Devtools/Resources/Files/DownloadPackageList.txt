@@ -1,0 +1,6 @@
+
+monolog/monolog
+monolog/monolog
+kdyby/monolog
+adeira/monolog
+cakephp/monolog

@@ -1,0 +1,112 @@
+@@Form::open():
+<div class="row">
+    <div class="col-lg-11">
+        <h1 class="page-header">
+            {{LANG['packages']}} <small> {{LANG['overview']}}</small>
+        </h1>
+
+    </div>
+
+    <div class="col-lg-1">
+        <h1 class="page-header">
+            @@Form::class('btn btn-info')->submit('search', LANG['searchButton']):
+        </h1>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['packages']}} </h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <label>{{LANG['name']}}</label>
+                    @@Form::required()->class('form-control')->placeholder('Packagist Package Name/: Example/: monolog/monolog')->text('name', Validation::postBack('name')):
+                </div>
+
+            </div>
+
+            @if( isset($result) ):
+
+            <div class="panel-body">
+
+                <div id="tables" class="list-group">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{{LANG['name']}}</th>
+                                    <th>{{LANG['description']}}</th>
+                                    <th>{{LANG['downloadCount']}}</th>
+                                    <th>{{LANG['process']}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach( $result as $row ):
+
+
+                                <tr>
+                                    <td>{{$row->name}}</td>
+                                    <td>{{$row->description}}</td>
+                                    <td>{{$row->downloads}}</td>
+                                    <td name="{{$row->name}}">
+                                        @if( ! Arrays::valueExists($list, $row->name) ):
+                                            {{Form::class('btn btn-info')->dval($row->name)->onclick('downloadPackage(this)')->button('download', LANG['downloadButton'])}}
+                                        @else:
+                                            {{LANG['available']}}
+                                        @endif:
+                                    </td>
+                                </tr>
+                                @endforeach:
+                            </tbody>
+
+                        </table>
+                    </div>
+                    {{$datatable ?? NULL}}
+
+                </div>
+            </div>
+
+            @endif:
+
+
+        </div>
+    </div>
+</div>
+@@Form::close():
+
+<script>
+
+function downloadPackage(obj)
+{
+    var ids = $(obj).attr('dval');
+
+    $.ajax
+    ({
+        url: '{{siteUrl('packages/download')}}',
+        data: {'name': ids},
+        type: 'post',
+        success: function(data)
+        {
+            alert('{{lang('Success', 'success')}}');
+            $(obj).parent().text('{{LANG['available']}}');
+        }
+    });
+}
+
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('/#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('/#loadingDiv').addClass('hide');
+});
+
+</script>

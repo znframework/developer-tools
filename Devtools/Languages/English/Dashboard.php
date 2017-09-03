@@ -11,6 +11,8 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'available' => 'Available',
+    'packages' => 'Packages',
     'allCommandList' => 'Run the command-list command to see all supported commands.',
     'tools' => 'Tools',
     'versionNotes' => 'Version Notes',
@@ -34,6 +36,7 @@
     'routeName' => 'Route Name',
     'migrationName' => 'Migration Name',
     'namespace' => 'Namespace',
+    'name' => 'Name',
     'extends' => 'Extends',
     'projects' => 'Projects',
     'functions' => 'Functions',
@@ -42,6 +45,10 @@
     'datas' => 'Datas',
     'overview' => 'Overview',
     'downloadCount' => 'Download Count',
+    'download' => 'Download',
+    'downloadButton' => 'DOWNLOAD',
+    'searchButton' => 'SEARCH',
+    'description' => 'Description',
     'fileCount' => 'File Count',
     'lineCount' => 'Line Count',
     'libraryCount' => 'Library Count',
@@ -127,6 +134,7 @@
     'viewColumns' => 'View Columns',
     'removeButton' => 'REMOVE',
     'processColumn' => 'Process Column',
+    'process' => 'Process',
     'saveButton' => 'SAVE',
     'save' => 'Save',
     'loadButton' => 'LOAD',

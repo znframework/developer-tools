@@ -11,6 +11,8 @@
     //
     //--------------------------------------------------------------------------------------------------------
 
+    'available' => 'Kullanılabilir',
+    'packages' => 'Paketler',
     'allCommandList' => 'Desteklenen tüm komutları görmek için command-list komutunu çalıştırın.',
     'tools' => 'Araçlar',
     'versionNotes' => 'Versiyon Notları',
@@ -35,6 +37,7 @@
     'migrationName' => 'Göç Adı',
     'modelName' => 'Model Adı',
     'namespace' => 'Namespace(İsim Alanı)',
+    'name' => 'İsim',
     'extends' => 'Extends(Uzantı)',
     'projects' => 'Projeler',
     'functions' => 'Fonskiyonlar',
@@ -42,6 +45,10 @@
     'home' => 'Anasayfa',
     'overview' => 'Genel Bakış',
     'downloadCount' => 'İndirme Sayısı',
+    'searchButton' => 'ARAMA',
+    'download' => 'İndir',
+    'downloadButton' => 'İNDİR',
+    'description' => 'Açıklama',
     'fileCount' => 'Dosya Sayısı',
     'lineCount' => 'Satır Sayısı',
     'libraryCount' => 'Kütüphane Sayısı',
@@ -126,6 +133,7 @@
     'viewColumns' => 'Gösterilecek Kolonlar',
     'removeButton' => 'KALDIR',
     'processColumn' => 'İşlem Kolonu',
+    'process' => 'İşlem',
     'saveButton' => 'KAYDET',
     'save' => 'Kaydet',
     'loadButton' => 'YÜKLE',

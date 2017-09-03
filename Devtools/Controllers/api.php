@@ -24,12 +24,10 @@ class Api extends Controller
             if( $data = Method::post('data') )
             {
                 $explode = explode(',', $data);
-
                 $newData = [];
 
                 foreach( $explode as $value )
                 {
-
                     $valueEx = explode(':', trim(str_replace(EOL, NULL, $value)));
 
                     if( isset($valueEx[1]) )
@@ -37,7 +35,7 @@ class Api extends Controller
                         $newData[$valueEx[0]] = $valueEx[1];
                     }
                 }
-                
+
                 Restful::data($newData);
             }
 
