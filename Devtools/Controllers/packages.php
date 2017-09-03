@@ -53,7 +53,7 @@ class Packages extends Controller
 
         $name = Method::post('name');
 
-        exec('composer install ' . $name, $response, $res);
+        exec('composer require ' . $name, $response, $return);
 
         File::append($this->downloadFileName, $name . EOL);
     }
