@@ -185,6 +185,18 @@
     </div>
 </div>
 
+<script>
 
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('/#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('/#loadingDiv').addClass('hide');
+});
+
+</script>
 
 <!-- /.container-fluid -->

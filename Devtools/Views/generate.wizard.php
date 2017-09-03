@@ -38,13 +38,13 @@
                         {{Form::id('renameId' . $key)->style('width:20%; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
-                        @if( $file !== 'Projects/Projects.php' ):
+                        @if( strpos($relativePath, 'Settings') !== 0 ):
                         <span class="pull-right"><i onclick="deleteProcess('generate/deleteFile/{{$relativePath}}');" class="fa fa-trash-o fa-fw"></i></span>
                         <span class="pull-right"><i onclick="renameProcess('{{$relativePath}}', '/#renameId{{$key}}');" title="{{LANG['renameFile']}}" class="fa fa-edit fa-fw"></i></span>
                         @endif:
                     </a>
 
-                    <pre id="b@$key:" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" onkeyup="saveProcess('{{absoluteRelativePath($file)}}', this, event, {{$key}});" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
+                    <pre id="b@$key:" key="{{$key}}" link="{{absoluteRelativePath($file)}}" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
                         editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
@@ -78,7 +78,22 @@ function renameProcess(oldname, newname)
     }
 }
 
-function saveProcess(link, e, evt, key)
+$('pre').keydown(function(event)
+{
+        // If Control or Command key is pressed and the S key is pressed
+        // run save function. 83 is the key code for S.
+        if( (event.ctrlKey || event.metaKey) && event.which == 83)
+        {
+            saveProcess($(this).attr('link'), $(this).attr('key'));
+
+            event.preventDefault();
+
+            return false;
+        };
+    }
+);
+
+function saveProcess(link, key)
 {
     var editor = ace.edit("editor" + key);
     var code   = editor.getValue();
@@ -94,5 +109,15 @@ function saveProcess(link, e, evt, key)
         }
     });
 }
+
+$(document).ajaxSend(function(e, jqXHR)
+{
+  $('/#loadingDiv').removeClass('hide');
+});
+
+$(document).ajaxComplete(function(e, jqXHR)
+{
+  $('/#loadingDiv').addClass('hide');
+});
 
 </script>
