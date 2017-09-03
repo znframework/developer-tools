@@ -102,7 +102,7 @@
 
     					<pre></pre>
 
-						<?php echo 'php zerocore > ';?>
+						{[ echo 'php zerocore > ';]}
 						<input type="text" name="command" id="command" autocomplete="off" />
 
         				</div>

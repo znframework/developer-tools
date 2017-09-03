@@ -14,12 +14,51 @@
     </div>
 </div>
 
+@if( ! empty($list) ):
 
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['packages']}} </h3>
+                <h3 class="panel-title"><i class="fa fa-th fa-fw"></i> {{LANG['myPackages']}} </h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{LANG['name']}}</th>
+                                <th>{{LANG['process']}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach( $list as $row ):
+                            <tr>
+                                <td>{{$row}}</td>
+                                <td>
+                                    {{Html::class('form-control btn btn-danger')->anchor('packages/delete/' . $row, LANG['deleteButton'])}}
+                                </td>
+                            </tr>
+                            @endforeach:
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endif:
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-th fa-fw"></i> {{LANG['packages']}} </h3>
             </div>
             <div class="panel-body">
 
@@ -33,9 +72,7 @@
             @if( isset($result) ):
 
             <div class="panel-body">
-
                 <div id="tables" class="list-group">
-
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
@@ -54,7 +91,7 @@
                                     <td>{{$row->name}}</td>
                                     <td>{{$row->description}}</td>
                                     <td>{{$row->downloads}}</td>
-                                    <td name="{{$row->name}}">
+                                    <td>
                                         @if( ! Arrays::valueExists($list, $row->name) ):
                                             {{Form::class('form-control btn btn-info')->dval($row->name)->onclick('downloadPackage(this)')->button('download', LANG['downloadButton'])}}
                                         @else:
@@ -64,11 +101,8 @@
                                 </tr>
                                 @endforeach:
                             </tbody>
-
                         </table>
                     </div>
-                    {{$datatable ?? NULL}}
-
                 </div>
             </div>
 
