@@ -56,9 +56,9 @@
                                     <td>{{$row->downloads}}</td>
                                     <td name="{{$row->name}}">
                                         @if( ! Arrays::valueExists($list, $row->name) ):
-                                            {{Form::class('btn btn-info')->dval($row->name)->onclick('downloadPackage(this)')->button('download', LANG['downloadButton'])}}
+                                            {{Form::class('form-control btn btn-info')->dval($row->name)->onclick('downloadPackage(this)')->button('download', LANG['downloadButton'])}}
                                         @else:
-                                            {{LANG['available']}}
+                                            {{Form::class('form-control btn btn-success')->dval($row->name)->disabled()->onclick('downloadPackage(this)')->button('download', strtoupper(LANG['available']))}}
                                         @endif:
                                     </td>
                                 </tr>
@@ -94,7 +94,7 @@ function downloadPackage(obj)
         success: function(data)
         {
             alert('{{lang('Success', 'success')}}');
-            $(obj).parent().text('{{LANG['available']}}');
+            $(obj).addClass('form-control btn btn-success').attr('disabled', 'disabled').val('{{strtoupper(LANG['available'])}}');
         }
     });
 }
