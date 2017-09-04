@@ -12,6 +12,7 @@
     //--------------------------------------------------------------------------------------------------------
 
     'available' => 'Kullanılabilir',
+    'myPackages' => 'Paketlerim',
     'packages' => 'Paketler',
     'allCommandList' => 'Desteklenen tüm komutları görmek için command-list komutunu çalıştırın.',
     'tools' => 'Araçlar',

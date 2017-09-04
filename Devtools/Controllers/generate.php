@@ -299,14 +299,14 @@ class Generate extends Controller
 
         if( defined('SETTINGS_DIR') )
         {
-            $projects = SETTINGS_DIR . 'Projects.php';
+            $settings = Folder::allFiles(SETTINGS_DIR);
         }
         else
         {
-            $projects =  'Projects/Projects.php';
+            $settings =  'Projects' . DS . 'Projects.php';
         }
 
-        $files = Arrays::addFirst($files, $projects);
+        $files = Arrays::addFirst($files, $settings);
 
         $this->masterpage->pdata['files']      = $files;
     }

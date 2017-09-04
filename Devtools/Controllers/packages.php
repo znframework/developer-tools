@@ -11,22 +11,37 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, JC, Method, Http, Processor, File, Arrays, URI;
+use Restful, JC, Method, Http, Processor, File, Arrays, URI, Json, Folder, Config, Strings;
 
 class Packages extends Controller
 {
-    protected $downloadFileName = FILES_DIR . 'DownloadPackageList.txt';
+    protected $downloadFileName = FILES_DIR . 'DownloadPackageList.json';
 
     protected $list = [];
+
+    protected $vendor;
 
     public function __construct()
     {
         parent::__construct();
 
-        if( File::exists($this->downloadFileName) )
+        if( ! File::exists($this->downloadFileName) )
         {
-            $this->list = Arrays::deleteElement(explode(EOL, File::read($this->downloadFileName)), '');
+            File::write($this->downloadFileName, '[]' . EOL);
         }
+
+        $vendor = Config::get('Autoloader', 'composer');
+
+        if( is_bool($vendor) )
+        {
+            $this->vendor = 'vendor/';
+        }
+        else
+        {
+            $this->vendor = rtrim($vendor, 'autoload.php');
+        }
+
+        $this->list = Json::decodeArray(File::read($this->downloadFileName));
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -59,9 +74,16 @@ class Packages extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function delete()
     {
-        $newList = Arrays::deleteElement($this->list, URI::get('delete', 2, true));
+        $newList = Arrays::deleteElement($this->list, $packageName = URI::get('delete', 2, true));
 
-        File::write($this->downloadFileName, implode(EOL, $newList));
+        $deletePackageName = $this->vendor . Strings::divide($packageName, '/');
+
+        if( Folder::exists($deletePackageName) )
+        {
+            Folder::delete($deletePackageName);
+        }
+
+        File::write($this->downloadFileName, Json::encode($newList) . EOL);
 
         redirect('packages');
     }
@@ -84,6 +106,12 @@ class Packages extends Controller
 
         exec('composer require ' . $name, $response, $return);
 
-        File::append($this->downloadFileName, $name . EOL);
+        $data = Json::decodeArray(File::read($this->downloadFileName));
+
+        $data = Arrays::addLast($data, $name);
+
+        File::write($this->downloadFileName, Json::encode($data) . EOL);
+
+        exit;
     }
 }

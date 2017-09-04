@@ -12,6 +12,7 @@
     //--------------------------------------------------------------------------------------------------------
 
     'available' => 'Available',
+    'myPackages' => 'My Packages',
     'packages' => 'Packages',
     'allCommandList' => 'Run the command-list command to see all supported commands.',
     'tools' => 'Tools',
