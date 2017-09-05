@@ -24,6 +24,11 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
+        if( ZN_VERSION < '5.3.3' )
+        {
+            die(lang('DevtoolsErrors', 'versionError', ZN_VERSION));
+        }
+
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
         {
             $lastVersionData = $versions[0]->version ?? NULL;
