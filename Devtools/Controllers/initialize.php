@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful;
+use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful, ML;
 
 class Initialize extends Controller
 {
@@ -38,7 +38,7 @@ class Initialize extends Controller
             redirect('login');
         }
 
-        define('LANG', lang('Dashboard'));
+        define('LANG', ML::select());
 
         $projects           = Folder::files(PROJECTS_DIR, 'dir');
         $projects           = Arrays::addLast($projects, 'External');

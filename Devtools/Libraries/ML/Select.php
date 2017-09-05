@@ -22,11 +22,16 @@ class Select extends MLExtends
     // @return string
     //
     //--------------------------------------------------------------------------------------------------------
-    public function do(String $key, $convert = NULL) : String
+    public function do(String $key = NULL, $convert = NULL)
     {
         $read = file_get_contents($this->lang);
 
         $array = Json::decodeArray($read);
+
+        if( $key === NULL )
+        {
+            return $array;
+        }
 
         $return = '';
 
