@@ -1,5 +1,5 @@
 <?php return
 [
-    'versionError' => 'ZN must be at least [%] version!',
+    'versionError' => 'ZN en az [%] sürümü olmalıdır! Sizin versiyonunuz [#]',
     'gridError' => 'Veritabanında gösterilecek herhangi bir tablo bulunmamaktadır!'
 ];

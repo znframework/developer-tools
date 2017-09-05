@@ -26,7 +26,7 @@ class Initialize extends Controller
     {
         if( ZN_VERSION < '5.3.3' )
         {
-            die(lang('DevtoolsErrors', 'versionError', ZN_VERSION));
+            die(lang('DevtoolsErrors', 'versionError', ['%' => '5.3.3', '#' => ZN_VERSION]));
         }
 
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
