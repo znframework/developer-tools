@@ -275,16 +275,22 @@ class System extends Controller
         {
             if( ! empty($return) )
             {
+                $upgradeFolder = 'Upgrade'.md5('upgrade').'/';
+
+                Folder::create($upgradeFolder);
+
                 foreach( $return as $file => $content )
                 {
-                    $dirname = pathInfos($file, 'dirname');
+                    $file = $upgradeFolder . $file;
 
-                    Folder::permission($dirname, 0777);
-                    File::permission($file, 0777);
+                    $dirname = pathInfos($file, 'dirname');
 
                     Folder::create($dirname);
                     File::write($file, $content);
                 }
+
+                Folder::copy($upgradeFolder, '/');
+                Folder::delete($upgradeFolder);
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }

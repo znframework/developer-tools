@@ -24,7 +24,7 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        if( ZN_VERSION < '5.3.3' )
+        if( ZN_VERSION < '5.3.24' )
         {
             die(lang('DevtoolsErrors', 'versionError', ['%' => '5.3.3', '#' => ZN_VERSION]));
         }
