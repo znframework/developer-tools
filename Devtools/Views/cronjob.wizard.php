@@ -32,7 +32,7 @@
                         'weekly'    => LANG['weekly'],
                         'monthly'   => LANG['monthly'],
                         'yearly'    => LANG['yearly']
-                    ]):
+                    ], Validation::postBack('certain')):
                 </div>
 
                 <div class="form-group col-lg-2">
@@ -44,7 +44,7 @@
                         'perhour'   => LANG['perhour'],
                         'perDay'    => LANG['perday'],
                         'permonth'  => LANG['permonth']
-                    ]):
+                    ], Validation::postBack('per')):
                 </div>
 
                 <div class="form-group col-lg-2">
@@ -53,7 +53,7 @@
                     [
                         'none'      => LANG['none'],
                         'minute'    => LANG['minute']
-                    ]):
+                    ], Validation::postBack('minute')):
                 </div>
 
                 <div class="form-group col-lg-2">
@@ -62,7 +62,7 @@
                     [
                         'none'      => LANG['none'],
                         'hour'      => LANG['hour']
-                    ]):
+                    ], Validation::postBack('hour')):
                 </div>
 
                 <div class="form-group col-lg-2">
@@ -71,7 +71,7 @@
                     [
                         'none'      => LANG['none'],
                         'day'       => LANG['day']
-                    ]):
+                    ], Validation::postBack('day')):
                 </div>
 
 
@@ -81,16 +81,16 @@
                     [
                         'none'      => LANG['none'],
                         'month'     => LANG['month']
-                    ]):
+                    ], Validation::postBack('month')):
                 </div>
 
 
                 <div class="form-group col-lg-2">
-                    @@Form::id('certainInput')->disabled()->class('form-control')->text('certainval'):
+                    @@Form::id('certainInput')->disabled()->class('form-control')->text('certainval', Validation::postBack('certainval')):
                 </div>
 
                 <div class="form-group col-lg-2">
-                    @@Form::id('perInput')->placeholder('Number Value/: Example/: 10')->disabled()->class('form-control')->text('perval'):
+                    @@Form::id('perInput')->placeholder('Number Value/: Example/: 10')->disabled()->class('form-control')->text('perval', Validation::postBack('perval')):
                 </div>
 
                 {[
@@ -103,7 +103,7 @@
                 ]}
 
                 <div class="form-group col-lg-2">
-                    @@Form::id('minuteInput')->sub(true)->disabled()->class('form-control')->select('minuteval', $minutes):
+                    @@Form::id('minuteInput')->sub(true)->disabled()->class('form-control')->select('minuteval', $minutes, Validation::postBack('minuteval')):
                 </div>
 
                 {[
@@ -116,7 +116,7 @@
                 ]}
 
                 <div class="form-group col-lg-2">
-                    @@Form::id('hourInput')->sub(true)->disabled()->class('form-control')->select('hourval', $hours):
+                    @@Form::id('hourInput')->sub(true)->disabled()->class('form-control')->select('hourval', $hours, Validation::postBack('hourval')):
                 </div>
 
                 <div class="form-group col-lg-2">
@@ -129,7 +129,7 @@
                         'friday'    => LANG['friday'],
                         'saturday'  => LANG['saturday'],
                         'sunday'    => LANG['sunday']
-                    ]):
+                    ], Validation::postBack('dayval')):
                 </div>
 
 
@@ -147,7 +147,7 @@
                         'october'   => LANG['october'],
                         'november'  => LANG['november'],
                         'december'  => LANG['december']
-                    ]):
+                    ], Validation::postBack('monthval')):
                 </div>
 
                 <div class="form-group col-lg-6">
@@ -156,11 +156,11 @@
                         'controller' => LANG['controllerMethod'],
                         'command'    => LANG['commandMethod'],
                         'wget'       => 'WGET'
-                    ]):
+                    ], Validation::postBack('type')):
                 </div>
 
                 <div class="form-group col-lg-6">
-                    @@Form::required()->placeholder('Controller/Method, Command/:Method or WGET URL')->class('form-control')->text('typeval'):
+                    @@Form::required()->placeholder('Controller/Method, Command/:Method or WGET URL')->class('form-control')->text('typeval', Validation::postBack('typeval')):
                 </div>
 
             </div>
