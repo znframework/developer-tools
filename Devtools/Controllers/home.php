@@ -87,10 +87,10 @@ class Home extends Controller
 
         \Import::handload('Functions');
 
-        $this->masterpage->plugin['name'] = array_merge(\Config::get('Masterpage', 'plugin')['name'], [
+        $this->masterpage->plugin['name'] = [
             'Dashboard/highlight/styles/agate.css',
             'Dashboard/highlight/highlight.pack.js'
-        ]);
+        ];
 
         $this->masterpage->pdata['docs'] = $return;
 

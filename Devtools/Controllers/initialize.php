@@ -24,9 +24,12 @@ class Initialize extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        if( ZN_VERSION < '5.3.24' )
+        define('DASHBOARD_CONFIG', Config::get('Dashboard'));
+        define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
+
+        if( ZN_VERSION < DASHBOARD_VERSION )
         {
-            die(lang('DevtoolsErrors', 'versionError', ['%' => '5.3.3', '#' => ZN_VERSION]));
+            die(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
         }
 
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
@@ -35,8 +38,6 @@ class Initialize extends Controller
         }
 
         define('LASTEST_VERSION', $lastVersionData ?? ZN_VERSION);
-        define('DASHBOARD_CONFIG', Config::get('Dashboard'));
-        define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
         if( strtolower(CURRENT_CONTROLLER) !== 'login' && ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], ipv4()) && ! Session::select('isLogin') )
         {
