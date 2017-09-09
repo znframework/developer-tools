@@ -49,7 +49,7 @@
 
                 <div class="form-group col-lg-2">
                     <label>{{LANG['minute']}}</label>
-                    @@Form::class('form-control')->onchange('inputControlActive(this, \'minuteInput\')')->select('minute',
+                    @@Form::id('minute')->class('form-control')->onchange('inputControlActive(this, \'minuteInput\')')->select('minute',
                     [
                         'none'      => LANG['none'],
                         'minute'    => LANG['minute']
@@ -58,7 +58,7 @@
 
                 <div class="form-group col-lg-2">
                     <label>{{LANG['hour']}}</label>
-                    @@Form::class('form-control')->onchange('inputControlActive(this, \'hourInput\')')->select('hour',
+                    @@Form::id('hour')->class('form-control')->onchange('inputControlActive(this, \'hourInput\')')->select('hour',
                     [
                         'none'      => LANG['none'],
                         'hour'      => LANG['hour']
@@ -67,7 +67,7 @@
 
                 <div class="form-group col-lg-2">
                     <label>{{LANG['day']}}</label>
-                    @@Form::class('form-control')->onchange('inputControlActive(this, \'dayInput\')')->select('day',
+                    @@Form::id('day')->class('form-control')->onchange('inputControlActive(this, \'dayInput\')')->select('day',
                     [
                         'none'      => LANG['none'],
                         'day'       => LANG['day']
@@ -77,7 +77,7 @@
 
                 <div class="form-group col-lg-2">
                     <label>{{LANG['month']}}</label>
-                    @@Form::class('form-control')->onchange('inputControlActive(this, \'monthInput\')')->select('month',
+                    @@Form::id('month')->class('form-control')->onchange('inputControlActive(this, \'monthInput\')')->select('month',
                     [
                         'none'      => LANG['none'],
                         'month'     => LANG['month']
@@ -214,11 +214,34 @@
 
 <script>
 
-$('/#certain').change(function()
+function selectNone()
 {
+    $('/#minute').val('none');
+    $('/#month').val('none');
+    $('/#day').val('none');
+    $('/#hour').val('none');
+
+    $('/#minuteInput').attr('disabled', 'disabled');
+    $('/#monthInput').attr('disabled', 'disabled');
+    $('/#dayInput').attr('disabled', 'disabled');
+    $('/#hourInput').attr('disabled', 'disabled');
+}
+
+function selectOneNone()
+{
+    $('/#certain').val('none');
+    $('/#per').val('none');
+
     $('/#certainInput').attr('disabled', 'disabled');
     $('/#perInput').attr('disabled', 'disabled');
-    $('select[sub="sub"]').attr('disabled', 'disabled');
+}
+
+$('/#certain').change(function()
+{
+    selectNone();
+
+    $('/#per').val('none');
+    $('/#perInput').attr('disabled', 'disabled');
 
     if( $(this).val() === 'none' )
     {
@@ -228,8 +251,8 @@ $('/#certain').change(function()
 
 $('/#per').change(function()
 {
-    $('/#certainInput').attr('disabled', 'disabled');
-    $('select[sub="sub"]').attr('disabled', 'disabled');
+    selectNone();
+    $('/#certain').val('none');
 
     if( $(this).val() === 'none' )
     {
@@ -252,8 +275,7 @@ function inputControlActive(th, obj)
         $(obj).attr('disabled', 'disabled');
     }
 
-    $('/#certainInput').attr('disabled', 'disabled');
-    $('/#perInput').attr('disabled', 'disabled');
+    selectOneNone();
 }
 
 </script>
