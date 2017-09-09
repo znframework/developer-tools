@@ -127,8 +127,15 @@ function downloadPackage(obj)
         type: 'post',
         success: function(data)
         {
-            alert('{{lang('Success', 'success')}}');
-            $(obj).addClass('form-control btn btn-success').attr('disabled', 'disabled').val('{{strtoupper(LANG['available'])}}');
+            if( data == 1 )
+            {
+                alert('{{LANG['composerError']}}');
+            }
+            else
+            {
+                alert('{{lang('Success', 'success')}}');
+                $(obj).addClass('form-control btn btn-success').attr('disabled', 'disabled').val('{{strtoupper(LANG['available'])}}');
+            }
         }
     });
 }

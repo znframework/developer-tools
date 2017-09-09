@@ -106,11 +106,16 @@ class Packages extends Controller
 
         exec('composer require ' . $name, $response, $return);
 
-        $data = Json::decodeArray(File::read($this->downloadFileName));
+        if( $return == 0 )
+        {
+            $data = Json::decodeArray(File::read($this->downloadFileName));
 
-        $data = Arrays::addLast($data, $name);
+            $data = Arrays::addLast($data, $name);
 
-        File::write($this->downloadFileName, Json::encode($data) . EOL);
+            File::write($this->downloadFileName, Json::encode($data) . EOL);
+        }
+
+        echo $return;
 
         exit;
     }
