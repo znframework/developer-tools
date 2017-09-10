@@ -172,7 +172,12 @@ class Initialize extends Controller
         $tools['datatables']    = 'datatables';
         $tools['grids']         = 'system/grid';
         $tools['packages'] =      'packages';
-        $tools['cronjobs']   = 'cronjobs';
+
+        if( PHP_OS === 'Linux' )
+        {
+            $tools['cronjobs']   = 'cronjobs';
+        }
+
         $tools['restApi']       = 'api';
         $tools['sqlConverter']  = 'system/converter';
         $tools['documentation'] = 'home/docs';
@@ -186,7 +191,7 @@ class Initialize extends Controller
         $menus['systemInfo'] = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
 
         $tools['terminal']   = 'system/terminal';
-        
+
         define('TOOLS', $tools);
         define('MENUS', $menus);
     }

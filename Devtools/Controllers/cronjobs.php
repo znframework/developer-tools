@@ -24,6 +24,10 @@ class Cronjobs extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
+        {
+            redirect();
+        }
+
         if( Post::create() )
         {
             $method = Post::type();
