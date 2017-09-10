@@ -13,10 +13,18 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> @@SELECT_PROJECT: <b class="caret"></b></a>
             <ul class="dropdown-menu">
-                @foreach( PROJECT_LIST as $project ):
+                @foreach( PROJECT_LIST as $key => $project ):
                     @if($project !== SELECT_PROJECT):
                     <li>
-                        <a href="@@siteUrl('home/project/' . $project):"> @$project:</a>
+
+                        {[
+                            if( $cont  = (PROJECTS_CONFIG['containers'][$key] ?? NULL) )
+                            {
+                                $project = $cont . '[' . $project . ']';
+                            }
+                        ]}
+
+                        <a href="@@siteUrl('home/project/' . $key):"> @$project:</a>
                     </li>
                     @endif:
                 @endforeach:
