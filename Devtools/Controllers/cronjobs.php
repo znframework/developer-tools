@@ -24,8 +24,9 @@ class Cronjobs extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
+        if( PHP_OS !== 'Linux' && PHP_OS !== 'Unix' )
         {
-            redirect();
+            return $this->masterpage->error = LANG['availableLinux'];
         }
 
         if( Post::create() )

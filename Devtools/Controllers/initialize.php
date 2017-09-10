@@ -173,7 +173,7 @@ class Initialize extends Controller
         $tools['grids']         = 'system/grid';
         $tools['packages'] =      'packages';
 
-        if( PHP_OS === 'Linux' )
+        if( PHP_OS === 'Linux' || PHP_OS === 'Unix' )
         {
             $tools['cronjobs']   = 'cronjobs';
         }
