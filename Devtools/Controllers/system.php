@@ -350,11 +350,6 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function terminal(String $params = NULL)
     {
-        if( IS_CONTAINER )
-        {
-            redirect();
-        }
-
         $this->masterpage->pdata['supportCommands'] =
         [
             '<b>command-list</b> : ' . LANG['allCommandList']
