@@ -333,13 +333,22 @@ class Generate extends Controller
             {
                 $functions = explode(',', Method::post('functions'));
 
-                $status = Gen::model(Method::post('model'),
+                $extends = Method::post('extends');
+
+                $data =  
                 [
                     'application' => SELECT_PROJECT,
                     'namespace'   => Method::post('namespace'),
-                    'extends'     => Method::post('extends'),
+                    'extends'     => $extends,
                     'functions'   => $functions
-                ]);
+                ];
+
+                if( $extends === 'RelevanceModel' )
+                {
+                    $data['constants'] = ['relevance' => '[/*first_table.column:second_table.column*/]'];
+                }
+
+                $status = Gen::model(Method::post('model'), $data);
 
                 redirect(currentUri(), 0, ['success' => LANG['success']]);
             }

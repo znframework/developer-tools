@@ -18,7 +18,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['extends']}}</label>
-                    @@Form::class('form-control')->select('extends', ['Model' => 'Model', 'GrandModel' => 'GrandModel'], 'Model'):
+                    @@Form::class('form-control')->select('extends', ['Model' => 'Model', 'GrandModel' => 'GrandModel', 'RelevanceModel' => 'RelevanceModel'], 'Model'):
                 </div>
 
                 <div class="form-group">
