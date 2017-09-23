@@ -184,7 +184,9 @@
                         <thead>
                             <tr>
                                 <th>{{'ID'}}</th>
-                                <th>{{LANG['job']}}</th>
+                                <th>{{LANG['time']}}</th>
+                                <th>{{LANG['path']}}</th>
+                                <th>{{LANG['code']}}</th>
                                 <th>{{LANG['process']}}</th>
                             </tr>
                         </thead>
@@ -193,7 +195,9 @@
                             @foreach( $list as $key => $row ):
                             <tr>
                                 <td>{{$key}}</td>
-                                <td>{{$row}}</td>
+                                <td>{{$row[0]}}</td>
+                                <td>{{$row[1]}}</td>
+                                <td>{{$row[2]}}</td>
                                 <td>
                                     {{Html::class('form-control btn btn-danger')->anchor('cronjobs/delete/' . $key, LANG['deleteButton'])}}
                                 </td>
