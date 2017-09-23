@@ -261,6 +261,7 @@ $('/#per').change(function()
     if( $(this).val() === 'none' )
     {
         $('/#certainInput').attr('disabled', 'disabled');
+        $('/#perInput').attr('disabled', 'disabled');
     }
     else
     {
