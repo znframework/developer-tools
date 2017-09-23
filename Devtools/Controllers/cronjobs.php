@@ -92,7 +92,16 @@ class Cronjobs extends Controller
 
         if( Crontab::list() )
         {
-            $list = Crontab::listArray();
+            $l    = Crontab::listArray();
+            $list = [];
+
+            foreach( $l as $key => $val )
+            {
+                if( stristr($val, '"'.SELECT_PROJECT.'"') )
+                {
+                    $list[$key] = $val;
+                }
+            }
         }
 
         $this->masterpage->pdata['list'] = $list ?? [];
