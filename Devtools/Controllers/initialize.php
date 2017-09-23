@@ -189,7 +189,6 @@ class Initialize extends Controller
         }
 
         $menus['systemInfo'] = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
-
         $tools['terminal']   = 'system/terminal';
 
         define('TOOLS', $tools);
