@@ -29,7 +29,7 @@ class Initialize extends Controller
 
         if( ZN_VERSION < DASHBOARD_VERSION )
         {
-            die(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
+            trace(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
         }
 
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
