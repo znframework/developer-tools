@@ -41,6 +41,7 @@
 <a href="/#table-@$table:" class="list-group-item" data-toggle="collapse">
     <i class="fa fa-fw fa-table"></i> @$table:
     <span><i class="fa fa-angle-down fa-fw"></i></span>
+    <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('{{$table}}')" title="Delete Datatable"></i></span>
     <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#add-column-@$table:"  class="fa fa-plus fa-fw" title="Add Column"></i></span>
 </a>
 

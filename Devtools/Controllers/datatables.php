@@ -203,7 +203,7 @@ class Datatables extends Controller
 
             $newColumns[$data['columnName']] =
             [
-                $type.( ! empty($maxLength ) ? '('.$maxLength .')' : '' ),
+                ( $type ?: '' ).( ! empty($maxLength ) ? '('.$maxLength .')' : '' ),
                 ! empty($data['primaryKey'])      ? DB::primaryKey()    : NULL,
                 ! empty($data['autoIncrement'])   ? DB::autoIncrement() : NULL,
                 $data['isNull'] === DB::notNull() ? DB::notNull()       : '',
@@ -211,7 +211,16 @@ class Datatables extends Controller
             ];
         }
 
-        $status = DBForge::createTable($table, $newColumns, DB::encoding());
+        if( Config::database('database')['driver'] === 'postgres')
+        {
+            $encoding = NULL;
+        }
+        else
+        {
+            $encoding = DB::encoding();
+        }
+
+        $status = DBForge::createTable($table, $newColumns, $encoding);
         $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
         echo Json::encode
