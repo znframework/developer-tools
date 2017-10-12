@@ -210,8 +210,10 @@ class Datatables extends Controller
                 ! empty($default)                 ? 'DEFAULT '.$default : ''
             ];
         }
+        
+        $driver = Config::database('database')['driver'];
 
-        if( Config::database('database')['driver'] === 'postgres')
+        if( $driver === 'postgres' || $driver === 'sqlite' )
         {
             $encoding = NULL;
         }

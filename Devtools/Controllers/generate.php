@@ -27,7 +27,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('controller', ['required', 'alpha'], LANG['controllerName']);
+            Validation::rules('controller', ['required', 'alnum'], LANG['controllerName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -114,7 +114,7 @@ class Generate extends Controller
     {
         if( Method::post('generate') )
         {
-            Validation::rules('library', ['required', 'alpha'], LANG['libraryName']);
+            Validation::rules('library', ['required', 'alnum'], LANG['libraryName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -165,7 +165,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('command', ['required', 'alpha'], LANG['commandName']);
+            Validation::rules('command', ['required', 'alnum'], LANG['commandName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -221,7 +221,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('route', ['required', 'alpha'], LANG['routeName']);
+            Validation::rules('route', ['required', 'alnum'], LANG['routeName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -268,7 +268,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('config', ['required', 'alpha'], LANG['configName']);
+            Validation::rules('config', ['required', 'alnum'], LANG['configName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -327,7 +327,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('model', ['required', 'alpha'], LANG['modelName']);
+            Validation::rules('model', ['required', 'alnum'], LANG['modelName']);
 
             if( ! $error = Validation::error('string') )
             {
@@ -513,7 +513,7 @@ class Generate extends Controller
 
         if( Method::post('generate') )
         {
-            Validation::rules('migration', ['required', 'specialChar'], LANG['migrationName']);
+            Validation::rules('migration', ['required', 'alnum'], LANG['migrationName']);
 
             if( ! $error = Validation::error('string') )
             {
