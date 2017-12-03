@@ -35,7 +35,7 @@
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i>
                         {[$relativePath = absoluteRelativePath($file)]}
-                        {{Form::id('renameId' . $key)->style('width:20%; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
+                        {{Form::id('renameId' . $key)->style('width:'.(mb_strlen($relativePath) * 7).'px; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
                         @if( strpos($relativePath, 'Settings') !== 0 ):
