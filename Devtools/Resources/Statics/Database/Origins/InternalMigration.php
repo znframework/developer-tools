@@ -3,8 +3,10 @@
 // This file automatically created and updated
 //--------------------------------------------------------------------------------------------------
 
-class Session extends StaticAccess
+class Migration extends StaticAccess
 {
+	const table = __CLASS__;
+
 	public static function getClassName()
 	{
 		return __CLASS__;
