@@ -82,7 +82,7 @@ class Initialize extends Controller
             'ENUM' => 'ENUM', 'DECIMAL' => 'DECIMAL',
             'DATE' => 'DATE', 'DATETIME' => 'DATETIME', 'TIMESTAMP' => 'TIMESTAMP'
         ]);
-        define('NULLTYPES', [DB::null() => DB::null(), DB::notNull() => DB::notNull()]);
+        define('NULLTYPES', ['NULL ' => 'NULL ', 'NOT NULL ' => 'NOT NULL ']);
         define('DATATYPESCHANGE',
         [
             'STRING' => 'ENUM', 'VAR_STRING' => 'VARCHAR', 'LONG' => 'INT',

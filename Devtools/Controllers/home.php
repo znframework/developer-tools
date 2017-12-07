@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Method, Validation, File, Folder, Session, Cookie, Json, Uri, Security, Http, BS;
+use Restful, Method, Validation, File, Folder, Session, Cookie, Json, Uri, Security, Http;
 
 class Home extends Controller
 {

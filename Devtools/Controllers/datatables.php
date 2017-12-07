@@ -11,7 +11,11 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Http, Method, DBForge, DB, Import, DBTool, Session, Config, Security, Arrays, Json, Folder, File;
+use Http, Method, DBForge, DB, Import, DBTool, Session, Config, Folder, File;
+use ZN\DataTypes\Arrays\RemoveElement;
+use ZN\DataTypes\Arrays\Exists;
+use ZN\DataTypes\Json\Encode;
+use ZN\IndividualStructures\Security\Html;
 
 class Datatables extends Controller
 {
@@ -42,7 +46,7 @@ class Datatables extends Controller
             return false;
         }
 
-        $content = Security::htmlDecode(Method::post('content'));
+        $content = Html::decode(Method::post('content'));
         $type    = Method::post('type');
 
         if( $type === 'orm' )
@@ -56,7 +60,7 @@ class Datatables extends Controller
 
         $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
-        echo Json::encode
+        echo Encode::do
         ([
             'status' => $status,
             'result' => $result,
@@ -75,7 +79,7 @@ class Datatables extends Controller
         $status  = DBForge::dropTable($table);
         $result  = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
-        echo Json::encode
+        echo Encode::do
         ([
             'status' => $status,
             'result' => $result,
@@ -173,7 +177,7 @@ class Datatables extends Controller
 
 
         $table   = Method::post('table');
-        $columns = Arrays::removeFirst(Method::post());
+        $columns = RemoveElement::first(Method::post());
         $newData = [];
         $i       = 0;
 
@@ -196,7 +200,7 @@ class Datatables extends Controller
             $maxLength = $data['maxLength'];
             $type      = $data['type'];
 
-            if( Arrays::valueExists(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+            if( Exists::value(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
             {
                 $maxLength = 0;
             }
@@ -225,7 +229,7 @@ class Datatables extends Controller
         $status = DBForge::createTable($table, $newColumns, $encoding);
         $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
-        echo Json::encode
+        echo Encode::do
         ([
             'status' => $status,
             'result' => $result,
@@ -248,7 +252,7 @@ class Datatables extends Controller
         $isNull     = Method::post('isNull');
         $default    = Method::post('defaul');
 
-        if( Arrays::valueExists(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+        if( Exists::value(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
         {
             $maxLength = 0;
         }
