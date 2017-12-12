@@ -35,7 +35,7 @@
     <div class="form-group col-lg-1">
         <label>&nbsp;</label>
         @if( $i == 10 ):
-            @Form::disabled():
+            {[Form::disabled()]}
         @endif:
 
         @@Form::class('form-control btn btn-success')->onclick('addJoinColumn(\'/#joinDiv'.($i + 1).'\')')->button('add', LANG['addButton']):
@@ -44,7 +44,7 @@
     <div class="form-group col-lg-1">
         <label>&nbsp;</label>
         @if( $i == 1 ):
-            @Form::disabled():
+            {[Form::disabled()]}
         @endif:
 
         @@Form::class('form-control btn btn-danger')->onclick('removeJoinColumn(\'/#joinDiv'.$i.'\', \''.$i.'\')')->button('remove', LANG['removeButton']):
