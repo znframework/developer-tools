@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/znframework/developer-tools/v/stable)](https://packagist.org/packages/znframework/developer-tools)
+[![Total Downloads](https://poser.pugx.org/znframework/developer-tools/downloads)](https://packagist.org/packages/znframework/developer-tools)
+[![Latest Unstable Version](https://poser.pugx.org/znframework/developer-tools/v/unstable)](https://packagist.org/packages/znframework/developer-tools)
+[![License](https://poser.pugx.org/znframework/developer-tools/license)](https://packagist.org/packages/znframework/developer-tools)
+
 # ZN PHP Web Framework
 [Download](http://www.znframework.com/framework/download) - 
 [Upgrade](http://www.znframework.com/framework/upgrade) - 
