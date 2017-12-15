@@ -41,7 +41,7 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    @@STORAGE_DIR . 'ProjectBackup' . DS . SELECT_PROJECT . '-xxxx-xx-xx-xx-xx-xx' . DS:
+                {{STORAGE_DIR}}ProjectBackup/{{SELECT_PROJECT}}-xxxx-xx-xx-xx-xx-xx/
                 </div>
             </div>
         </div>
