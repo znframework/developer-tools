@@ -13,7 +13,6 @@
 
 use Http, Method, DBForge, DB, Import, DBTool, Session, Config, Folder, File;
 use ZN\DataTypes\Arrays\RemoveElement;
-use ZN\DataTypes\Arrays\Exists;
 use ZN\DataTypes\Json\Encode;
 use ZN\IndividualStructures\Security\Html;
 
@@ -180,7 +179,7 @@ class Datatables extends Controller
         $columns = RemoveElement::first(Method::post());
         $newData = [];
         $i       = 0;
-
+        
         foreach( $columns as $key => $values )
         {
             foreach( $values as $value )
@@ -194,13 +193,13 @@ class Datatables extends Controller
         }
 
         $newColumns = [];
-
+        
         foreach( $newData as $data )
         {
             $maxLength = $data['maxLength'];
             $type      = $data['type'];
 
-            if( Exists::value(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+            if( in_array($type, ['DATE', 'DATETIME', 'TIME', 'TIMESTAMP']) )
             {
                 $maxLength = 0;
             }
@@ -214,7 +213,7 @@ class Datatables extends Controller
                 ! empty($default)                 ? 'DEFAULT '.$default : ''
             ];
         }
-        
+
         $driver = Config::database('database')['driver'];
 
         if( $driver === 'postgres' || $driver === 'sqlite' )
@@ -252,7 +251,7 @@ class Datatables extends Controller
         $isNull     = Method::post('isNull');
         $default    = Method::post('defaul');
 
-        if( Exists::value(['DATE', 'DATETIME', 'TIME', 'TIMESTAMP'], $type) )
+        if( in_array($type, ['DATE', 'DATETIME', 'TIME', 'TIMESTAMP']) )
         {
             $maxLength = 0;
         }

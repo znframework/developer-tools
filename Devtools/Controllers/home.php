@@ -93,7 +93,7 @@ class Home extends Controller
         ];
 
         $this->masterpage->pdata['docs'] = $return;
-
+      
         $this->masterpage->page  = 'docs';
     }
 
