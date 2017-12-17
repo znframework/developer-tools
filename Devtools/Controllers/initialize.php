@@ -188,8 +188,9 @@ class Initialize extends Controller
             $tools['systemBackup']  = 'system/backup';
         }
 
-        $menus['systemInfo'] = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
-        $tools['terminal']   = 'system/terminal';
+        $menus['systemInfo']  = ['icon' => 'info',       'href' => 'system/info', 'badge' => (ZN_VERSION < LASTEST_VERSION) ? LASTEST_VERSION : NULL];
+        $tools['experiments'] = 'experiments';
+        $tools['terminal']    = 'system/terminal';
 
         define('TOOLS', $tools);
         define('MENUS', $menus);

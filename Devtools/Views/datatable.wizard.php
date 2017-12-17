@@ -25,8 +25,8 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><pre><code id="RunORMCode" contenteditable="true"><br>Run ORM<br><br></code></pre></th>
-                            <th><pre><code id="RunSQLCode" contenteditable="true"><br>Run SQL<br><br></code></pre></th>
+                            <th><pre><div style="width/:100%; height/:300px;" id="RunORMCode" contenteditable="true"><br>Run ORM<br><br></div></pre></th>
+                            <th><pre><div style="width/:100%; height/:300px;" id="RunSQLCode" contenteditable="true"><br>Run SQL<br><br></div></pre></th>
 
                         </tr>
                         <tr>
@@ -36,6 +36,7 @@
                         </tr>
                     </thead>
                 </table>
+          
             </div>
         </div>
     </div>
@@ -65,6 +66,15 @@
 </div>
 
 <script>
+
+var RunORMCode = ace.edit("RunORMCode");
+RunORMCode.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
+RunORMCode.getSession().setMode("ace/mode/php");
+
+var RunSQLCode = ace.edit("RunSQLCode");
+RunSQLCode.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
+RunSQLCode.getSession().setMode("ace/mode/sql");
+
 
 var i = 0;
 
@@ -281,10 +291,19 @@ function addRow(table, id)
 
 function alterTable(type, id)
 {
+    if( id === 'RunORMCode' )
+    {
+        content = RunORMCode.getValue();
+    }
+    else
+    {
+        content = RunSQLCode.getValue();
+    }
+    
     $.ajax
     ({
         url/:"@@siteUrl('datatables/alterTable'):",
-    	data/:'content=' + $('/#' + id).text() + '&type=' + type,
+    	data/:'content=' + encodeURIComponent(content) + '&type=' + type,
     	method/:"post",
         dataType/:"json",
     	success/:function(data)
