@@ -416,7 +416,7 @@ class Generate extends Controller
                     $content = File::read(TEMPLATES_DIR.$template);
                 }
 
-                Folder::create(pathInfos($viewPath, 'dirname'));
+                Folder::create(File::pathInfo($viewPath, 'dirname'));
 
                 if( ! File::exists($viewPath) )
                 {
@@ -579,8 +579,8 @@ class Generate extends Controller
         $old = Method::post('old');
         $new = Method::post('new');
 
-        $controlOld = pathInfos($old, 'dirname');
-        $controlNew = pathInfos($new, 'dirname');
+        $controlOld = File::pathInfo($old, 'dirname');
+        $controlNew = File::pathInfo($new, 'dirname');
 
         if( $controlOld === $controlNew )
         {

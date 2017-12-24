@@ -34,7 +34,7 @@
 
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i>
-                        {[$relativePath = absoluteRelativePath($file)]}
+                        {[$relativePath = ZN\FileSystem\File\Info::absolutePath($file)]}
                         {{Form::id('renameId' . $key)->style('width:'.(mb_strlen($relativePath) * 7).'px; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
@@ -44,7 +44,7 @@
                         @endif:
                     </a>
 
-                    <pre id="b@$key:" key="{{$key}}" link="{{absoluteRelativePath($file)}}" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
+                    <pre id="b@$key:" key="{{$key}}" link="{{ZN\FileSystem\File\Info::absolutePath($file)}}" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
                         editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");

@@ -283,7 +283,7 @@ class System extends Controller
                 {
                     $file = $upgradeFolder . $file;
 
-                    $dirname = pathInfos($file, 'dirname');
+                    $dirname = File::pathInfo($file, 'dirname');
 
                     Folder::create($dirname);
                     File::write($file, $content);
