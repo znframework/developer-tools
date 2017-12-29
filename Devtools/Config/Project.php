@@ -38,7 +38,7 @@
     // Proje modu belirtilir. Kullanılabilir modlar: publication, restoration, development
     //
     //--------------------------------------------------------------------------------------------------
-    'mode' => 'development',
+    'mode' => 'publication',
 
     //--------------------------------------------------------------------------------------------------
     // Error Reporting

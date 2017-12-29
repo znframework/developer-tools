@@ -99,12 +99,18 @@ class Cronjobs extends Controller
             {
                 if( stristr($val, '"'.SELECT_PROJECT.'"') )
                 {
-                    $time = Strings::divide($val, ' /');
+                    $time = Strings::divide($val, ' php');
                     $code = Strings::divide(rtrim($val, ';\''), ';', -1);
                     
-                    preg_match('/\s\/(.*?)*php/', $val, $path);
+                    preg_match('/\s(\/)+(.*?)*php\s/', $val, $path);
 
-                    $list[$key] = [$time, $path[0], $code];
+                    $list[$key] = [$time, $path[0] ?? \Config::services('processor')['path'], $code];
+                }
+                elseif( stristr($val, 'wget') )
+                {
+                    $ex = explode(' wget ', $val);
+
+                    $list[$key] = [$ex[0], 'wget', $ex[1]];
                 }
             }
         }
