@@ -11,7 +11,9 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Folder, File, Html, Arrays, Restful, Separator, Http, Session, DBTool, DB, Form, DBGrid, Security, Config, Json;
+use Method, Folder, File, Html, Arrays, Restful, Separator, Redirect, URI;
+use Http, Session, DBTool, DB, Form, DBGrid, Security, Config, Json;
+use ZN\Base;
 
 class System extends Controller
 {
@@ -37,12 +39,12 @@ class System extends Controller
             $this->_ccreateDatabase($orm);
             $this->_cdropDatabase($orm);
 
-            $orm = suffix(str_replace('->', '<br>&nbsp;&nbsp;->', $orm), ';');
+            $orm = Base::suffix(str_replace('->', '<br>&nbsp;&nbsp;->', $orm), ';');
 
-            $this->masterpage->pdata['orm'] = $orm;
+            $pdata['orm'] = $orm;
         }
 
-        $this->masterpage->pdata['supportQueries'] =
+        $pdata['supportQueries'] =
         [
             '<b>select</b> columns <b>from</b> table_name [<b>where</b> column cond value] [<b>limit</b> start, limit] [<b>group by</b> column] [<b>order by</b> column asc|desc]',
             '<b>insert into</b> table_name (col1, col2, ...) <b>values</b>(val1, val2, ...)',
@@ -54,7 +56,9 @@ class System extends Controller
             '<b>drop</b> <b>database</b> database_name'
         ];
 
-        $this->masterpage->page  = 'converter';
+        Masterpage::page('converter');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -66,9 +70,11 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function language(String $params = NULL)
     {
-        $this->masterpage->pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
+        $pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
 
-        $this->masterpage->page  = 'language';
+        Masterpage::page('language');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -89,12 +95,12 @@ class System extends Controller
 
         if( empty($selectTable) )
         {
-            return $this->masterpage->error = lang('DevtoolsErrors', 'gridError');
+            return Masterpage::error(lang('DevtoolsErrors', 'gridError'));
         }
 
         $joinCollapse       = Session::select('joinCollapse');
 
-        $this->masterpage->pdata['tables'] = Arrays::combine($tables, $tables);
+        $pdata['tables'] = Arrays::combine($tables, $tables);
 
         if( Method::post('show') )
         {
@@ -170,13 +176,16 @@ class System extends Controller
 
         $saves = Folder::files($path);
 
-        $this->masterpage->pdata['table']        = DBGrid::create($selectTable);
-        $this->masterpage->pdata['selectTable']  = $selectTable;
-        $this->masterpage->pdata['viewColumns']  = $viewColumns;
-        $this->masterpage->pdata['columns']      = Arrays::combine($columns, $columns);
-        $this->masterpage->pdata['joinCollapse'] = $joinCollapse;
-        $this->masterpage->pdata['saves']        = Arrays::combine($saves, $saves);
-        $this->masterpage->page                  = 'grid';
+        $pdata['table']        = DBGrid::create($selectTable);
+        $pdata['selectTable']  = $selectTable;
+        $pdata['viewColumns']  = $viewColumns;
+        $pdata['columns']      = Arrays::combine($columns, $columns);
+        $pdata['joinCollapse'] = $joinCollapse;
+        $pdata['saves']        = Arrays::combine($saves, $saves);
+
+        Masterpage::page('grid');
+
+        Masterpage::pdata($pdata);
     }
 
     public function gridGetColumnsAjax()
@@ -292,16 +301,19 @@ class System extends Controller
                 Folder::copy($upgradeFolder, '/');
                 Folder::delete($upgradeFolder);
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = LANG['alreadyVersion'];
+                Masterpage::error(LANG['alreadyVersion']);
             }
         }
 
-        $this->masterpage->pdata['upgrades'] = Arrays::keys($return);
-        $this->masterpage->page              = 'info';
+        $pdata['upgrades'] = Arrays::keys($return);
+
+        Masterpage::page('info');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -319,12 +331,15 @@ class System extends Controller
 
         if( empty($files) )
         {
-            $this->masterpage->error = LANG['notFound'];
+            Masterpage::error(LANG['notFound']);
         }
 
-        $this->masterpage->pdata['files'] = $files;
-        $this->masterpage->pdata['path']  = $path;
-        $this->masterpage->page           = 'logs';
+        $pdata['files'] = $files;
+        $pdata['path']  = $path;
+        
+        Masterpage::page('logs');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -350,12 +365,14 @@ class System extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function terminal(String $params = NULL)
     {
-        $this->masterpage->pdata['supportCommands'] =
+        $pdata['supportCommands'] =
         [
             '<b>command-list</b> : ' . LANG['allCommandList']
         ];
 
-        $this->masterpage->page  = 'terminal';
+        Masterpage::page('terminal');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -451,19 +468,22 @@ class System extends Controller
 
             Folder::copy(rtrim(SELECT_PROJECT_DIR, DS), $fullPath);
 
-            redirect(currentUri(), 0, ['success' => LANG['success']]);
+            Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
         }
 
         $files = Folder::files($path, 'dir');
 
         if( empty($files) )
         {
-            $this->masterpage->error = LANG['notFound'];
+            Masterpage::error(LANG['notFound']);
         }
 
-        $this->masterpage->pdata['files'] = $files;
-        $this->masterpage->pdata['path']  = $path;
-        $this->masterpage->page           = 'backup';
+        $pdata['files'] = $files;
+        $pdata['path']  = $path;
+
+        Masterpage::page('backup');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -479,7 +499,7 @@ class System extends Controller
 
         if( preg_match('/' . $query . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
             $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::createDatabase(\'$1\')', $replace);
         }
@@ -498,7 +518,7 @@ class System extends Controller
 
         if( preg_match('/' . $query . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
             $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::dropDatabase(\'$1\')', $replace);
         }
@@ -517,7 +537,7 @@ class System extends Controller
 
         if( preg_match('/' . $query . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
             $syntax  = '/'.$query.'(\w+)/si';
             $replace = preg_replace($syntax, 'DBForge::dropTable(\'$1\')', $replace);
         }
@@ -536,7 +556,7 @@ class System extends Controller
 
         if( preg_match('/' . $query . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
             $syntax  = '/'.$query.'(.*?)\s*\((.*)\)/si';
 
             preg_match($syntax, $replace, $match);
@@ -551,7 +571,7 @@ class System extends Controller
                 $valEx  = explode(' ', $val);
                 $column = $valEx[0] ?? NULL;
 
-                $options .= presuffix(trim($column), '\'') . ' => ' . presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
+                $options .= Base::presuffix(trim($column), '\'') . ' => ' . Base::presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
             }
 
             $options = rtrim($options, ', ');
@@ -575,7 +595,7 @@ class System extends Controller
         {
             $replaceEx   = explode('where', $replace);
             $whereClause = $replaceEx[1] ?? NULL;
-            $replace     = suffix($replaceEx[0], ';');
+            $replace     = Base::suffix($replaceEx[0], ';');
             $syntax      = '/'.$update.'(.*?)\s+set\s+(.*?)(\s+|\;)$/si';
 
             preg_match($syntax, $replace, $match);
@@ -592,7 +612,7 @@ class System extends Controller
             {
                 $valEx = explode('=', trim($val));
 
-                $options .= presuffix(trim($valEx[0]), '\'') . ' => ' . trim($valEx[1]) . ', ';
+                $options .= Base::presuffix(trim($valEx[0]), '\'') . ' => ' . trim($valEx[1]) . ', ';
             }
 
             $options  = rtrim($options, ', ');
@@ -614,7 +634,7 @@ class System extends Controller
 
         if( preg_match('/' . $insert . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
             $syntax  = '/'.$insert.'into\s+(.*?)\s*\((.*?)\)\s+values\s*\((.*?)\)/si';
 
             preg_match($syntax, $replace, $match);
@@ -625,7 +645,7 @@ class System extends Controller
 
             foreach( $columns as $key => $val )
             {
-                $options .= presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
+                $options .= Base::presuffix(trim($val), '\'') . ' => ' . trim($values[$key]) . ', ';
             }
 
             $options  = rtrim($options, ', ');
@@ -647,7 +667,7 @@ class System extends Controller
 
         if( preg_match('/' . $delete . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
 
             $from    = 'from\s+(.*?)(\;|\s+)';
             $where   = 'where\s+(.*?)(\;|\s+)';
@@ -680,7 +700,7 @@ class System extends Controller
 
         if( preg_match('/' . $select . '/i', $replace))
         {
-            $replace = suffix($replace, ';');
+            $replace = Base::suffix($replace, ';');
 
             $from    = 'from\s+(.*?)(\;|\s+)';
             $where   = 'where\s+(.*?)(\;|\s+)';

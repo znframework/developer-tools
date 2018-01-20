@@ -11,8 +11,9 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Method, Arrays, Generate as Gen;
+use Method, Arrays, Generate as Gen, Redirect;
 use Validation, Folder, File, Config, Uri, Security, Http;
+use ZN\Base;
 
 class Generate extends Controller
 {
@@ -39,7 +40,7 @@ class Generate extends Controller
                     $functions = Arrays::addFirst($functions, 'main');
                 }
 
-                $viewObjectConfig = import(SELECT_PROJECT_DIR . 'Config' . DS . 'ViewObjects.php');
+                $viewObjectConfig = Base::import(SELECT_PROJECT_DIR . 'Config' . DS . 'ViewObjects.php');
 
                 $controller = Method::post('controller');
 
@@ -69,7 +70,7 @@ class Generate extends Controller
                             $view = $controller . '-' . $view;
                         }
 
-                        $viewPath = $viewsDir . suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php');
+                        $viewPath = $viewsDir . Base::suffix($view . ( $type === 'wizard' ? '.wizard' : NULL ), '.php');
 
                         if( ! File::exists($viewPath) )
                         {
@@ -86,21 +87,24 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Controllers';
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'controller';
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+        Masterpage::page('generate');
+        Masterpage::pdata
+        ([
+            'content'    => 'controller',
+            'fullPath'   => ($fullPath = SELECT_PROJECT_DIR . $path),
+            'deletePath' => $path,
+            'files'      => Folder::allFiles($fullPath, true)
+        ]);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -131,22 +135,25 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Libraries';
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'library';
-        $this->masterpage->pdata['title']      = 'libraries';
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+        Masterpage::page('generate');
+        Masterpage::pdata
+        ([
+            'content'    => 'library',
+            'title'      => 'libraries',
+            'fullPath'   => ($fullPath = SELECT_PROJECT_DIR . $path),
+            'deletePath' => $path,
+            'files'      => Folder::allFiles($fullPath, true)
+        ]);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -160,7 +167,7 @@ class Generate extends Controller
     {
         if( IS_CONTAINER )
         {
-            redirect();
+            Redirect::location();
         }
 
         if( Method::post('generate') )
@@ -184,21 +191,24 @@ class Generate extends Controller
                     'functions'   => $functions
                 ]);
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Commands';
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'command';
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+        Masterpage::page('generate');
+        Masterpage::pdata
+        ([
+            'content'    => 'command',
+            'fullPath'   => ($fullPath = SELECT_PROJECT_DIR . $path),
+            'deletePath' => $path,
+            'files'      => Folder::allFiles($fullPath, true)
+        ]);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -212,12 +222,12 @@ class Generate extends Controller
     {
         if( IS_CONTAINER )
         {
-            redirect();
+            Redirect::location();
         }
 
         $path = 'Routes';
 
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Method::post('generate') )
         {
@@ -227,25 +237,28 @@ class Generate extends Controller
             {
                 $functions = explode(',', Method::post('functions'));
 
-                $routePath = $fullPath . suffix(prefix(Method::post('route')), '.php');
+                $routePath = $fullPath . Base::suffix(Base::prefix(Method::post('route')), '.php');
 
                 if( ! File::exists($routePath) )
                 {
                     File::create($routePath);
                 }
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'route';
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['files']      = Folder::allFiles($fullPath, true);
+        Masterpage::page('generate');
+
+        $pdata['content']    = 'route';
+        $pdata['deletePath'] = $path;
+        $pdata['files']      = Folder::allFiles($fullPath, true);
+
+        Masterpage::pdata($pdata);  
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -259,12 +272,12 @@ class Generate extends Controller
     {
         if( IS_CONTAINER )
         {
-            redirect();
+            Redirect::location();
         }
 
         $path = 'Config';
 
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Method::post('generate') )
         {
@@ -276,24 +289,24 @@ class Generate extends Controller
 
                 $configContent = '<?php return' . EOL . '[' . EOL . HT . '\'key\' => \'value\'' . EOL . '];';
 
-                $configPath = $fullPath . suffix(prefix(Method::post('config')), '.php');
+                $configPath = $fullPath . Base::suffix(Base::prefix(Method::post('config')), '.php');
 
                 if( ! File::exists($configPath) )
                 {
                     File::write($configPath, $configContent);
                 }
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'config';
-        $this->masterpage->pdata['deletePath'] = $path;
+        Masterpage::page('generate');
+        $pdata['content']    = 'config';
+        $pdata['deletePath'] = $path;
 
         $files = Folder::allFiles($fullPath, true);
 
@@ -308,7 +321,9 @@ class Generate extends Controller
 
         $files = Arrays::addFirst($files, $settings);
 
-        $this->masterpage->pdata['files']      = $files;
+        $pdata['files']      = $files;
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -322,7 +337,7 @@ class Generate extends Controller
     {
         if( IS_CONTAINER )
         {
-            redirect();
+            Redirect::location();
         }
 
         if( Method::post('generate') )
@@ -350,29 +365,29 @@ class Generate extends Controller
 
                 $status = Gen::model(Method::post('model'), $data);
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Models';
 
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'model';
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        Masterpage::page('generate');
+        $pdata['content']    = 'model';
+        $pdata['deletePath'] = $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($fullPath) )
         {
             $files = Folder::allFiles($fullPath, true);
         }
 
-        $this->masterpage->pdata['files'] = $files ?? [];
+        $pdata['files'] = $files ?? [];
 
-
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -401,10 +416,10 @@ class Generate extends Controller
 
                 if( Method::post('type') === 'Wizard' )
                 {
-                    $viewName = suffix($viewName, '.wizard');
+                    $viewName = Base::suffix($viewName, '.wizard');
                 }
 
-                $viewPath = SELECT_PROJECT_DIR . 'Views/' . suffix($viewName, '.php');
+                $viewPath = SELECT_PROJECT_DIR . 'Views/' . Base::suffix($viewName, '.php');
                 $template = Method::post('template');
 
                 if( $template === 'none' )
@@ -423,27 +438,28 @@ class Generate extends Controller
                     File::write($viewPath, $content);
                 }
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Views';
 
-        $this->masterpage->page  = 'generate';
-        $this->masterpage->pdata['content'] = 'view';
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        Masterpage::page('generate');
+        $pdata['content'] = 'view';
+        $pdata['deletePath'] = $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($fullPath) )
         {
             $files = Folder::allFiles($fullPath, true);
         }
 
-        $this->masterpage->pdata['files'] = $files ?? [];
+        $pdata['files'] = $files ?? [];
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -467,34 +483,36 @@ class Generate extends Controller
 
                 $path = 'Starting' . DS . $path;
 
-                $viewPath = SELECT_PROJECT_DIR . $path . suffix($viewName, '.php');
+                $viewPath = SELECT_PROJECT_DIR . $path . Base::suffix($viewName, '.php');
 
                 if( ! File::exists($viewpath) )
                 {
                     File::write($viewPath, '<?php');
                 }
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
         $path = 'Starting';
 
-        $this->masterpage->page  = 'generate';
-        $this->masterpage->pdata['content'] = 'starting';
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        Masterpage::page('generate');
+        $pdata['content'] = 'starting';
+        $pdata['deletePath'] = $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($fullPath) )
         {
             $files = Folder::allFiles($fullPath, true);
         }
 
-        $this->masterpage->pdata['files'] = $files ?? [];
+        $pdata['files'] = $files ?? [];
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -508,7 +526,7 @@ class Generate extends Controller
     {
         if( IS_CONTAINER )
         {
-            redirect();
+            Redirect::location();
         }
 
         if( Method::post('generate') )
@@ -521,26 +539,28 @@ class Generate extends Controller
 
                 \Migration::path($path)->create(Method::post('migration'), (int) Method::post('version'));
 
-                redirect(currentUri(), 0, ['success' => LANG['success']]);
+                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
             }
             else
             {
-                $this->masterpage->error = $error;
+                Masterpage::error($error);
             }
         }
 
-        $path                                  = 'Models'. DS .'Migrations';
-        $this->masterpage->page                = 'generate';
-        $this->masterpage->pdata['content']    = 'migration';
-        $this->masterpage->pdata['deletePath'] = $path;
-        $this->masterpage->pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
+        $path = 'Models'. DS .'Migrations';
+        Masterpage::page('generate');
+        $pdata['content']    = 'migration';
+        $pdata['deletePath'] = $path;
+        $pdata['fullPath']   = $fullPath = SELECT_PROJECT_DIR . $path;
 
         if( Folder::exists($fullPath) )
         {
             $files = Folder::allFiles($fullPath, true);
         }
 
-        $this->masterpage->pdata['files'] = $files ?? [];
+        $pdata['files'] = $files ?? [];
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -559,7 +579,7 @@ class Generate extends Controller
             File::delete($file);
         }
 
-        redirect((string) prevUrl(), 0, ['success' => LANG['success']]);
+        Redirect::location((string) URL::prev(), 0, ['success' => LANG['success']]);
     }
 
     //--------------------------------------------------------------------------------------------------------

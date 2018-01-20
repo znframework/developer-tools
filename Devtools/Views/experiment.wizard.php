@@ -28,8 +28,8 @@
 
                         </tr>
                         <tr>
-                            <th>@@Form::onclick('alterTable(\'php\', \'RunPHPCode\')')->class('form-control btn btn-info')->button('update', LANG['runPHPButton']):</th>
-                            <th>@@Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton']):</th>
+                            <th>@Form::onclick('alterTable(\'php\', \'RunPHPCode\')')->class('form-control btn btn-info')->button('update', LANG['runPHPButton']):</th>
+                            <th>@Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton']):</th>
 
                         </tr>
                     </thead>
@@ -45,7 +45,7 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['output']}}
+                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['output'] ?? 'Output'}}
                     
 
                 </h3>
@@ -64,7 +64,7 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['output']}}
+                <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['output'] ?? 'Output'}}
                     
 
                 </h3>
@@ -104,7 +104,7 @@ function alterTable(type, id)
     
     $.ajax
     ({
-        url/:"@@siteUrl('experiments/alterTable'):",
+        url/:"@URL::site('experiments/alterTable'):",
     	data/:'content=' + encodeURIComponent(content) + '&type=' + type,
     	method/:"post",
     	success/:function(data)

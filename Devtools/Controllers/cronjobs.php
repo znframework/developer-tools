@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Post, Crontab, Strings;
+use Post, Crontab, Strings, Arrays, Redirect;
 
 class Cronjobs extends Controller
 {
@@ -23,7 +23,7 @@ class Cronjobs extends Controller
     //
     //--------------------------------------------------------------------------------------------------------
     public function __construct()
-    {
+    {   
         parent::__construct();
 
         Crontab::project(SELECT_PROJECT);
@@ -40,7 +40,7 @@ class Cronjobs extends Controller
     {
         if( PHP_OS !== 'Linux' && PHP_OS !== 'Unix' )
         {
-            return $this->masterpage->error = LANG['availableLinux'];
+            return Masterpage::error(LANG['availableLinux']);
         }
 
         if( Post::create() )
@@ -82,7 +82,7 @@ class Cronjobs extends Controller
 
             if( $status === false )
             {
-                return $this->masterpage->error = LANG['crontabTimeError'];
+                return Masterpage::error(LANG['crontabTimeError']);
             }
             else
             {
@@ -99,9 +99,12 @@ class Cronjobs extends Controller
             {
                 if( stristr($val, '"'.SELECT_PROJECT.'"') )
                 {
-                    $time = Strings::divide($val, ' php');
-                    $code = Strings::divide(rtrim($val, ';\''), ';', -1);
-                    
+                    $timeEx = explode(' ', Strings::divide($val, ' -r'));
+
+                    $timeEx = Arrays::removeLast($timeEx, 2);
+                    $time   = implode(' ', $timeEx);
+                    $code   = Strings::divide(rtrim($val, ';\''), ';', -1);
+                  
                     preg_match('/\s(\/)+(.*?)*php\s/', $val, $path);
 
                     $list[$key] = [$time, $path[0] ?? \Config::services('processor')['path'], $code];
@@ -115,9 +118,9 @@ class Cronjobs extends Controller
             }
         }
 
-        $this->masterpage->pdata['list'] = $list ?? [];
+        Masterpage::pdata(['list' => $list ?? []]);
 
-        $this->masterpage->page = 'cronjob';
+        Masterpage::page('cronjob');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -131,6 +134,6 @@ class Cronjobs extends Controller
     {
         Crontab::remove($id);
 
-        redirect('cronjobs');
+        Redirect::location('cronjobs');
     }
 }

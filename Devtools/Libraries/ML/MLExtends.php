@@ -1,8 +1,9 @@
 <?php namespace ML;
 
-use CLController;
+use ZN\Lang;
+use ZN\Config;
 
-class MLExtends extends CLController
+class MLExtends
 {
     //--------------------------------------------------------------------------------------------------------
     //
@@ -12,8 +13,6 @@ class MLExtends extends CLController
     // Copyright  : (c) 2012-2016, znframework.com
     //
     //--------------------------------------------------------------------------------------------------------
-
-    const config = 'EncodingSupport:ml';
 
     //--------------------------------------------------------------------------------------------------------
     // $appdir
@@ -51,9 +50,9 @@ class MLExtends extends CLController
     //--------------------------------------------------------------------------------------------------------
     public function __construct()
     {
-        parent::__construct();
+        $this->gridConfig = Config::get('ViewObjects', 'mlgrid');
 
-        $mlDir = 'Languages' . DS . 'ML' . DS;
+        $mlDir = 'Languages' . DS . 'ml' . DS;
 
         $this->appdir = SELECT_PROJECT_DIR . $mlDir;
 
@@ -62,7 +61,7 @@ class MLExtends extends CLController
             mkdir($this->appdir, 0755);
         }
 
-        $this->lang = $this->appdir.getLang().$this->extension;
+        $this->lang = $this->appdir.Lang::get().$this->extension;
     }
 
     //--------------------------------------------------------------------------------------------------------

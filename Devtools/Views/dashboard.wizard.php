@@ -1,4 +1,4 @@
-@@Form::open():
+@Form::open():
 <!-- Page Heading -->
 <div class="row">
     <div class="col-lg-11">
@@ -10,7 +10,7 @@
 
     <div class="col-lg-1">
         <h1 class="page-header">
-            @@Form::class('btn btn-info')->submit('create', LANG['createButton']):
+            @Form::class('btn btn-info')->submit('create', LANG['createButton']):
         </h1>
     </div>
 </div>
@@ -120,7 +120,7 @@
             <div class="panel-body">
 
                     <div class="form-group">
-                        @@Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
+                        @Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project'):
                     </div>
 
 
@@ -130,7 +130,7 @@
 
 </div>
 
-@@Form::close():
+@Form::close():
 <!-- /.container-fluid -->
 
 <div class="row">
@@ -143,7 +143,7 @@
                 <div class="list-group">
 
                     @foreach( PROJECT_LIST as $project ):
-                    <a href="{{siteUrl('home/project/' . $project)}}" class="{{((Session::select('project') ? Session::select('project') : DEFAULT_PROJECT) === $project ) ? 'active ' : NULL}}list-group-item">
+                    <a href="{{URL::site('home/project/' . $project)}}" class="{{((Session::select('project') ? Session::select('project') : DEFAULT_PROJECT) === $project ) ? 'active ' : NULL}}list-group-item">
                         <i class="fa fa-fw fa-folder"></i> @$project:
                         @if( $project !== 'External' ):
                         <span class="pull-right"><i onclick="deleteProcess('home/delete/{{$project}}');" class="fa fa-trash-o fa-fw"></i></span>

@@ -1,6 +1,9 @@
 <?php
 
-class InternalMLS extends FactoryController
+use ZN\Lang;
+use ZN\Controller\Factory;
+
+class InternalMLS extends Factory
 {
     //--------------------------------------------------------------------------------------------------------
     //
@@ -39,6 +42,6 @@ class InternalMLS extends FactoryController
     //--------------------------------------------------------------------------------------------------------
     public function lang(String $lang = 'tr') : Bool
     {
-        setLang($lang);
+        Lang::set($lang);
     }
 }

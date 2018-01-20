@@ -13,8 +13,8 @@
 
 use Http, Method, DBForge, DB, Import, DBTool, Session, Config, Folder, File;
 use ZN\DataTypes\Arrays\RemoveElement;
-use ZN\DataTypes\Json\Encode;
-use ZN\IndividualStructures\Security\Html;
+use ZN\Security\Html;
+use ZN\Base;
 
 class Datatables extends Controller
 {
@@ -27,8 +27,8 @@ class Datatables extends Controller
     //--------------------------------------------------------------------------------------------------------
     public function main(String $params = NULL)
     {
-        $this->masterpage->pdata['tables'] = DBTool::listTables();
-        $this->masterpage->page = 'datatable';
+        Masterpage::pdata(['tables' => DBTool::listTables()]);
+        Masterpage::page('datatable');
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ class Datatables extends Controller
 
         if( $type === 'orm' )
         {
-            $status  = eval('?><?php ' . suffix($content, ';'));
+            $status  = eval('?><?php ' . Base::suffix($content, ';'));
         }
         else
         {

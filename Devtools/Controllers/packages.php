@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, JC, Method, Http, Processor, File, Arrays, URI, Json, Folder, Config, Strings;
+use Restful, JC, Method, Http, Processor, File, Arrays, URI, Json, Folder, Config, Strings, Redirect;
 
 class Packages extends Controller
 {
@@ -57,12 +57,14 @@ class Packages extends Controller
         {
             $data = Restful::get('https://packagist.org/search.json?q=' . Method::post('name') );
 
-            $this->masterpage->pdata['result'] = $data->results;
+            $pdata['result'] = $data->results;
          }
 
-        $this->masterpage->pdata['list'] = $this->list;
+        $pdata['list'] = $this->list;
 
-        $this->masterpage->page = 'package';
+        Masterpage::page('package');
+
+        Masterpage::pdata($pdata);
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -85,7 +87,7 @@ class Packages extends Controller
 
         File::write($this->downloadFileName, Json::encode($newList) . EOL);
 
-        redirect('packages');
+        Redirect::location('packages');
     }
 
     //--------------------------------------------------------------------------------------------------------

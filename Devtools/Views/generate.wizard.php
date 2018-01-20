@@ -1,23 +1,23 @@
-@@Form::open():
+@Form::open():
 
 <div class="row">
     <div class="col-lg-11">
         <h1 class="page-header">
-            @@Strings::titleCase(CURRENT_CFUNCTION): <small> {{LANG['overview']}}</small>
+            @Strings::titleCase(CURRENT_CFUNCTION): <small> {{LANG['overview']}}</small>
         </h1>
 
     </div>
 
     <div class="col-lg-1">
         <h1 class="page-header">
-            @@Form::class('btn btn-info')->submit('generate', LANG['generateButton']):
+            @Form::class('btn btn-info')->submit('generate', LANG['generateButton']):
         </h1>
     </div>
 </div>
 
 @Import::view($content . '.wizard'):
 
-@@Form::close():
+@Form::close():
 
 @if( ! empty($files) ):
 
@@ -34,7 +34,7 @@
 
                     <a href="/#b@$key:" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i>
-                        {[$relativePath = ZN\FileSystem\File\Info::absolutePath($file)]}
+                        {[$relativePath = ZN\Filesystem\Info::relativepath($file)]}
                         {{Form::id('renameId' . $key)->style('width:'.(mb_strlen($relativePath) * 7).'px; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
@@ -44,7 +44,7 @@
                         @endif:
                     </a>
 
-                    <pre id="b@$key:" key="{{$key}}" link="{{ZN\FileSystem\File\Info::absolutePath($file)}}" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" contenteditable="true">@@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
+                    <pre id="b@$key:" key="{{$key}}" link="{{ZN\Filesystem\Info::relativepath($file)}}" class="collapse"><div style="width/:100%; height/:800px;" id="editor{{$key}}" contenteditable="true">@Security::phpTagEncode(Security::htmlEncode(File::read($relativePath))):</div></pre>
                     <script>
                         var editor = ace.edit("editor{{$key}}");
                         editor.setTheme("ace/theme/{{SELECT_EDITOR_THEME}}");
@@ -63,11 +63,11 @@
 
 function renameProcess(oldname, newname)
 {
-    if( confirm("@@LANG['areYouSure']:") )
+    if( confirm("@LANG['areYouSure']:") )
     {
         $.ajax
         ({
-            'url'/:'@@siteUrl('generate/renameFile'):',
+            'url'/:'@URL::site('generate/renameFile'):',
             'data'/:'old=' + oldname + '&new=' + $(newname).val() + '&current={{CURRENT_CFUNCTION}}',
             'type'/:'post',
             'success'/:function()
@@ -100,7 +100,7 @@ function saveProcess(link, key)
 
     $.ajax
     ({
-        'url'/:'@@siteUrl('generate/saveFile'):',
+        'url'/:'@URL::site('generate/saveFile'):',
         'data'/:'link=' + link + '&content=' + encodeURIComponent(code),
         'type'/:'post',
         'success'/:function(data)

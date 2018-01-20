@@ -11,7 +11,8 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful, ML;
+use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful, ML, User, Redirect;
+use ZN\Base;
 
 class Initialize extends Controller
 {
@@ -29,7 +30,7 @@ class Initialize extends Controller
 
         if( ZN_VERSION < DASHBOARD_VERSION )
         {
-            trace(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
+            Base::trace(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
         }
 
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
@@ -39,9 +40,9 @@ class Initialize extends Controller
 
         define('LASTEST_VERSION', $lastVersionData ?? ZN_VERSION);
 
-        if( strtolower(CURRENT_CONTROLLER) !== 'login' && ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], ipv4()) && ! Session::select('isLogin') )
+        if( strtolower(CURRENT_CONTROLLER) !== 'login' && ! Arrays::valueExists(DASHBOARD_CONFIG['ip'], User::ip()) && ! Session::select('isLogin') )
         {
-            redirect('login');
+            Redirect::location('login');
         }
 
         define('LANG', ML::select());
@@ -128,7 +129,7 @@ class Initialize extends Controller
             'vibrant_ink'               => 'Vibrant Ink',
             'xcode'                     => 'Xcode'
         ]);
-
+           
         $databaseConfigPath = SELECT_PROJECT_DIR . 'Config' . DS . 'Database.php';
 
         if( IS_CONTAINER )
@@ -138,7 +139,7 @@ class Initialize extends Controller
 
         if( SELECT_PROJECT !== 'External' )
         {
-            Config::set('Database', import($databaseConfigPath));
+            Config::set('Database', Base::import($databaseConfigPath));
         }
 
         define('CURRENT_DATABASE', Config::get('Database', 'database')['database']);

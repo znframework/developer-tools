@@ -11,7 +11,7 @@
 //
 //------------------------------------------------------------------------------------------------------------
 
-use Restful, Import;
+use Restful, Import, Redirect;
 
 class Version extends Controller
 {
@@ -26,11 +26,15 @@ class Version extends Controller
     {
         if( ! $versions = Restful::post('https://api.znframework.com/statistics/versions') )
         {
-            redirect();
+            Redirect::location();
         }
 
         Import::handload('Functions');
-        $this->masterpage->pdata['notes'] = $versions;
-        $this->masterpage->page           = 'versions-notes';
+        
+        $pdata['notes'] = $versions;
+
+        Masterpage::page('versions-notes');
+
+        Masterpage::pdata($pdata);
     }
 }
