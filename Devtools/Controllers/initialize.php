@@ -12,7 +12,7 @@
 //------------------------------------------------------------------------------------------------------------
 
 use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful, ML, User, Redirect;
-use ZN\Base;
+use ZN\Base, Lang;
 
 class Initialize extends Controller
 {
@@ -30,7 +30,7 @@ class Initialize extends Controller
 
         if( ZN_VERSION < DASHBOARD_VERSION )
         {
-            Base::trace(lang('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
+            Base::trace(Lang::select('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
         }
 
         if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
