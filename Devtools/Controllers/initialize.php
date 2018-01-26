@@ -1,28 +1,25 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// INITIALIZE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Folder, Arrays, Form, Config, Route, Validation, Session, Cookie, DB, Restful, ML, User, Redirect;
+use Folder;
+use Arrays;
+use Form;
+use Config;
+use Route;
+use Validation;
+use Session;
+use Cookie;
+use DB;
+use Restful;
+use ML;
+use User;
+use Redirect;
 use ZN\Base, Lang;
 
 class Initialize extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Main
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Initialize Controller
+     */
     public function main(String $params = NULL)
     {
         define('DASHBOARD_CONFIG', Config::get('Dashboard'));

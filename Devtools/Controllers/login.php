@@ -1,27 +1,14 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// GENERATE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Method, Session, Redirect;
+use Method;
+use Session;
+use Redirect;
 
 class Login extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Main Page
+     */
     public function main(String $params = NULL)
     {
         if( Session::select('isLogin') )
@@ -44,6 +31,9 @@ class Login extends Controller
         }
     }
 
+    /**
+     * Out
+     */
     public function out()
     {
         Session::delete('isLogin');

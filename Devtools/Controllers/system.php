@@ -1,29 +1,30 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// SYSTEM
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Method, Folder, File, Html, Arrays, Restful, Separator, Redirect, URI;
-use Http, Session, DBTool, DB, Form, DBGrid, Security, Config, Json;
+use Method;
+use Folder;
+use File;
+use Html;
+use Arrays;
+use Restful;
+use Separator;
+use Redirect;
+use URI;
+use Http;
+use Session;
+use DBTool;
+use DB;
+use Form;
+use DBGrid;
+use Security;
+use Config;
+use Json;
 use ZN\Base;
 
 class System extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Converter
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Converter Page
+     */
     public function converter(String $params = NULL)
     {
         if( Method::post('convert') )
@@ -61,13 +62,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Converter
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Language Page
+     */
     public function language(String $params = NULL)
     {
         $pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
@@ -77,13 +74,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Converter
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Grid Page
+     */
     public function grid(String $params = NULL)
     {
         $tables             = DBTool::listTables();
@@ -188,6 +181,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
+    /**
+     * Ajax Grid Get Columns
+     */
     public function gridGetColumnsAjax()
     {
         if( ! Http::isAjax() )
@@ -210,8 +206,11 @@ class System extends Controller
         echo $str;
     }
 
+    /**
+     * Ajax Save Grid
+     */
     public function gridSaveAjax()
-    {
+    {   
         if( ! Http::isAjax() )
         {
             return false;
@@ -232,6 +231,9 @@ class System extends Controller
         $this->grid();
     }
 
+    /**
+     * Ajax Load Grid
+     */
     public function gridLoadAjax()
     {
         if( ! Http::isAjax() )
@@ -249,6 +251,9 @@ class System extends Controller
         }
     }
 
+    /**
+     * Ajax Delete Grid
+     */
     public function gridDeleteAjax()
     {
         if( ! Http::isAjax() )
@@ -268,13 +273,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Info
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Info Page
+     */
     public function info(String $params = NULL)
     {
         $return   = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
@@ -316,13 +317,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Log
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Log Page
+     */
     public function log(String $params = NULL)
     {
         $project = SELECT_PROJECT;
@@ -342,27 +339,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Clear Command
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
-    protected function clearCommand()
-    {
-        unset($_SESSION['persistCommands']);
-        unset($_SESSION['commandResponses']);
-        unset($_SESSION['commands']);
-    }
-
-    //--------------------------------------------------------------------------------------------------------
-    // Terminal
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Terminal Page
+     */
     public function terminal(String $params = NULL)
     {
         $pdata['supportCommands'] =
@@ -375,13 +354,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Terminal Ajax
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Terminal
+     */
     public function terminalAjax()
     {
         if( ! Http::isAjax() )
@@ -419,13 +394,9 @@ class System extends Controller
         echo $string;
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Terminal Ajax
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Back Data
+     */
     public function backDataAjax()
     {
         if( ! Http::isAjax() )
@@ -436,13 +407,9 @@ class System extends Controller
         echo Json::encode(Session::select('commands'));
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Backup
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Backup Page
+     */
     public function backup(String $params = NULL)
     {
         $project = SELECT_PROJECT;
@@ -486,13 +453,9 @@ class System extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Create Database
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Create Database
+     */
     protected function _ccreateDatabase(&$replace)
     {
         $query  = '^create\s+database\s+';
@@ -505,13 +468,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Drop Database
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Drop Database
+     */
     protected function _cdropDatabase(&$replace)
     {
         $query  = '^drop\s+database\s+';
@@ -524,13 +483,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Drop Table
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Drop Table
+     */
     protected function _cdropTable(&$replace)
     {
         $query  = '^drop\s+table\s+';
@@ -543,13 +498,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Create Table
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Create Table
+     */
     protected function _ccreateTable(&$replace)
     {
         $query  = '^create\s+table\s+';
@@ -580,13 +531,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Update
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Update
+     */
     protected function _cupdate(&$replace)
     {
         $update = '^update\s+';
@@ -621,13 +568,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Insert
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Insert
+     */
     protected function _cinsert(&$replace)
     {
         $insert = '^insert\s+';
@@ -654,13 +597,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Delete
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Delete
+     */
     protected function _cdelete(&$replace)
     {
         $delete  = '^delete\s+';
@@ -687,13 +626,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Convert Select
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Convert Select
+     */
     protected function _cselect(&$replace)
     {
         $select  = '^select\s+(.*?)\s+';
@@ -730,14 +665,9 @@ class System extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Protected Last
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string &$replace
-    // @param string  $getRegex
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Protected Last
+     */
     protected function _last(&$replace, $getRegex, $class)
     {
         preg_match($getRegex, $replace, $match);

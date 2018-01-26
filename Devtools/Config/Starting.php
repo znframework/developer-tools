@@ -1,59 +1,59 @@
 <?php return
 [
-    //--------------------------------------------------------------------------------------------------
-    // Starting
-    //--------------------------------------------------------------------------------------------------
-    //
-    // Author     : Ozan UYKUN <ozanbote@windowslive.com> | <ozanbote@gmail.com>
-    // Site       : www.znframework.com
-    // License    : The MIT License
-    // Copyright  : Copyright (c) 2012-2016, ZN Framework
-    //
-    //--------------------------------------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | Constructor Controllers
+    |--------------------------------------------------------------------------
+    | 
+    | Controllers that will run before the system and before the controllers.
+    |
+    | Example: 
+    | [
+    |     'starting/starting:main', 'starting:otherMethod',
+    |     'otherController/otherController:main', 'otherController:otherMethod'
+    | ]
+    |
+    */
 
-    //--------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------
-    //
-    // Başlangıçta çalıştırılmak istenen kontrolcü varsa kullanılır. Bir veya birden fazla, parametreli
-    // veya parametresiz kontrolcü çalıştırılabilir. Bunun için ayar değeri hem dizge hem de dizi
-    // olabilir. Dikkat edilmesi gereken nokta kontrolcü ismi ile sınıfı adı aynı olmalıdır.
-    // Verinin class bölümü aslında sayfa adıdır.
-    //
-    // Tekil Kullanım
-    // 'file:func'
-    //
-    // Çoğul Kullanım
-    // ['file1:func1', 'file2:func2', ...]
-    //
-    // Parametreli Kullanım
-    // ['file1:func1' => ['p1', 'p2'], ... ]
-    //
-    //--------------------------------------------------------------------------------------------------
-    'controller' => 'initialize',
+    'constructors' => ['initialize'],
 
-    //--------------------------------------------------------------------------------------------------
-    // Autoload
-    //--------------------------------------------------------------------------------------------------
-    //
-    // Functions/Autoloader/ dizininde bulunan dosyalar otomatik olarak dahil edilir.
-    // Bunu kapatmak için aşağıdaki status ayarına ait değer false, açmak için true olarak ayarlanır.
-    // Dizin içi dizinlerde de arama yapılması istenirse recursive true olarak ayarlanır.
-    //
-    //--------------------------------------------------------------------------------------------------
+    /*
+    |--------------------------------------------------------------------------
+    | Destructor Controllers
+    |--------------------------------------------------------------------------
+    |
+    | It is the controllers that will go into the circuit after the 
+    | controllers work.
+    |
+    */
+
+    'destructors' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Extract View Data
+    |--------------------------------------------------------------------------
+    |
+    | It sends data to the controllers working under it with the View library.
+    | Sent data is accessed with [$this] object.
+    |
+    */
+
+    'extractViewData' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Autoload
+    |--------------------------------------------------------------------------
+    |
+    | Allows the files in the Starting/Autoload/ folder to be installed 
+    | automatically.
+    |
+    */
+
     'autoload' =>
     [
         'status'    => true,
         'recursive' => false
-    ],
-
-    //--------------------------------------------------------------------------------------------------
-    // Handload
-    //--------------------------------------------------------------------------------------------------
-    //
-    // El ile yüklenmek istenen fonksiyon dosyalarının yol bilgileri belirtilir.
-    // Yol bilgisi belirtilirken Functions/Handload/ kök dizin kabul edilir.
-    //
-    //--------------------------------------------------------------------------------------------------
-    'handload' => []
+    ]
 ];

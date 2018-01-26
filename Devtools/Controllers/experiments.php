@@ -1,46 +1,32 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// GENERATE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
+use DB;
+use Http;
+use Post;
+use Import;
 
 class Experiments extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Main
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Main
+     */
     public function main(String $params = NULL)
     {
         Masterpage::page('experiment');
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Ajax Alter Table
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Alter Table
+     */
     public function alterTable()
     {
-        if( ! \Http::isAjax() )
+        if( ! Http::isAjax() )
         {
             return false;
         }
 
-        $content = \Post::content();
-        $type    = \Post::type();
+        $content = Post::content();
+        $type    = Post::type();
 
         if( $type === 'php' )
         {
@@ -48,9 +34,9 @@ class Experiments extends Controller
         }
         else
         {
-            $query = \DB::query($content);
+            $query = DB::query($content);
 
-            $result = \Import::view('experiments-table', ['columns' => $query->columns(), 'result' => $query->resultArray()], true);
+            $result = Import::view('experiments-table', ['columns' => $query->columns(), 'result' => $query->resultArray()], true);
         }
 
         echo $result ?: LANG['noOutput'];

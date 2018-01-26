@@ -1,29 +1,23 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// GENERATE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Method, Arrays, Generate as Gen, Redirect;
-use Validation, Folder, File, Config, Uri, Security, Http;
+use Method;
+use Arrays;
+use Generate as Gen;
+use Redirect;
+use Validation;
+use Folder;
+use File;
+use Config;
+use Uri;
+use Security;
+use Http;
 use ZN\Base;
 
 class Generate extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Controller
+     */
     public function controller(String $params = NULL)
     {
         if( Method::post('generate') )
@@ -40,7 +34,7 @@ class Generate extends Controller
                     $functions = Arrays::addFirst($functions, 'main');
                 }
 
-                $viewObjectConfig = Base::import(SELECT_PROJECT_DIR . 'Config' . DS . 'ViewObjects.php');
+                $viewObjectConfig = Base::import(SELECT_PROJECT_DIR . 'Config' . DS . 'Starting.php');
 
                 $controller = Method::post('controller');
 
@@ -107,13 +101,9 @@ class Generate extends Controller
         ]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Library
+     */
     public function library(String $params = NULL)
     {
         if( Method::post('generate') )
@@ -156,13 +146,9 @@ class Generate extends Controller
         ]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Command
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Command
+     */
     public function command(String $params = NULL)
     {
         if( IS_CONTAINER )
@@ -211,13 +197,9 @@ class Generate extends Controller
         ]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Command
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Route
+     */
     public function route(String $params = NULL)
     {
         if( IS_CONTAINER )
@@ -261,13 +243,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);  
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Command
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Config
+     */
     public function config(String $params = NULL)
     {
         if( IS_CONTAINER )
@@ -326,13 +304,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Model
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Model
+     */
     public function model(String $params = NULL)
     {
         if( IS_CONTAINER )
@@ -390,13 +364,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Model
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate View
+     */
     public function view(String $params = NULL)
     {
         $templates = Folder::files(TEMPLATES_DIR, 'php');
@@ -462,13 +432,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Model
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Starting File
+     */
     public function starting(String $params = NULL)
     {
         if( Method::post('generate') )
@@ -515,13 +481,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Migration
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Generate Migration
+     */
     public function migration(String $params = NULL)
     {
         if( IS_CONTAINER )
@@ -563,13 +525,9 @@ class Generate extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Delete
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Delete File
+     */
     public function deleteFile()
     {
         $file = Uri::get('deleteFile', 'all');
@@ -582,13 +540,9 @@ class Generate extends Controller
         Redirect::location((string) URL::prev(), 0, ['success' => LANG['success']]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Rename File
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Rename File
+     */
     public function renameFile()
     {
         if( ! Http::isAjax() )
@@ -608,13 +562,9 @@ class Generate extends Controller
         }
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Save File
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Save File
+     */
     public function saveFile()
     {
         if( ! Http::isAjax() )

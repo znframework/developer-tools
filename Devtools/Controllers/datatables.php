@@ -1,43 +1,33 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// GENERATE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Http, Method, DBForge, DB, Import, DBTool, Session, Config, Folder, File;
+use DB;
+use DBTool;
+use DBForge;
+use Import;
+use Session; 
+use Config;
+use Folder;
+use File;
+use Http;
+use Method;
 use ZN\DataTypes\Arrays\RemoveElement;
 use ZN\Security\Html;
 use ZN\Base;
 
 class Datatables extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Main
+     */
     public function main(String $params = NULL)
     {
         Masterpage::pdata(['tables' => DBTool::listTables()]);
         Masterpage::page('datatable');
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Save File
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Alter Table
+     */
     public function alterTable()
     {
         if( ! Http::isAjax() )
@@ -67,6 +57,9 @@ class Datatables extends Controller
         ]);
     }
 
+    /**
+     * Ajax Drop Table
+     */
     public function dropTable()
     {
         if( ! Http::isAjax() )
@@ -86,6 +79,9 @@ class Datatables extends Controller
         ]);
     }
 
+    /**
+     * Ajax Update Rows
+     */
     public function updateRows()
     {
         if( ! Http::isAjax() )
@@ -119,6 +115,9 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    /**
+     * Ajax Add Row
+     */
     public function addRow()
     {
         if( ! Http::isAjax() )
@@ -135,7 +134,10 @@ class Datatables extends Controller
 
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
-
+    
+    /**
+     * Ajax Delete Row
+     */
     public function deleteRow()
     {
         if( ! Http::isAjax() )
@@ -152,6 +154,9 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    /**
+     * Ajax Drop Column
+     */
     public function dropColumn()
     {
         if( ! Http::isAjax() )
@@ -167,13 +172,15 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    /**
+     * Ajax Create New Datatable
+     */
     public function createNewDatatable()
     {
         if( ! Http::isAjax() )
         {
             return false;
         }
-
 
         $table   = Method::post('table');
         $columns = RemoveElement::first(Method::post());
@@ -234,8 +241,11 @@ class Datatables extends Controller
             'result' => $result,
             'error'  => DBForge::error()
         ]);
-    }
+    }   
 
+    /**
+     * Ajax Modify Column
+     */
     public function modifyColumn()
     {
         if( ! Http::isAjax() )
@@ -283,7 +293,9 @@ class Datatables extends Controller
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
-
+    /**
+     * Ajax Update Row
+     */
     public function updateRow()
     {
         if( ! Http::isAjax() )
@@ -294,13 +306,16 @@ class Datatables extends Controller
         $table   = Method::post('table');
         $column  = Method::post('uniqueKey');
         $ids     = Method::post('ids');
-        $columns = $_POST['updateColumns'][$ids]; // Origin Data
+        $columns = $_POST['updateColumns'][$ids]; # Origin Data
 
         DB::where($column, $ids)->update('ignore:' . $table, $columns);
 
         Import::view('datatables-rows.wizard', ['table' => $table, 'start' => (int) Session::select($table . 'paginationStart')]);
     }
 
+    /**
+     * Ajax Pagination Row
+     */
     public function paginationRow()
     {
         if( ! Http::isAjax() )

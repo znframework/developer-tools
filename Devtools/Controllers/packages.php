@@ -1,17 +1,17 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// GENERATE
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Restful, JC, Method, Http, Processor, File, Arrays, URI, Json, Folder, Config, Strings, Redirect;
+use Restful;
+use Method;
+use Http;
+use Processor;
+use File;
+use Arrays;
+use URI;
+use Json;
+use Folder;
+use Config;
+use Strings;
+use Redirect;
 
 class Packages extends Controller
 {
@@ -21,6 +21,9 @@ class Packages extends Controller
 
     protected $vendor;
 
+    /**
+     * Magic Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -44,13 +47,9 @@ class Packages extends Controller
         $this->list = Json::decodeArray(File::read($this->downloadFileName));
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Controller
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Main Page
+     */
     public function main(String $params = NULL)
     {
         if( Method::post('search') )
@@ -67,13 +66,9 @@ class Packages extends Controller
         Masterpage::pdata($pdata);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Delete
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Delete
+     */
     public function delete()
     {
         $newList = Arrays::deleteElement($this->list, $packageName = URI::get('delete', 2, true));
@@ -90,13 +85,9 @@ class Packages extends Controller
         Redirect::location('packages');
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Ajax Download
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param void
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Ajax Download
+     */
     public function download()
     {
         if( ! Http::isAjax() )

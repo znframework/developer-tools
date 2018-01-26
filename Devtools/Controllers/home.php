@@ -1,27 +1,25 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// HOME
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Restful, Method, Validation, File, Folder, Session, Cookie, Json, URI, Security, Http, Redirect, Lang, URL;
+use Restful;
+use Method;
+use Validation;
+use File;
+use Folder;
+use Session;
+use Cookie;
+use Json;
+use URI;
+use Security;
+use Http;
+use Redirect;
+use Lang;
+use URL;
 
 class Home extends Controller
 {
-    //--------------------------------------------------------------------------------------------------------
-    // Main
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Main Page
+     */
     public function main(String $params = NULL)
     {
         if( Method::post('create') )
@@ -30,7 +28,7 @@ class Home extends Controller
 
             if( ! $error = Validation::error('string') )
             {
-                $source = FILES_DIR . 'Default.zip';
+                $source = EXTERNAL_FILES_DIR . 'DefaultProject.zip';
                 $target = PROJECTS_DIR . Method::post('project');
 
                 File::zipExtract($source, $target);
@@ -54,13 +52,9 @@ class Home extends Controller
         Masterpage::pdata(['return' => $return]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Docs
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Docs Page
+     */
     public function docs(String $params = NULL)
     {
         $docs = FILES_DIR . 'docs.json';
@@ -97,13 +91,9 @@ class Home extends Controller
         Masterpage::page('docs');
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Delete
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Delete
+     */
     public function delete($project = NULL)
     {
         if( ! empty($project) )
@@ -120,13 +110,9 @@ class Home extends Controller
         Redirect::location((string) URL::prev(), 0, ['success' => LANG['success']]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Delete
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Delete Backup
+     */
     public function deleteBackup($backup = NULL)
     {
         $path = $path = STORAGE_DIR . 'ProjectBackup' . DS . $backup;
@@ -139,13 +125,9 @@ class Home extends Controller
         Redirect::location((string) URL::prev(), 0, ['success' => LANG['success']]);
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Lang
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Lang
+     */
     public function lang($lang = NULL)
     {
         Lang::set($lang);
@@ -153,26 +135,18 @@ class Home extends Controller
         Redirect::location((string) URL::prev());
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Lang
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Project
+     */
     public function project($project = NULL)
     {
         Session::insert('project', $project);
         Redirect::location((string) URL::prev());
     }
 
-    //--------------------------------------------------------------------------------------------------------
-    // Lang
-    //--------------------------------------------------------------------------------------------------------
-    //
-    // @param string $params NULL
-    //
-    //--------------------------------------------------------------------------------------------------------
+    /**
+     * Editor Theme
+     */
     public function editorTheme($theme = NULL)
     {
         Cookie::insert('editorTheme', $theme);

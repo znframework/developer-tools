@@ -1,20 +1,14 @@
 <?php namespace Project\Controllers;
 
-//------------------------------------------------------------------------------------------------------------
-// SYSTEM
-//------------------------------------------------------------------------------------------------------------
-//
-// Author   : ZN Framework
-// Site     : www.znframework.com
-// License  : The MIT License
-// Copyright: Copyright (c) 2012-2016, znframework.com
-//
-//------------------------------------------------------------------------------------------------------------
-
-use Method, Restful, Json;
+use Json;
+use Method;
+use Restful;
 
 class Api extends Controller
 {
+    /**
+     * Main
+     */
     public function main()
     {
         if( Method::post('request') )
@@ -45,7 +39,6 @@ class Api extends Controller
             }
 
             Masterpage::pdata(['results' => Restful::$type(Method::post('url'))]);
-
 
             $infos = Restful::info('all');
 
