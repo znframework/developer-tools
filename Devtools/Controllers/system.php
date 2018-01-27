@@ -278,43 +278,12 @@ class System extends Controller
      */
     public function info(String $params = NULL)
     {
-        $return   = Restful::post('https://api.znframework.com/statistics/upgrade', ['version' => ZN_VERSION]);
-        $return   = Separator::decodeArray($return);
-
         if( Method::post('upgrade') )
         {
-            if( ! empty($return) )
-            {
-                $upgradeFolder = 'Upgrade'.md5('upgrade').'/';
-
-                Folder::create($upgradeFolder);
-
-                foreach( $return as $file => $content )
-                {
-                    $file = $upgradeFolder . $file;
-
-                    $dirname = File::pathInfo($file, 'dirname');
-
-                    Folder::create($dirname);
-                    File::write($file, $content);
-                }
-
-                Folder::copy($upgradeFolder, '/');
-                Folder::delete($upgradeFolder);
-
-                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
-            }
-            else
-            {
-                Masterpage::error(LANG['alreadyVersion']);
-            }
+            exec('composer update');
         }
 
-        $pdata['upgrades'] = Arrays::keys($return);
-
         Masterpage::page('info');
-
-        Masterpage::pdata($pdata);
     }
 
     /**

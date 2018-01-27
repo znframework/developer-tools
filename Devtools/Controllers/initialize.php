@@ -30,10 +30,24 @@ class Initialize extends Controller
             Base::trace(Lang::select('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
         }
 
-        if( $versions = Restful::post('https://api.znframework.com/statistics/versions') )
-        {
-            $lastVersionData = $versions[0]->version ?? NULL;
+        if( ! Session::lastversion() )
+        {   
+            $return  = \Restful::useragent(true)->get('https://api.github.com/repos/znframework/znframework/tags');
+
+            $lastest = $return[0];
+
+            $lastVersionData = $lastest->name ?? NULL;
+
+            Session::znframework($return);
+            Session::lastversion($lastVersionData);
         }
+        else
+        {
+            $return = Session::znframework();
+            $lastVersionData = Session::lastversion();
+        }
+
+        View::znframework($return);
 
         define('LASTEST_VERSION', $lastVersionData ?? ZN_VERSION);
 

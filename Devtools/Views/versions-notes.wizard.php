@@ -11,25 +11,38 @@
 
     <div class="col-lg-12">
 
-        @foreach( $notes as $key => $note ):
+        @foreach( $znframework as $key => $version ):
+            {[
+                if( ! Session::select($version->name) )
+                {
+                    $detail = \Restful::useragent(true)->get($version->commit->url);
 
-        @if( ! empty($note->description) ):
+                    Session::insert($version->name, $detail);
+                }
+                else
+                {
+                    $detail = Session::select($version->name);
+                }   
+            ]}
+            @if( $detail->commit ?? NULL ):
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 style="cursor:pointer" data-toggle="collapse" data-target="/#id{{$key}}" class="panel-title">
                     <i class="fa fa-book fa-fw"></i>
-                    {{$note->version}}
+                    {{$version->name}}
                     <span><i class="fa fa-angle-down fa-fw"></i></span>
                 </h3>
             </div>
             <div id="id{{$key}}" class="collapse panel-body">
                 <div class="list-group">
-                    {{specialWord($note->description)}}
+                    {{$detail->commit->message}}
+                    <p>
+                    <a target="_blank" href="{{$detail->html_url}}">&raquo; @LANG['detail']:</a>
+                    </p>
                 </div>
             </div>
         </div>
-        @endif:
-
+            @endif:
         @endforeach:
     </div>
 
