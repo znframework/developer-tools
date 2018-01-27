@@ -21,7 +21,7 @@ else
 
 ?>
 
-<?php if( $success = Redirect::selectData('success') ):
+<?php if( ($success ?? NULL) || $success = Redirect::selectData('success') ):
 Redirect::deleteData('success'); ?>
 <div class="row">
     <div class="col-lg-12">

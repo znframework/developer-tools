@@ -280,7 +280,18 @@ class System extends Controller
     {
         if( Method::post('upgrade') )
         {
-            exec('composer update');
+            $open   = popen('composer update', 'r');
+            $result = fread($open, 2096);
+            pclose($open);
+
+            if( empty($result) )
+            {
+                Masterpage::error(LANG['notUpgrade']);
+            }
+            else
+            {
+                Masterpage::success(LANG['successUpgrade']);
+            }
         }
 
         Masterpage::page('info');
