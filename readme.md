@@ -8,7 +8,7 @@
 
 ## Installation
 
-```
+```php
 # Run the following command in the project directory.
 composer create-project znframework/developer-tools Devtools
 ```
