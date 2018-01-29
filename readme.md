@@ -13,7 +13,7 @@
 ## Installation
 
 ```ruby
-# Run the following command in the project directory.
+# Run the following command in the Projects/ directory.
 composer create-project znframework/developer-tools Devtools
 ```
 
