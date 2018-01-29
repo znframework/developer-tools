@@ -3,20 +3,21 @@
 [![Latest Unstable Version](https://poser.pugx.org/znframework/developer-tools/v/unstable)](https://packagist.org/packages/znframework/developer-tools)
 [![License](https://poser.pugx.org/znframework/developer-tools/license)](https://packagist.org/packages/znframework/developer-tools)
 
-# ZN PHP Web Framework
-[Download](http://www.znframework.com/framework/download) - 
-[Upgrade](http://www.znframework.com/framework/upgrade) - 
-[Documentation](http://www.znframework.com/documentation)
+# ZN Framework Developer Tools
+<p>Developer Tools For Multi Edition</p>
 
-<p>Dashboard For ZN Framework</p>
+## Installation
+
+```
+# Run the following command in the project directory.
+composer create-project znframework/developer-tools Devtools
+```
 
 ## Requirements
 
-* PHP >= 7.0.0
-* ZN  >= 5.0.0
+* ZN Multi Edition >= 5.0.0
 
 ## Screenshot
-
 
 ![Developer Tools](https://cloud.teslaerp.com/tesla/Application/Resources/Uploads/znframework/gallery/zn/1495141581_developer-tools.png)
 
