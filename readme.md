@@ -6,16 +6,16 @@
 # ZN Framework Developer Tools
 <p>Developer Tools For Multi Edition</p>
 
-## Installation
-
-```php
-# Run the following command in the project directory.
-composer create-project znframework/developer-tools Devtools
-```
-
 ## Requirements
 
 * ZN Multi Edition >= 5.0.0
+
+## Installation
+
+```ruby
+# Run the following command in the project directory.
+composer create-project znframework/developer-tools Devtools
+```
 
 ## Screenshot
 
