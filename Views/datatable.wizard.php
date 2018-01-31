@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div style="cursor:pointer" data-target="/#alterTableProcessTable" data-toggle="collapse"  class="panel-heading">
+            <div style="cursor:pointer" data-target="#alterTableProcessTable" data-toggle="collapse"  class="panel-heading">
                 <h3 class="panel-title">
                     <i class="fa fa-table fa-fw"></i>
 
@@ -25,13 +25,13 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><pre><div style="width/:100%; height/:300px;" id="RunORMCode" contenteditable="true"><br>Run ORM<br><br></div></pre></th>
-                            <th><pre><div style="width/:100%; height/:300px;" id="RunSQLCode" contenteditable="true"><br>Run SQL<br><br></div></pre></th>
+                            <th><pre><div style="width:100%; height:300px;" id="RunORMCode" contenteditable="true"><br>Run ORM<br><br></div></pre></th>
+                            <th><pre><div style="width:100%; height:300px;" id="RunSQLCode" contenteditable="true"><br>Run SQL<br><br></div></pre></th>
 
                         </tr>
                         <tr>
-                            <th>@Form::onclick('alterTable(\'orm\', \'RunORMCode\')')->class('form-control btn btn-info')->button('update', LANG['runORMButton']):</th>
-                            <th>@Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton']):</th>
+                            <th>{{Form::onclick('alterTable(\'orm\', \'RunORMCode\')')->class('form-control btn btn-info')->button('update', LANG['runORMButton'])}}</th>
+                            <th>{{Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton'])}}</th>
 
                         </tr>
                     </thead>
@@ -42,21 +42,21 @@
     </div>
 </div>
 
-@Import::view('alert-bar.wizard'):
+{{Import::view('alert-bar.wizard')}}
 
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-table fa-fw"></i> {{LANG['datatables']}}
-                    <span href="/#newDatatable" data-toggle="collapse" style="cursor:pointer" class="pull-right"><i class="fa fa-plus fa-fw" title="Add Datatable"></i></span>
+                    <span href="#newDatatable" data-toggle="collapse" style="cursor:pointer" class="pull-right"><i class="fa fa-plus fa-fw" title="Add Datatable"></i></span>
 
                 </h3>
             </div>
             <div class="panel-body">
                 <div id="tables" class="list-group">
 
-                    @Import::view('datatables-tables.wizard', ['tables' => $tables]):
+                    {{Import::view('datatables-tables.wizard', ['tables' => $tables])}}
 
                 </div>
 
@@ -81,7 +81,7 @@ var i = 0;
 function addColumnInNewTable()
 {
     i++;
-    $('/#newTableColumnContent').append('<tr>' + $('.newTableColumn').html() + '</tr>');
+    $('#newTableColumnContent').append('<tr>' + $('.newTableColumn').html() + '</tr>');
 }
 
 function dropColumnInNewTable(obj)
@@ -97,26 +97,26 @@ function dropColumnInNewTable(obj)
 
 function createNewDatatable()
 {
-    if( confirm("@LANG['areYouSure']:") )
+    if( confirm("{{LANG['areYouSure']}}") )
     {
         $.ajax
         ({
-            url/:"@URL::site('datatables/createNewDatatable'):",
-        	data/:$('/#newDatatableForm').serialize(),
-        	method/:"post",
-            dataType/:"json",
-        	success/:function(data)
+            url:"{{URL::site('datatables/createNewDatatable')}}",
+        	data:$('#newDatatableForm').serialize(),
+        	method:"post",
+            dataType:"json",
+        	success:function(data)
         	{
-                $('/#tables').html(data.result);
+                $('#tables').html(data.result);
 
                 if( data.status )
                 {
-                    $('/#success-process').removeClass('hide');
+                    $('#success-process').removeClass('hide');
                 }
                 else
                 {
-                    $('/#error-process').removeClass('hide');
-                    $('/#error-process-content').text(data.error);
+                    $('#error-process').removeClass('hide');
+                    $('#error-process-content').text(data.error);
                 }
         	}
         });
@@ -125,26 +125,26 @@ function createNewDatatable()
 
 function dropTable(table)
 {
-    if( confirm("@LANG['areYouSure']:") )
+    if( confirm("{{LANG['areYouSure']}}") )
     {
         $.ajax
         ({
-            url/:"@URL::site('datatables/dropTable'):",
-        	data/:"table=" + table,
-        	method/:"post",
+            url:"{{URL::site('datatables/dropTable')}}",
+        	data:"table=" + table,
+        	method:"post",
             dataType:"json",
-        	success/:function(data)
+        	success:function(data)
         	{
-                $('/#tables').html(data.result);
+                $('#tables').html(data.result);
 
                 if( data.status )
                 {
-                    $('/#success-process').removeClass('hide');
+                    $('#success-process').removeClass('hide');
                 }
                 else
                 {
-                    $('/#error-process').removeClass('hide');
-                    $('/#error-process-content').text(data.error);
+                    $('#error-process').removeClass('hide');
+                    $('#error-process-content').text(data.error);
                 }
         	}
         });
@@ -153,15 +153,15 @@ function dropTable(table)
 
 function dropColumn(table, column, id)
 {
-    if( confirm("@LANG['areYouSure']:") )
+    if( confirm("{{LANG['areYouSure']}}") )
     {
         $.ajax
         ({
-            url/:"@URL::site('datatables/dropColumn'):",
-        	data/:{"table":table, "column":column},
-        	method/:"post",
+            url:"{{URL::site('datatables/dropColumn')}}",
+        	data:{"table":table, "column":column},
+        	method:"post",
 
-        	success/:function(data)
+        	success:function(data)
         	{
                 $(id).html(data);
         	}
@@ -171,26 +171,26 @@ function dropColumn(table, column, id)
 
 function modifyColumn(table, column, id)
 {
-    if( confirm("@LANG['areYouSure']:") )
+    if( confirm("{{LANG['areYouSure']}}") )
     {
-        var obj = '/#' + table + column;
+        var obj = '#' + table + column;
         $.ajax
         ({
-            url/:"@URL::site('datatables/modifyColumn'):",
-        	data/:
+            url:"{{URL::site('datatables/modifyColumn')}}",
+        	data:
             {
-                "table"/:table,
-                "column"/:column,
-                "columnName"/:$(obj + 'columnName').val(),
-                "type"/:$(obj + 'type').val(),
-                "maxLength"/:$(obj + 'maxLength').val(),
-                "isNull"/:$(obj + 'isNull').val(),
-                "default"/:$(obj + 'default').val(),
+                "table":table,
+                "column":column,
+                "columnName":$(obj + 'columnName').val(),
+                "type":$(obj + 'type').val(),
+                "maxLength":$(obj + 'maxLength').val(),
+                "isNull":$(obj + 'isNull').val(),
+                "default":$(obj + 'default').val(),
             },
 
-        	method/:"post",
+        	method:"post",
 
-        	success/:function(data)
+        	success:function(data)
         	{
                 $(id).html(data);
         	}
@@ -200,15 +200,15 @@ function modifyColumn(table, column, id)
 
 function deleteRow(table, column, value, id)
 {
-    if( confirm("@LANG['areYouSure']:") )
+    if( confirm("{{LANG['areYouSure']}}") )
     {
         $.ajax
         ({
-            url/:"@URL::site('datatables/deleteRow'):",
-        	data/:{"table":table, "column":column, "value":value},
-        	method/:"post",
+            url:"{{URL::site('datatables/deleteRow')}}",
+        	data:{"table":table, "column":column, "value":value},
+        	method:"post",
 
-        	success/:function(data)
+        	success:function(data)
         	{
                 $(id).html(data);
         	}
@@ -220,21 +220,21 @@ function updateRow(table, ids, id, uniqueKey)
 {
     $.ajax
     ({
-        url/:"@URL::site('datatables/updateRow'):",
-    	data/:$('/#' + table).serialize() + '&uniqueKey=' + uniqueKey + '&table=' + table + '&ids=' + ids,
-    	method/:"post",
+        url:"{{URL::site('datatables/updateRow')}}",
+    	data:$('#' + table).serialize() + '&uniqueKey=' + uniqueKey + '&table=' + table + '&ids=' + ids,
+    	method:"post",
 
-    	success/:function(data)
+    	success:function(data)
     	{
             $(id).html(data);
 
             if( ! data )
             {
-                $('/#success-process-' + table).removeClass('hide');
+                $('#success-process-' + table).removeClass('hide');
             }
             else
             {
-                $('/#error-process-' + table).removeClass('hide');
+                $('#error-process-' + table).removeClass('hide');
             }
     	}
     });
@@ -245,21 +245,21 @@ function updateRows(table, id, uniqueKey)
 {
     $.ajax
     ({
-        url/:"@URL::site('datatables/updateRows'):",
-    	data/:$('/#' + table).serialize() + '&table=' + table + '&uniqueKey=' + uniqueKey,
-    	method/:"post",
+        url:"{{URL::site('datatables/updateRows')}}",
+    	data:$('#' + table).serialize() + '&table=' + table + '&uniqueKey=' + uniqueKey,
+    	method:"post",
 
-    	success/:function(data)
+    	success:function(data)
     	{
             $(id).html(data);
 
             if( ! data )
             {
-                $('/#success-process-' + table).removeClass('hide');
+                $('#success-process-' + table).removeClass('hide');
             }
             else
             {
-                $('/#error-process-' + table).removeClass('hide');
+                $('#error-process-' + table).removeClass('hide');
             }
     	}
     });
@@ -269,21 +269,21 @@ function addRow(table, id)
 {
     $.ajax
     ({
-        url/:"@URL::site('datatables/addRow'):",
-    	data/:$('#' + table).serialize() + '&table=' + table,
-    	method/:"post",
+        url:"{{URL::site('datatables/addRow')}}",
+    	data:$('#' + table).serialize() + '&table=' + table,
+    	method:"post",
 
-    	success/:function(data)
+    	success:function(data)
     	{
             $(id).html(data);
 
             if( data )
             {
-                $('/#success-process-' + table).removeClass('hide');
+                $('#success-process-' + table).removeClass('hide');
             }
             else
             {
-                $('/#error-process-' + table).removeClass('hide');
+                $('#error-process-' + table).removeClass('hide');
             }
     	}
     });
@@ -302,22 +302,22 @@ function alterTable(type, id)
     
     $.ajax
     ({
-        url/:"@URL::site('datatables/alterTable'):",
-    	data/:'content=' + encodeURIComponent(content) + '&type=' + type,
-    	method/:"post",
-        dataType/:"json",
-    	success/:function(data)
+        url:"{{URL::site('datatables/alterTable')}}",
+    	data:'content=' + encodeURIComponent(content) + '&type=' + type,
+    	method:"post",
+        dataType:"json",
+    	success:function(data)
     	{
-            $('/#tables').html(data.result);
+            $('#tables').html(data.result);
 
             if( ! data.error )
             {
-                $('/#success-process').removeClass('hide');
+                $('#success-process').removeClass('hide');
             }
             else
             {
-                $('/#error-process').removeClass('hide');
-                $('/#error-process-content').text(data.error);
+                $('#error-process').removeClass('hide');
+                $('#error-process-content').text(data.error);
             }
     	}
     });
@@ -327,11 +327,11 @@ function paginationRow(table, start, id)
 {
     $.ajax
     ({
-        url/:"@URL::site('datatables/paginationRow'):",
-    	data/:{"table":table, "start":start},
-    	method/:"post",
+        url:"{{URL::site('datatables/paginationRow')}}",
+    	data:{"table":table, "start":start},
+    	method:"post",
 
-    	success/:function(data)
+    	success:function(data)
     	{
             $(id).html(data);
     	}
@@ -340,12 +340,12 @@ function paginationRow(table, start, id)
 
 $(document).ajaxSend(function(e, jqXHR)
 {
-  $('/#loadingDiv').removeClass('hide');
+  $('#loadingDiv').removeClass('hide');
 });
 
 $(document).ajaxComplete(function(e, jqXHR)
 {
-  $('/#loadingDiv').addClass('hide');
+  $('#loadingDiv').addClass('hide');
 });
 
 </script>

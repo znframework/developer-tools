@@ -1,15 +1,15 @@
-@Form::id('gridForm')->open('gridForm'):
+{{Form::id('gridForm')->open('gridForm')}}
 <div class="row">
     <div class="col-lg-11">
         <h1 class="page-header">
-            @LANG['grids']: <small> {{LANG['overview']}}</small>
+            {{LANG['grids']}} <small> {{LANG['overview']}}</small>
         </h1>
     </div>
 
     <div class="col-lg-1">
         <h1 class="pull-right page-header">
-            @Form::class('btn btn-info')->onclick('submitPage(event)')->button('show', LANG['showButton']):
-            @Form::hidden('show', 1):
+            {{Form::class('btn btn-info')->onclick('submitPage(event)')->button('show', LANG['showButton'])}}
+            {{Form::hidden('show', 1)}}
         </h1>
     </div>
 </div>
@@ -24,7 +24,7 @@
 
                 <div class="form-group">
                     <label>{{LANG['selectTable']}}</label>
-                    @Form::class('form-control')->onchange('changeDefaultJoinTable(this)')->select('table', $tables, $selectTable):
+                    {{Form::class('form-control')->onchange('changeDefaultJoinTable(this)')->select('table', $tables, $selectTable)}}
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
 
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div style="cursor:pointer" data-target="/#joinsCollapse" data-toggle="collapse" class="panel-heading">
+            <div style="cursor:pointer" data-target="#joinsCollapse" data-toggle="collapse" class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-random fa-fw"></i> {{LANG['joins']}}</h3>
             </div>
 
@@ -44,7 +44,7 @@
                 @if( ! empty($joinCollapse) ):
                     {{$joinCollapse}}
                 @else:
-                    @Import::view('add-join-column.wizard', ['tables' => $tables, 'selectTable' => $selectTable]):
+                    {{Import::view('add-join-column.wizard', ['tables' => $tables, 'selectTable' => $selectTable])}}
                 @endif:
             </div>
 
@@ -56,13 +56,13 @@
 
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div style="cursor:pointer" data-target="/#columnsCollapse" data-toggle="collapse" class="panel-heading">
+            <div style="cursor:pointer" data-target="#columnsCollapse" data-toggle="collapse" class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-eye fa-fw"></i> {{LANG['viewColumns']}}</h3>
             </div>
 
             <div id="columnsCollapse" class="collapse panel-body">
                 <div class="form-group">
-                    @Form::class('form-control')->placeholder('table.column as Columns, table2.column2 as Columns2')->text('viewColumns', $viewColumns):
+                    {{Form::class('form-control')->placeholder('table.column as Columns, table2.column2 as Columns2')->text('viewColumns', $viewColumns)}}
                 </div>
             </div>
 
@@ -74,21 +74,21 @@
 
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div style="cursor:pointer" data-target="/#saveCollapse" data-toggle="collapse" class="panel-heading">
+            <div style="cursor:pointer" data-target="#saveCollapse" data-toggle="collapse" class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-save fa-fw"></i> {{LANG['save']}}</h3>
             </div>
 
             <div id="saveCollapse" class="collapse panel-body">
                 <div class="form-group">
-                    @Form::class('form-control')->id('saves')->select('saves', $saves):
+                    {{Form::class('form-control')->id('saves')->select('saves', $saves)}}
                 </div>
                 <div class="form-group">
-                    @Form::class('form-control')->id('saveName')->placeholder('File Name')->text('saveName'):
+                    {{Form::class('form-control')->id('saveName')->placeholder('File Name')->text('saveName')}}
                 </div>
                 <div class="form-group">
-                    @Form::class('btn btn-success')->onclick('saveJoin()')->button('save', LANG['saveButton']):
-                    @Form::class('btn btn-info')->onclick('loadJoin()')->button('load', LANG['loadButton']):
-                    @Form::class('btn btn-danger')->onclick('deleteJoin()')->button('delete', LANG['deleteButton']):
+                    {{Form::class('btn btn-success')->onclick('saveJoin()')->button('save', LANG['saveButton'])}}
+                    {{Form::class('btn btn-info')->onclick('loadJoin()')->button('load', LANG['loadButton'])}}
+                    {{Form::class('btn btn-danger')->onclick('deleteJoin()')->button('delete', LANG['deleteButton'])}}
                 </div>
 
             </div>
@@ -97,7 +97,7 @@
     </div>
 </div>
 
-@Form::close():
+{{Form::close()}}
 
 <div class="row">
     <div class="col-lg-12">
@@ -124,7 +124,7 @@ changeDefaultJoinTable('select[name="table"]');
 
 function changeDefaultJoinTable(obj)
 {
-    $('/#joinOtherTable1').attr('style', 'background:/#ddd').val($(obj).val()).trigger('change');
+    $('#joinOtherTable1').attr('style', 'background:#ddd').val($(obj).val()).trigger('change');
 }
 
 function addJoinColumn(id)
@@ -156,10 +156,10 @@ function getColumns(obj, id, type)
 
     $.ajax
     ({
-        url/:"@URL::site('system/gridGetColumnsAjax'):",
-    	data/:'table=' + $(obj).val() + '&type=' + type,
-    	method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('system/gridGetColumnsAjax')}}",
+    	data:'table=' + $(obj).val() + '&type=' + type,
+    	method:"post",
+    	success:function(data)
     	{
             $(id).html(data);
     	}
@@ -170,10 +170,10 @@ function submitPage(e)
 {
     $.ajax
     ({
-        url/:"@URL::site('system/grid'):",
-    	data/:$('/#gridForm').serialize() + '&joinsCollapse=' + encodeURIComponent($('/#joinsCollapse').html()),
-        method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('system/grid')}}",
+    	data:$('#gridForm').serialize() + '&joinsCollapse=' + encodeURIComponent($('#joinsCollapse').html()),
+        method:"post",
+    	success:function(data)
     	{
             document.documentElement.innerHTML = data;
     	}
@@ -184,10 +184,10 @@ function saveJoin()
 {
     $.ajax
     ({
-        url/:"@URL::site('system/gridSaveAjax'):",
-    	data/:'content=' + encodeURIComponent(document.documentElement.innerHTML) + '&saveName=' + $('/#saveName').val(),
-        method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('system/gridSaveAjax')}}",
+    	data:'content=' + encodeURIComponent(document.documentElement.innerHTML) + '&saveName=' + $('#saveName').val(),
+        method:"post",
+    	success:function(data)
     	{
             document.documentElement.innerHTML = data;
     	}
@@ -198,10 +198,10 @@ function loadJoin()
 {
     $.ajax
     ({
-        url/:"@URL::site('system/gridLoadAjax'):",
-    	data/:'saves=' + $('/#saves').val(),
-        method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('system/gridLoadAjax')}}",
+    	data:'saves=' + $('#saves').val(),
+        method:"post",
+    	success:function(data)
     	{
             if( data )
             {
@@ -215,10 +215,10 @@ function deleteJoin()
 {
     $.ajax
     ({
-        url/:"@URL::site('system/gridDeleteAjax'):",
-    	data/:'delete=' + $('/#saves').val(),
-        method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('system/gridDeleteAjax')}}",
+    	data:'delete=' + $('#saves').val(),
+        method:"post",
+    	success:function(data)
     	{
             if( data )
             {
@@ -230,12 +230,12 @@ function deleteJoin()
 
 $(document).ajaxSend(function(e, jqXHR)
 {
-  $('/#loadingDiv').removeClass('hide');
+  $('#loadingDiv').removeClass('hide');
 });
 
 $(document).ajaxComplete(function(e, jqXHR)
 {
-  $('/#loadingDiv').addClass('hide');
+  $('#loadingDiv').addClass('hide');
 });
 
 </script>

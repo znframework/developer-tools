@@ -5,7 +5,7 @@
 
             @foreach( $columns as $column):
         
-            <th>@$column:</th>
+            <th>{{$column}}</th>
 
             @endforeach:
 
@@ -15,7 +15,7 @@
     <tbody>
         @foreach( $result as $row ):
         <tr>
-            <td>@implode('</td><td>', $row):</td>
+            <td>{{implode('</td><td>', $row)}}</td>
         </tr>
         @endforeach:
     </tbody>

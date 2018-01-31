@@ -22,7 +22,7 @@
                     <td colspan="8">{{Form::class('form-control')->placeholder('Table Name')->text('table')}}</td>
                 </tbody>
                 <tbody id="newTableColumnContent">
-                    @Import::view('add-column.wizard'):
+                    {{Import::view('add-column.wizard')}}
                 </tbody>
                 <tbody>
                     <tr>
@@ -38,14 +38,14 @@
 
 @foreach( $tables as $key => $table ):
 
-<a href="/#table-@$table:" class="list-group-item" data-toggle="collapse">
-    <i class="fa fa-fw fa-table"></i> @$table:
+<a href="#table-{{$table}}" class="list-group-item" data-toggle="collapse">
+    <i class="fa fa-fw fa-table"></i> {{$table}}
     <span><i class="fa fa-angle-down fa-fw"></i></span>
     <span style="cursor:pointer"  class="pull-right"><i class="fa fa-trash-o fa-fw" onclick="dropTable('{{$table}}')" title="Delete Datatable"></i></span>
-    <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="/#add-column-@$table:"  class="fa fa-plus fa-fw" title="Add Column"></i></span>
+    <span style="cursor:pointer" class="pull-right"><i data-toggle="collapse" data-target="#add-column-{{$table}}"  class="fa fa-plus fa-fw" title="Add Column"></i></span>
 </a>
 
-<div id="add-column-@$table:" class="collapse panel panel-default">
+<div id="add-column-{{$table}}" class="collapse panel panel-default">
     <div class="panel-body">
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
@@ -67,7 +67,7 @@
                         <td>{{Form::class('form-control')->id($table.'add-columndefault')->text('default')}}</td>
                     </tr>
                     <tr>
-                        <td colspan="7">{{Form::onclick('modifyColumn(\''.$table.'\', \'add-column\', \'/#table-'.$table.'\')')->class('form-control btn btn-info')->button('createNewDatatable', LANG['createButton'])}}</td>
+                        <td colspan="7">{{Form::onclick('modifyColumn(\''.$table.'\', \'add-column\', \'#table-'.$table.'\')')->class('form-control btn btn-info')->button('createNewDatatable', LANG['createButton'])}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -76,8 +76,8 @@
 
 </div>
 
-<div id="table-@$table:" class="collapse table-responsive">
-    @Import::view('datatables-rows.wizard', ['table' => $table]):
+<div id="table-{{$table}}" class="collapse table-responsive">
+    {{Import::view('datatables-rows.wizard', ['table' => $table])}}
 </div>
 
 @endforeach:

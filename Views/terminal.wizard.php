@@ -20,8 +20,8 @@
                 <div class="list-group">
 
                     @foreach( $supportCommands as $command ):
-                    <a href="/#" class="list-group-item">
-                        <i class="fa fa-fw fa-code"></i> @$command:
+                    <a href="#" class="list-group-item">
+                        <i class="fa fa-fw fa-code"></i> {{$command}}
                     </a>
                     @endforeach:
 
@@ -47,53 +47,53 @@
                 <style type="text/css">
                     *
                     {
-                        margin/: 0;
-                        padding/: 0;
+                        margin: 0;
+                        padding: 0;
                     }
 
                     input
                     {
-                        width/: 85%;
-                        outline/:none;
-                        border/:none;
-                        background/:none;
+                        width: 85%;
+                        outline:none;
+                        border:none;
+                        background:none;
                     }
                     .content
                     {
-                        width/: 100%;
-                        margin-bottom/: 15px;
+                        width: 100%;
+                        margin-bottom: 15px;
 
-                        text-align/: left;
-                        overflow/: auto;
-                        background-color/:  @$settings['bgColor']:;
-                        color/: @$settings['textColor']:;
-                        font-family/: @$settings['textType']:;
-                        font-weight/: bold;
-                        font-size/: @$settings['textSize']:;
+                        text-align: left;
+                        overflow: auto;
+                        background-color: {{$settings['bgColor']}};
+                        color: {{$settings['textColor']}};
+                        font-family: {{$settings['textType']}};
+                        font-weight: bold;
+                        font-size: {{$settings['textSize']}};
                     }
                     .terminal
                     {
-                        border/: 1px solid /#CCC;
-                        height/: @$settings['height']:;
-                        position/: relative;
-                        overflow/: auto;
-                        padding-bottom/: 20px;
-                        height/: 500px;
+                        border: 1px solid #CCC;
+                        height: {{$settings['height']}};
+                        position: relative;
+                        overflow: auto;
+                        padding-bottom: 20px;
+                        height: 500px;
                     }
 
                     .terminal
                     {
-                        padding/: 10px;
-                        padding-right/: 0;
+                        padding: 10px;
+                        padding-right: 0;
                     }
 
 
                     pre{
-                        background/: none;
-                        border/:none;
-                        margin-top/:-10px;
-                        margin-bottom/:-10px;
-                        margin-left/:-10px;
+                        background: none;
+                        border:none;
+                        margin-top:-10px;
+                        margin-bottom:-10px;
+                        margin-left:-10px;
                     }
                 </style>
 
@@ -109,31 +109,31 @@
         			</div>
 
                     <script type="text/javascript">
-                        $('/#command').focus();
+                        $('#command').focus();
 
                         var obj = {{Json::encode(Session::select('commands'))}};
                         var   i = -1;
 
-                        $('/#command').keyup(function(e)
+                        $('#command').keyup(function(e)
                         {
                             if(e.keyCode == 13)
                             {
                                 $.ajax
                                 ({
-                                    'url'/: '@URL::site('system/terminalAjax'):',
-                                    'type'/:'post',
-                                    'data'/:'command=' + $('/#command').val(),
-                                    'success'/:function(data)
+                                    'url': '{{URL::site('system/terminalAjax')}}',
+                                    'type':'post',
+                                    'data':'command=' + $('#command').val(),
+                                    'success':function(data)
                                     {
-                                        $('/#command').val("");
-                                        $('/#terminal pre').html(data);
+                                        $('#command').val("");
+                                        $('#terminal pre').html(data);
 
                                         $.ajax
                                         ({
-                                            'url'/: '@URL::site('system/backDataAjax'):',
-                                            'type'/:'post',
-                                            'dataType'/:'json',
-                                            'success'/:function(data)
+                                            'url': '{{URL::site('system/backDataAjax')}}',
+                                            'type':'post',
+                                            'dataType':'json',
+                                            'success':function(data)
                                             {
                                                 obj = data;
                                                 i   = data.length - 2;
@@ -144,7 +144,7 @@
                             }
                         });
 
-                        $('/#command').keyup(function(e)
+                        $('#command').keyup(function(e)
                         {
                             if( e.keyCode === 38 )
                             {
@@ -152,7 +152,7 @@
 
                                 if( data = obj[i] )
                                 {
-                                    $('/#command').val(data);
+                                    $('#command').val(data);
                                 }
                                 else
                                 {
@@ -161,7 +161,7 @@
                             }
                         });
 
-                        $('/#command').keyup(function(e)
+                        $('#command').keyup(function(e)
                         {
                             if( e.keyCode === 40 )
                             {
@@ -169,7 +169,7 @@
 
                                 if( data = obj[i] )
                                 {
-                                    $('/#command').val(data);
+                                    $('#command').val(data);
                                 }
                                 else
                                 {
@@ -189,12 +189,12 @@
 
 $(document).ajaxSend(function(e, jqXHR)
 {
-  $('/#loadingDiv').removeClass('hide');
+  $('#loadingDiv').removeClass('hide');
 });
 
 $(document).ajaxComplete(function(e, jqXHR)
 {
-  $('/#loadingDiv').addClass('hide');
+  $('#loadingDiv').addClass('hide');
 });
 
 </script>

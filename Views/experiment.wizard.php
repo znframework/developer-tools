@@ -23,13 +23,13 @@
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><pre><div style="width/:100%; height/:300px;" id="RunPHPCode" contenteditable="true"></div></pre></th>
-                            <th><pre><div style="width/:100%; height/:300px;" id="RunSQLCode" contenteditable="true"></div></pre></th>
+                            <th><pre><div style="width:100%; height:300px;" id="RunPHPCode" contenteditable="true"></div></pre></th>
+                            <th><pre><div style="width:100%; height:300px;" id="RunSQLCode" contenteditable="true"></div></pre></th>
 
                         </tr>
                         <tr>
-                            <th>@Form::onclick('alterTable(\'php\', \'RunPHPCode\')')->class('form-control btn btn-info')->button('update', LANG['runPHPButton']):</th>
-                            <th>@Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton']):</th>
+                            <th>{{Form::onclick('alterTable(\'php\', \'RunPHPCode\')')->class('form-control btn btn-info')->button('update', LANG['runPHPButton'])}}</th>
+                            <th>{{Form::onclick('alterTable(\'sql\', \'RunSQLCode\')')->class('form-control btn btn-info')->button('update', LANG['runSQLButton'])}}</th>
 
                         </tr>
                     </thead>
@@ -104,24 +104,24 @@ function alterTable(type, id)
     
     $.ajax
     ({
-        url/:"@URL::site('experiments/alterTable'):",
-    	data/:'content=' + encodeURIComponent(content) + '&type=' + type,
-    	method/:"post",
-    	success/:function(data)
+        url:"{{URL::site('experiments/alterTable')}}",
+    	data:'content=' + encodeURIComponent(content) + '&type=' + type,
+    	method:"post",
+    	success:function(data)
     	{
-            $('/#' + type).html(data);
+            $('#' + type).html(data);
     	}
     });
 }
 
 $(document).ajaxSend(function(e, jqXHR)
 {
-  $('/#loadingDiv').removeClass('hide');
+  $('#loadingDiv').removeClass('hide');
 });
 
 $(document).ajaxComplete(function(e, jqXHR)
 {
-  $('/#loadingDiv').addClass('hide');
+  $('#loadingDiv').addClass('hide');
 });
 
 </script>
