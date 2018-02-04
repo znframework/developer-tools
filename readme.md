@@ -4,11 +4,12 @@
 [![License](https://poser.pugx.org/znframework/developer-tools/license)](https://packagist.org/packages/znframework/developer-tools)
 
 # ZN Framework Developer Tools
-<p>Developer Tools For Multi Edition</p>
+<p>Developer Tools For Original Edition</p>
 
 ## Requirements
 
-* ZN Multi Edition >= 5.0.0
+* znframework/znframework >= 5.5.0
+* This package can only be used with the znframework/znframework package.
 
 ## Installation
 
