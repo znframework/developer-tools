@@ -63,6 +63,8 @@ function deleteProcess(link)
     if( confirm('<?php echo LANG['areYouSure']; ?>') )
     {
         window.location =  '<?php echo URL::site(); ?>' + link;
+
+        return false;
     }
 }
 </script>

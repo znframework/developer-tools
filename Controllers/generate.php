@@ -8,7 +8,8 @@ use Validation;
 use Folder;
 use File;
 use Config;
-use Uri;
+use URI;
+use URL;
 use Security;
 use Http;
 use ZN\Base;
@@ -530,7 +531,7 @@ class Generate extends Controller
      */
     public function deleteFile()
     {
-        $file = Uri::get('deleteFile', 'all');
+        $file = URI::get('deleteFile', 'all');
 
         if( File::exists($file) )
         {
