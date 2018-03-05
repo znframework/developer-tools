@@ -23,6 +23,6 @@ composer create-project znframework/developer-tools Devtools
 
 ![Developer Tools](https://cloud.teslaerp.com/tesla/Application/Resources/Uploads/znframework/gallery/zn/1495141581_developer-tools.png)
 
-## What is Dashboard?
+## What is Developer Tools?
 
 This tool allows you to perform more operations such as project, controller, model creation, version updates.
