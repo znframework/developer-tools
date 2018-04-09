@@ -64,7 +64,7 @@
                         margin-bottom: 15px;
 
                         text-align: left;
-                        overflow: auto;
+               
                         background-color: {{$settings['bgColor']}};
                         color: {{$settings['textColor']}};
                         font-family: {{$settings['textType']}};
@@ -93,14 +93,14 @@
                         border:none;
                         margin-top:-10px;
                         margin-bottom:-10px;
-                        margin-left:-10px;
+                        margin-left:-10px;                     
                     }
                 </style>
 
                     <div class="content">
         				<div class="terminal" id="terminal" onclick="document.getElementById('command').focus();">
 
-    					<pre></pre>
+    					<pre style="color:{{$settings['textColor']}}"></pre>
 
 						{[ echo 'php zerocore > ';]}
 						<input type="text" name="command" id="command" autocomplete="off" />
@@ -127,6 +127,7 @@
                                     {
                                         $('#command').val("");
                                         $('#terminal pre').html(data);
+                                        $('#terminal').scrollTop($('#terminal')[0].scrollHeight);
 
                                         $.ajax
                                         ({
