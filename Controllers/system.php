@@ -280,10 +280,10 @@ class System extends Controller
      */
     public function info(String $params = NULL)
     {
-        if( Method::post('upgrade') )
-        {
-            if( ZN::$projectType === 'EIP' )
-            {    
+        if( ZN::$projectType === 'EIP' )
+        {   
+            if( Method::post('upgrade') )
+            { 
                 $open   = popen('composer update', 'r');
                 $result = fread($open, 2096);
                 pclose($open);
@@ -297,8 +297,11 @@ class System extends Controller
                     Masterpage::success(LANG['successUpgrade']);
                 }
             }
-            else
-            {   
+        }
+        else
+        {   
+            if( Method::post('upgrade') )
+            {
                 if( ! empty(ZN::upgrade()) )
                 {
                     new Redirect(URL::current(), 0, ['success' => LANG['success']]);
@@ -312,10 +315,10 @@ class System extends Controller
                         Masterpage::error($upgradeError);
                     }         
                 }
-
-                View::upgrades(ZN::upgradeFiles());
             }
-        }
+
+            View::upgrades(ZN::upgradeFiles());
+        } 
 
         Masterpage::page('info');
     }
