@@ -13,12 +13,14 @@ use Http;
 use Session;
 use DBTool;
 use DB;
+use URL;
 use Form;
 use DBGrid;
 use Security;
 use Config;
 use Json;
 use ZN\Base;
+use ZN\ZN;
 
 class System extends Controller
 {
@@ -280,17 +282,38 @@ class System extends Controller
     {
         if( Method::post('upgrade') )
         {
-            $open   = popen('composer update', 'r');
-            $result = fread($open, 2096);
-            pclose($open);
+            if( ZN::$projectType === 'EIP' )
+            {    
+                $open   = popen('composer update', 'r');
+                $result = fread($open, 2096);
+                pclose($open);
 
-            if( empty($result) )
-            {
-                Masterpage::error(LANG['notUpgrade']);
+                if( empty($result) )
+                {
+                    Masterpage::error(LANG['notUpgrade']);
+                }
+                else
+                {
+                    Masterpage::success(LANG['successUpgrade']);
+                }
             }
             else
-            {
-                Masterpage::success(LANG['successUpgrade']);
+            {   
+                if( ! empty(ZN::upgrade()) )
+                {
+                    new Redirect(URL::current(), 0, ['success' => LANG['success']]);
+                }
+                else
+                {
+                    Masterpage::error(LANG['alreadyVersion']);
+
+                    if( $upgradeError = ZN::upgradeError() )
+                    {
+                        Masterpage::error($upgradeError);
+                    }         
+                }
+
+                View::upgrades(ZN::upgradeFiles());
             }
         }
 
