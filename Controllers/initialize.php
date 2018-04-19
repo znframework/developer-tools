@@ -32,14 +32,26 @@ class Initialize extends Controller
 
         if( ! Session::lastversion() )
         {   
-            $return  = \Restful::useragent(true)->get('https://api.github.com/repos/znframework/znframework/tags');
+            if( $return = Restful::useragent(true)->get('https://api.github.com/repos/znframework/'.(ZN::$projectType === 'EIP' ? 'znframework' : 'fullpack-edition').'/tags') )
+            {
+                if( ! isset($return->message) )
+                {
+                    usort($return, function($data1, $data2){ return strcmp($data1->name, $data2->name); });
 
-            $lastest = $return[0];
+                    rsort($return);
 
-            $lastVersionData = $lastest->name ?? NULL;
+                    $lastest = $return[0];
 
-            Session::znframework($return);
-            Session::lastversion($lastVersionData);
+                    $lastVersionData = $lastest->name ?? NULL;
+                }
+                else
+                {
+                    Masterpage::error($return->message);
+                }
+            }
+
+            Session::znframework($return ?: []);
+            Session::lastversion($lastVersionData ?? ZN_VERSION);
         }
         else
         {
