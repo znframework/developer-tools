@@ -13,21 +13,22 @@
 
         @foreach( $znframework as $key => $version ):
             {[
-                if( $key === 10 )
+                if( $key === 10 || is_string($version) )
                 {
                     break;
                 }
 
                 if( ! Session::select($version->name) )
                 {
-                    $detail = \Restful::useragent(true)->get($version->commit->url);
+                    $detail = Restful::useragent(true)->get($version->commit->url);
 
                     Session::insert($version->name, $detail);
                 }
                 else
                 {
                     $detail = Session::select($version->name);
-                }   
+                }  
+                 
             ]}
             @if( $detail->commit ?? NULL ):
         <div class="panel panel-default">
@@ -49,6 +50,7 @@
         </div>
             @endif:
         @endforeach:
+  
     </div>
 
 </div>
