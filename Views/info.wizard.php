@@ -16,6 +16,33 @@
 </div>
 <!-- /.row -->
 
+@if( ! empty($upgrades) )
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-book fa-fw"></i> ZN {{LASTEST_VERSION . ' - ' . LANG['updatedFiles']}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+
+                    @foreach( $upgrades as $upgrade ):
+                    <a href="/#" class="list-group-item">
+                        <i class="fa fa-fw fa-file"></i> @$upgrade:
+                    </a>
+                    @endforeach:
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+ @endif
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
