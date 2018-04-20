@@ -19,6 +19,7 @@ use DBGrid;
 use Security;
 use Config;
 use Json;
+use Lang;
 use ZN\Base;
 use ZN\ZN;
 
@@ -90,7 +91,7 @@ class System extends Controller
 
         if( empty($selectTable) )
         {
-            return Masterpage::error(lang('DevtoolsErrors', 'gridError'));
+            return Masterpage::error(Lang::select('DevtoolsErrors', 'gridError'));
         }
 
         $joinCollapse       = Session::select('joinCollapse');
