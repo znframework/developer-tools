@@ -14,6 +14,7 @@ use ML;
 use User;
 use Redirect;
 use ZN\Base, Lang;
+use ZN\ZN;
 
 class Initialize extends Controller
 {
