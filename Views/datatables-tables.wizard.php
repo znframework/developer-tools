@@ -22,7 +22,7 @@
                     <td colspan="8">{{Form::class('form-control')->placeholder('Table Name')->text('table')}}</td>
                 </tbody>
                 <tbody id="newTableColumnContent">
-                    {{Import::view('add-column.wizard')}}
+                    @view('add-column.wizard')
                 </tbody>
                 <tbody>
                     <tr>
@@ -36,7 +36,7 @@
     {{Form::close()}}
 </div>
 
-@foreach( $tables as $key => $table ):
+@foreach( $tables as $key => $table )
 
 <a href="#table-{{$table}}" class="list-group-item" data-toggle="collapse">
     <i class="fa fa-fw fa-table"></i> {{$table}}
@@ -77,7 +77,7 @@
 </div>
 
 <div id="table-{{$table}}" class="collapse table-responsive">
-    {{Import::view('datatables-rows.wizard', ['table' => $table])}}
+    @view('datatables-rows.wizard', ['table' => $table])
 </div>
 
-@endforeach:
+@endforeach

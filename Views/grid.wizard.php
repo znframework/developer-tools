@@ -41,11 +41,11 @@
             </div>
 
             <div id="joinsCollapse" class="collapse panel-body">
-                @if( ! empty($joinCollapse) ):
+                @if( ! empty($joinCollapse) )
                     {{$joinCollapse}}
-                @else:
-                    {{Import::view('add-join-column.wizard', ['tables' => $tables, 'selectTable' => $selectTable])}}
-                @endif:
+                @else
+                    @view('add-join-column.wizard', ['tables' => $tables, 'selectTable' => $selectTable])
+                @endif
             </div>
 
         </div>
@@ -227,15 +227,5 @@ function deleteJoin()
     	}
     });
 }
-
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
 
 </script>

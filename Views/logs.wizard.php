@@ -11,7 +11,7 @@
 
 
 <div class="row">
-    @if( ! empty($files) ) foreach( $files as $file ):
+    @foreach( $files as $file )
     {[
         $logs = explode(EOL, rtrim(File::read($path . $file), EOL));
     ]}
@@ -32,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach( $logs as $log ):
+                        @foreach( $logs as $log )
                         {[
                             $logEx = explode('|', $log);
                         ]}
@@ -42,15 +42,14 @@
                             <td>{{str_replace('Date: ',    '', $logEx[2] ?? '-')}}</td>
                             <td>{{str_replace('Message: ', '', $logEx[3] ?? '-')}}</td>
                         </tr>
-                        @endforeach:
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     </div>
-
-    @endforeach:
+    @endforeach
 </div>
 
 {{Form::close()}}

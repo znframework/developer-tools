@@ -11,7 +11,7 @@
 
     <div class="col-lg-12">
 
-        @foreach( $znframework as $key => $version ):
+        @foreach( $znframework as $key => $version )
             {[
                 if( $key === 10 || is_string($version) )
                 {
@@ -30,7 +30,7 @@
                 }  
                  
             ]}
-            @if( $detail->commit ?? NULL ):
+            @if( $detail->commit ?? NULL )
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 style="cursor:pointer" data-toggle="collapse" data-target="/#id{{$key}}" class="panel-title">
@@ -48,19 +48,19 @@
                 </div>
             </div>
         </div>
-            @endif:
-        @endforeach:
+            @endif
+        @endforeach
   
     </div>
 
 </div>
 
-@Form::close():
+@Form::close()
 
-@Import::plugin(array
+@plugin(array
 (
 	'Dashboard/highlight/styles/agate.css',
 	'Dashboard/highlight/highlight.pack.js'
-)):
+))
 
 <script>hljs.initHighlightingOnLoad();</script>

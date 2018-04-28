@@ -17,7 +17,7 @@
 
         <tr>
 
-            @foreach( $columns as $column):
+            @foreach( $columns as $column)
             {[
                 $columnDetail = $columnData[$column];
                 if( $columnDetail->primaryKey != 1 )
@@ -36,8 +36,7 @@
                     {{Form::class('form-control btn btn-info')->onclick('modifyColumn(\''.$table.'\', \''.$column.'\', \'#table-'.$table.'\')')->button('modifyColumnButton', LANG['modifyColumnButton'])}}
                 </div>
             </th>
-
-            @endforeach:
+            @endforeach
 
             <th>
             
@@ -61,9 +60,9 @@
 
                     <thead>
                         <tr>
-                            @foreach( $columns as $key => $column):
+                            @foreach( $columns as $key => $column)
                                 <th>{{Form::disabled()->class('form-control')->text('addColumn', $column)}}</th>
-                            @endforeach:
+                            @endforeach
 
                         </tr>
 
@@ -72,7 +71,7 @@
 
 
                         <tr>
-                            @foreach( $columns as $key => $column):
+                            @foreach( $columns as $key => $column)
                             {[
                                 if( $columnData[$column]->primaryKey == 1 )
                                 {
@@ -83,7 +82,7 @@
                                                          ? Form::class('form-control')->textarea('addColumns['.$column.']')
                                                          : Form::class('form-control')->text('addColumns['.$column.']') }}
                             </td>
-                            @endforeach:
+                            @endforeach
 
                         </tr>
 
@@ -96,7 +95,7 @@
 
                     </tbody>
                 </table>
-                {{Import::view('alert-bar.wizard', ['id' => '-' . $table])}}
+                @view('alert-bar.wizard', ['id' => '-' . $table])
 
             </td>
         </tr>
@@ -108,8 +107,7 @@
                     <thead>
 
                         <tr>
-                            @foreach( $columns as $key => $column):
-
+                            @foreach( $columns as $key => $column)
                             {[
                                 if( $columnData[$column]->primaryKey == 1 )
                                 {
@@ -121,7 +119,7 @@
                             ]}
 
                             <th>{{Form::disabled()->class('form-control')->text('columns['.$column.']', $column)}}</th>
-                            @endforeach:
+                            @endforeach
 
                         </tr>
 
@@ -133,9 +131,9 @@
                             $result = $get->resultArray();
                         ]}
 
-                        @foreach( $result as $key => $row ):
+                        @foreach( $result as $key => $row )
                         <tr>
-                            @foreach( $columns as $key => $column):
+                            @foreach( $columns as $key => $column)
                             {[
                                 if( $columnData[$column]->primaryKey == 1 )
                                 {
@@ -147,11 +145,10 @@
                                                          ? Form::class('form-control')->textarea('columns['.$column.'][]', $row[$column])
                                                          : Form::class('form-control')->text('columns['.$column.'][]', $row[$column]) }}
                             </td>
-                            @endforeach:
+                            @endforeach
 
                         </tr>
-
-                        @endforeach:
+                        @endforeach
                         <tr>
                             <td colspan="{{count($columns) + 1}}">
 
@@ -164,16 +161,16 @@
 
                     </tbody>
                 </table>
-                {{Import::view('alert-bar.wizard', ['id' => '-' . $table])}}
+                @view('alert-bar.wizard', ['id' => '-' . $table])
 
             </td>
         </tr>
 
         @foreach( $result as $key => $row ):
         <tr>
-            @foreach( $columns as $column):
+            @foreach( $columns as $column)
             <td>{{Limiter::word((string) $row[$column], 10)}}</td>
-            @endforeach:
+            @endforeach
             <td>
                 <span style="cursor: pointer;" class="pull-right"><i onclick="deleteRow('{{$table}}', '{{Arrays::getFirst($columns)}}', '{{Arrays::getFirst($row)}}', '#table-{{$table}}')" class="fa fa-trash-o fa-fw" title="Delete"></i></span>
                 <span data-target="#{{$table}}updateColumn{{$row[$uniqueKey]}}" data-toggle="collapse" style="cursor: pointer;" class="pull-right"><i class="fa fa-edit fa-fw" title="Edit Column"></i></span>
@@ -181,7 +178,7 @@
             </td>
         </tr>
         <tr id="{{$table}}updateColumn{{$row[$uniqueKey]}}" class="collapse">
-            @foreach( $columns as $column):
+            @foreach( $columns as $column)
             {[
                 if( $columnData[$column]->primaryKey == 1 )
                 {
@@ -206,10 +203,10 @@
             <td colspan="{{count($columns) + 1}}">
                 <ul class="pagination">
                   {[ $rows = ceil($get->totalRows(true) / 10) ]}
-                  @for( $i = 1; $i <= $rows; $i++ ):
+                  @for( $i = 1; $i <= $rows; $i++ )
                   {[ $s = ($i - 1) * 10 ]}
                   <li {{ $s == ($start ?? 0) ? 'class="active"' : ''}}><a href="javascript:;" onclick="paginationRow('{{$table}}', '{{$s}}', '#table-{{$table}}')">{{$i}}</a></li>
-                  @endfor:
+                  @endfor
                 </ul>
             </td>
         </tr>

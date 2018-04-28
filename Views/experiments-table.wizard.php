@@ -2,21 +2,17 @@
 
     <thead>
         <tr>
-
-            @foreach( $columns as $column):
-        
-            <th>{{$column}}</th>
-
-            @endforeach:
-
+            @foreach( $columns as $column)
+                <th>{{$column}}</th>
+            @endforeach
         </tr>
 
     </thead>
     <tbody>
-        @foreach( $result as $row ):
+        @foreach( $result as $row )
         <tr>
             <td>{{implode('</td><td>', $row)}}</td>
         </tr>
-        @endforeach:
+        @endforeach
     </tbody>
 </table>

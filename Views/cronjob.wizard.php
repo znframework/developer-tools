@@ -169,8 +169,7 @@
     </div>
 </div>
 
-@if( ! empty($list) ):
-
+@if( ! empty($list) )
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -192,7 +191,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach( $list as $key => $row ):
+                            @foreach( $list as $key => $row )
                             <tr>
                                 <td>{{$key}}</td>
                                 <td>{{$row[0]}}</td>
@@ -202,7 +201,7 @@
                                     {{Html::class('form-control btn btn-danger')->anchor('cronjobs/delete/' . $key, LANG['deleteButton'])}}
                                 </td>
                             </tr>
-                            @endforeach:
+                            @endforeach
                         </tbody>
 
                     </table>
@@ -211,8 +210,7 @@
         </div>
     </div>
 </div>
-
-@endif:
+@endif
 
 {{Form::close()}}
 

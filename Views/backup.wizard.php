@@ -49,7 +49,7 @@
 </div>
 
 <!-- /.row -->
-@if( ! empty($files) ):
+@if( ! empty($files) )
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -58,19 +58,19 @@
             </div>
             <div class="panel-body">
                 <div class="list-group">
-                    @foreach( $files as $backup ):
+                    @foreach( $files as $backup )
                     <a href="#" class="list-group-item">
 
                         <i class="fa fa-fw fa-folder"></i> {{$backup}}
                         <span class="pull-right"><i onclick="deleteProcess('home/deleteBackup/{{$backup}}');" class="fa fa-trash-o fa-fw"></i></span>
                     </a>
-                    @endforeach:
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endif:
+@endif
 
 {{Form::close()}}
 <!-- /.container-fluid -->

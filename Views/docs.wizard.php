@@ -17,7 +17,7 @@
 
     <div class="col-lg-12">
 
-        @foreach( $docs as $key => $doc ):
+        @foreach( $docs as $key => $doc )
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 style="cursor:pointer" data-toggle="collapse" data-target="#id{{$key}}" class="panel-title">
@@ -32,17 +32,17 @@
                 </div>
             </div>
         </div>
-        @endforeach:
+        @endforeach
     </div>
 
 </div>
 
-{{Form::close()}}
+@Form::close()
 
-{{Import::plugin(array
+@plugin(array
 (
 	'Dashboard/highlight/styles/agate.css',
 	'Dashboard/highlight/highlight.pack.js'
-))}}
+))
 
 <script>hljs.initHighlightingOnLoad();</script>

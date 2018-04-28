@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="form-group">
-                    @if( Validation::postback('sslVerifyPeer') ):
+                    @if( Validation::postback('sslVerifyPeer') )
                         @Form::checked()
-                    @endif:
+                    @endif
 
                     {{Form::checkbox('sslVerifyPeer', 1)}}
                     <label>{{LANG['sslVerifyPeer']}}</label>
@@ -50,7 +50,7 @@
 
 </div>
 
-@if( ! empty($results) && ! is_scalar($results) ):
+@if( ! empty($results) && ! is_scalar($results) )
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -64,9 +64,9 @@
                             <tr><td width="20%">{{LANG['keys']}}</td><td>{{LANG['values']}}</td></tr>
                         </thead>
                         <tbody>
-                            @foreach( $results as $key => $val ):
+                            @foreach( $results as $key => $val )
                             <tr><td>{{$key}}</td><td>{{ ! is_scalar($val) ? output($val) : $val}}</td></tr>
-                            @endforeach:
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -75,9 +75,9 @@
     </div>
 </div>
 
-@endif:
+@endif
 
-@if( ! empty($infos) && ! is_scalar($infos) ):
+@if( ! empty($infos) && ! is_scalar($infos) )
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -90,9 +90,9 @@
                         <tr><td width="20%">{{LANG['keys']}}</td><td>{{LANG['values']}}</td></tr>
                     </thead>
                     <tbody>
-                        @foreach( $infos as $key => $val ):
+                        @foreach( $infos as $key => $val )
                         <tr><td>{{$key}}</td><td>{{ ! is_scalar($val) ? output($val) : $val}}</td></tr>
-                        @endforeach:
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -100,7 +100,7 @@
     </div>
 </div>
 
-@endif:
+@endif
 
 
-@Form::close():
+@Form::close()

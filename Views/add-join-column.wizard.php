@@ -1,6 +1,6 @@
 {[ $tables = Arrays::addFirst($tables, ['none' => 'none']) ]}
 
-@for( $i = 1; $i <= 10; $i++ ):
+@for( $i = 1; $i <= 10; $i++ )
 <div id="joinDiv{{$i}}" class="{{ $i == 1 ? NULL : 'hide'}}">
     <div class="form-group col-lg-1">
         <label>&nbsp;</label>
@@ -34,20 +34,20 @@
 
     <div class="form-group col-lg-1">
         <label>&nbsp;</label>
-        @if( $i == 10 ):
+        @if( $i == 10 )
             {[Form::disabled()]}
-        @endif:
+        @endif
 
         {{Form::class('form-control btn btn-success')->onclick('addJoinColumn(\'#joinDiv'.($i + 1).'\')')->button('add', LANG['addButton'])}}
     </div>
 
     <div class="form-group col-lg-1">
         <label>&nbsp;</label>
-        @if( $i == 1 ):
+        @if( $i == 1 )
             {[Form::disabled()]}
-        @endif:
+        @endif
 
         {{Form::class('form-control btn btn-danger')->onclick('removeJoinColumn(\'#joinDiv'.$i.'\', \''.$i.'\')')->button('remove', LANG['removeButton'])}}
     </div>
 </div>
-@endfor:
+@endfor

@@ -19,11 +19,11 @@
             <div class="panel-body">
                 <div class="list-group">
 
-                    @foreach( $supportCommands as $command ):
+                    @foreach( $supportCommands as $command )
                     <a href="#" class="list-group-item">
                         <i class="fa fa-fw fa-code"></i> {{$command}}
                     </a>
-                    @endforeach:
+                    @endforeach
 
                 </div>
 
@@ -185,19 +185,3 @@
         </div>
     </div>
 </div>
-
-<script>
-
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
-
-</script>
-
-<!-- /.container-fluid -->

@@ -42,7 +42,7 @@
     </div>
 </div>
 
-{{Import::view('alert-bar.wizard')}}
+@view('alert-bar.wizard')
 
 <div class="row">
     <div class="col-lg-12">
@@ -56,7 +56,7 @@
             <div class="panel-body">
                 <div id="tables" class="list-group">
 
-                    {{Import::view('datatables-tables.wizard', ['tables' => $tables])}}
+                    @view('datatables-tables.wizard', ['tables' => $tables])
 
                 </div>
 
@@ -337,15 +337,5 @@ function paginationRow(table, start, id)
     	}
     });
 }
-
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
 
 </script>

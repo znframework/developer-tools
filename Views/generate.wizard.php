@@ -15,11 +15,11 @@
     </div>
 </div>
 
-{{Import::view($content . '.wizard')}}
+@view($content . '.wizard')
 
-{{Form::close()}}
+@Form::close()
 
-@if( ! empty($files) ):
+@if( ! empty($files) )
 
 <div class="row">
     <div class="col-lg-12">
@@ -30,7 +30,7 @@
             <div class="panel-body">
                 <div class="list-group">
 
-                    @foreach( $files as $key => $file ):
+                    @foreach( $files as $key => $file )
 
                     <a href="#b{{$key}}" class="list-group-item" data-toggle="collapse">
                         <i class="fa fa-fw fa-file-text-o"></i>
@@ -38,10 +38,10 @@
                         {{Form::id('renameId' . $key)->style('width:'.(mb_strlen($relativePath) * 7).'px; background:none; border:none;')->class('text')->text('rename', $relativePath)}}
                         <span><i class="fa fa-angle-down fa-fw"></i></span>
 
-                        @if( strpos($relativePath, 'Settings') !== 0 ):
+                        @if( strpos($relativePath, 'Settings') !== 0 )
                         <span class="pull-right"><i onclick="deleteProcess('generate/deleteFile/{{$relativePath}}');" class="fa fa-trash-o fa-fw"></i></span>
                         <span class="pull-right"><i onclick="renameProcess('{{$relativePath}}', '#renameId{{$key}}');" title="{{LANG['renameFile']}}" class="fa fa-edit fa-fw"></i></span>
-                        @endif:
+                        @endif
                     </a>
 
                     <pre id="b{{$key}}" key="{{$key}}" link="{{ZN\Filesystem\Info::relativepath($file)}}" class="collapse"><div style="font-size:14px; font-family:consolas, monospace; width:100%; height:800px;" id="editor{{$key}}" contenteditable="true">{{Security::phpTagEncode(Security::htmlEncode(File::read($relativePath)))}}</div></pre>
@@ -51,13 +51,13 @@
                         editor.getSession().setMode("ace/mode/php");
                     </script>
 
-                    @endforeach:
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endif:
+@endif
 
 <script>
 
@@ -109,15 +109,4 @@ function saveProcess(link, key)
         }
     });
 }
-
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
-
 </script>

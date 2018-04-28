@@ -22,11 +22,11 @@
             <div class="panel-body">
                 <div class="list-group">
 
-                    @foreach( $supportQueries as $query ):
+                    @foreach( $supportQueries as $query )
                     <a onclick="showQueryToORMArea(this)" support="{{strip_tags($query)}}" href="javascript::;" class="list-group-item">
                         <i class="fa fa-fw fa-code"></i> {{$query}}
                     </a>
-                    @endforeach:
+                    @endforeach
 
                 </div>
 
@@ -53,7 +53,7 @@
 </div>
 
 
-@if( ! empty($orm) ):
+@if( ! empty($orm) )
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -69,8 +69,7 @@
     </div>
 
 </div>
-
-@endif:
+@endif
 
 {{Form::close()}}
 

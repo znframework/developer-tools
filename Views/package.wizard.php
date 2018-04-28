@@ -29,7 +29,7 @@
 
             </div>
 
-            @if( isset($result) ):
+            @if( isset($result) )
 
             <div class="panel-body">
                 <div id="tables" class="list-group">
@@ -44,7 +44,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach( $result as $row ):
+                                @foreach( $result as $row )
 
 
                                 <tr>
@@ -52,28 +52,25 @@
                                     <td>{{$row->description}}</td>
                                     <td>{{$row->downloads}}</td>
                                     <td>
-                                        @if( ! Arrays::valueExists($list, $row->name) ):
+                                        @if( ! Arrays::valueExists($list, $row->name) )
                                             {{Form::class('form-control btn btn-info')->dval($row->name)->onclick('downloadPackage(this)')->button('download', LANG['downloadButton'])}}
-                                        @else:
+                                        @else
                                             {{Form::class('form-control btn btn-success')->dval($row->name)->disabled()->onclick('downloadPackage(this)')->button('download', strtoupper(LANG['available']))}}
-                                        @endif:
+                                        @endif
                                     </td>
                                 </tr>
-                                @endforeach:
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-            @endif:
-
-
+            @endif
         </div>
     </div>
 </div>
 
-@if( ! empty($list) ):
+@if( ! empty($list) )
 
 <div class="row">
     <div class="col-lg-12">
@@ -93,14 +90,14 @@
                         </thead>
 
                         <tbody>
-                            @foreach( $list as $row ):
+                            @foreach( $list as $row )
                             <tr>
                                 <td>{{$row}}</td>
                                 <td>
                                     {{Html::class('form-control btn btn-danger')->anchor('packages/delete/' . $row, LANG['deleteButton'])}}
                                 </td>
                             </tr>
-                            @endforeach:
+                            @endforeach
                         </tbody>
 
                     </table>
@@ -110,9 +107,9 @@
     </div>
 </div>
 
-@endif:
+@endif
 
-@Form::close():
+@Form::close()
 
 <script>
 
@@ -139,15 +136,5 @@ function downloadPackage(obj)
         }
     });
 }
-
-$(document).ajaxSend(function(e, jqXHR)
-{
-  $('#loadingDiv').removeClass('hide');
-});
-
-$(document).ajaxComplete(function(e, jqXHR)
-{
-  $('#loadingDiv').addClass('hide');
-});
 
 </script>

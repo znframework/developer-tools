@@ -27,11 +27,11 @@
             <div class="panel-body">
                 <div class="list-group">
 
-                    @foreach( $upgrades as $upgrade ):
+                    @foreach( $upgrades as $upgrade )
                     <a href="/#" class="list-group-item">
                         <i class="fa fa-fw fa-file"></i> @$upgrade:
                     </a>
-                    @endforeach:
+                    @endforeach
 
                 </div>
 
