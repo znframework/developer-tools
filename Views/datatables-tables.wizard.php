@@ -26,7 +26,7 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td colspan="7">{{Form::onclick('createNewDatatable()')->class('form-control btn btn-info')->button('createDatatable', LANG['createButton'])}}</td>
+                        <td colspan="7">{{Form::onclick('createNewTable()')->class('form-control btn btn-info')->button('createDatatable', LANG['createButton'])}}</td>
                         <td colspan="1">{{Form::onclick('addColumnInNewTable()')->class('form-control btn btn-success')->button('addColumn', LANG['addColumnButton'])}}</td>
                     </tr>
                 </tbody>

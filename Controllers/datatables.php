@@ -49,7 +49,7 @@ class Datatables extends Controller
 
         $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
-        echo Encode::do
+        echo json_encode
         ([
             'status' => $status,
             'result' => $result,
@@ -71,7 +71,7 @@ class Datatables extends Controller
         $status  = DBForge::dropTable($table);
         $result  = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
 
-        echo Encode::do
+        echo json_encode
         ([
             'status' => $status,
             'result' => $result,
@@ -173,9 +173,9 @@ class Datatables extends Controller
     }
 
     /**
-     * Ajax Create New Datatable
+     * Ajax Create New Table
      */
-    public function createNewDatatable()
+    public function createNewTable()
     {
         if( ! Http::isAjax() )
         {
@@ -233,9 +233,9 @@ class Datatables extends Controller
         }
 
         $status = DBForge::createTable($table, $newColumns, $encoding);
-        $result = Import::usable()->view('datatables-tables.wizard', ['tables' => DBTool::listTables()]);
+        $result = Import::view('datatables-tables.wizard', ['tables' => DBTool::listTables()], true);
 
-        echo Encode::do
+        echo json_encode
         ([
             'status' => $status,
             'result' => $result,

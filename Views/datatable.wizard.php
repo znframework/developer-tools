@@ -95,13 +95,13 @@ function dropColumnInNewTable(obj)
 
 
 
-function createNewDatatable()
+function createNewTable()
 {
     if( confirm("{{LANG['areYouSure']}}") )
     {
         $.ajax
         ({
-            url:"{{URL::site('datatables/createNewDatatable')}}",
+            url:"{{URL::site('datatables/createNewTable')}}",
         	data:$('#newDatatableForm').serialize(),
         	method:"post",
             dataType:"json",
@@ -134,7 +134,7 @@ function dropTable(table)
         	method:"post",
             dataType:"json",
         	success:function(data)
-        	{
+        	{  
                 $('#tables').html(data.result);
 
                 if( data.status )
