@@ -32,7 +32,7 @@
 
                 <div class="form-group">
                     @if( Validation::postback('sslVerifyPeer') ):
-                        {{Form::checked()}}
+                        @Form::checked()
                     @endif:
 
                     {{Form::checkbox('sslVerifyPeer', 1)}}
