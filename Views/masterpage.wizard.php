@@ -6,7 +6,6 @@
 <div id="page-wrapper">
 <div class="container-fluid">
 
-
 @if( isset($page) )
     @view(ZN\Base::suffix($page, '.wizard'), $pdata ?? NULL)
 @else
@@ -15,7 +14,7 @@
 
 @if( ($success ?? NULL) || $success = Redirect::selectData('success') )
 
-    @Redirect::deleteData('success')
+    {[Redirect::deleteData('success')]}
     <div class="row">
         <div class="col-lg-12">
             <div class="alert alert-success alert-dismissable">
