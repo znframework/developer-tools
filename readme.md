@@ -8,7 +8,7 @@
 
 ## Requirements
 
-* znframework/znframework >= 5.5.0
+* znframework/znframework >= 5.6.3
 * This package can only be used with the znframework/znframework package.
 * The PHP zip archive(php-zip) extension must be installed.
 
