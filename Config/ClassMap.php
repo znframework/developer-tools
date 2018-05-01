@@ -1,7 +1,7 @@
 <?php
-//----------------------------------------------------------------------
-// This file automatically created and updated
-//----------------------------------------------------------------------
+#----------------------------------------------------------------------
+# This file automatically created and updated
+#----------------------------------------------------------------------
 $classMap['classes']['ml\delete'] = 'Projects/Devtools/Libraries/ML/Delete.php';
 $classMap['classes']['ml\grid'] = 'Projects/Devtools/Libraries/ML/Grid.php';
 $classMap['classes']['ml\insert'] = 'Projects/Devtools/Libraries/ML/Insert.php';
