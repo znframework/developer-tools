@@ -24,11 +24,12 @@ class Initialize extends Controller
     public function main(String $params = NULL)
     {
         define('DASHBOARD_CONFIG', Config::get('Dashboard'));
+        define('MIN_ZN_VERSION', DASHBOARD_CONFIG['minZNVersion']);
         define('DASHBOARD_VERSION', DASHBOARD_CONFIG['version']);
 
-        if( ZN_VERSION < DASHBOARD_VERSION )
+        if( ZN_VERSION < MIN_ZN_VERSION )
         {
-            Base::trace(Lang::select('DevtoolsErrors', 'versionError', ['%' => DASHBOARD_VERSION, '#' => ZN_VERSION]));
+            Base::trace(Lang::select('DevtoolsErrors', 'versionError', ['%' => MIN_ZN_VERSION, '#' => ZN_VERSION]));
         }
 
         if( ! Session::lastversion() )
