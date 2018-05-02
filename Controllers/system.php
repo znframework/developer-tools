@@ -285,8 +285,8 @@ class System extends Controller
         {   
             if( Method::post('upgrade') )
             { 
-                $open   = popen('composer update', 'r');
-                $result = fread($open, 2096);
+                $open   = popen('composer update 2>&1', 'r');
+                $result = fread($open, 8096);
                 pclose($open);
 
                 if( empty($result) )
@@ -295,7 +295,15 @@ class System extends Controller
                 }
                 else
                 {
-                    Masterpage::success(LANG['successUpgrade']);
+                    if( ZN_VERSION === LASTEST_VERSION )
+                    {
+                        Masterpage::error(LANG['alreadyVersion']);           
+                    }
+                    else
+                    {
+                        File::replace('zeroneed.php', ZN_VERSION, LASTEST_VERSION);
+                        Masterpage::success(LANG['successUpgrade']);   
+                    }
                 }
             }
         }
