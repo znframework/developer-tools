@@ -302,7 +302,7 @@ class System extends Controller
                     else
                     {
                         File::replace('zeroneed.php', ZN_VERSION, LASTEST_VERSION);
-                        Masterpage::success(LANG['successUpgrade']);   
+                        Redirect::location(URL::current(), 0, ['success' => LANG['successUpgrade']]);
                     }
                 }
             }
@@ -313,7 +313,7 @@ class System extends Controller
             {
                 if( ! empty(ZN::upgrade()) )
                 {
-                    new Redirect(URL::current(), 0, ['success' => LANG['success']]);
+                    Redirect::location(URL::current(), 0, ['success' => LANG['successUpgrade']]);
                 }
                 else
                 {
