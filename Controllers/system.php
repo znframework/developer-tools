@@ -301,7 +301,7 @@ class System extends Controller
                     }
                     else
                     {
-                        File::replace('zeroneed.php', ZN_VERSION, LASTEST_VERSION);
+                        File::replace(DIRECTORY_INDEX, ZN_VERSION, LASTEST_VERSION);
                         Redirect::location(URL::current(), 0, ['success' => LANG['successUpgrade']]);
                     }
                 }
