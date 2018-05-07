@@ -119,6 +119,12 @@
             </div>
             <div class="panel-body">
 
+                    @if( ! empty($butcherThemes) )
+                    <div class="form-group">
+                        {{Form::required()->class('form-control')->placeholder('Select Theme')->select('selectButcherTheme', array_combine($butcherThemes, $butcherThemes))}}
+                    </div>
+                    @endif
+
                     <div class="form-group">
                         {{Form::required()->class('form-control')->placeholder('Projects/ProjectName')->text('project')}}
                     </div>
