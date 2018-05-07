@@ -24,7 +24,7 @@ class Integration extends Controller
             return false;
         }
         
-        Upload::start('file', SELECT_PROJECT_DIR . 'Butchery');
+        Upload::mimes('application/zip')->start('file', SELECT_PROJECT_DIR . 'Butchery');
 
         if( ! Upload::error() )
         {
