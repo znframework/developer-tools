@@ -121,12 +121,14 @@
             'Dashboard/css/sb-admin.css',
             'Dashboard/css/plugins/morris.css',
             'Dashboard/font-awesome/css/font-awesome.min.css',
+            'Dashboard/dropzone/dropzone.min.css',
             'Dashboard/js/jquery.js',
             'Dashboard/js/bootstrap.min.js',
             'Dashboard/js/plugins/morris/raphael.min.js',
             'Dashboard/js/plugins/morris/morris.min.js',
             'Dashboard/js/plugins/morris/morris-data.js',
-            'Dashboard/ace/ace.js'
+            'Dashboard/ace/ace.js',
+            'Dashboard/dropzone/dropzone.min.js'
         ],
         'recursive' => false
     ],

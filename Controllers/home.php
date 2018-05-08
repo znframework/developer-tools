@@ -14,6 +14,7 @@ use Http;
 use Redirect;
 use Lang;
 use URL;
+use Butcher;
 
 class Home extends Controller
 {
@@ -28,12 +29,19 @@ class Home extends Controller
 
             if( ! $error = Validation::error('string') )
             {
-                $source = EXTERNAL_FILES_DIR . 'DefaultProject.zip';
-                $target = PROJECTS_DIR . Method::post('project');
+                if( $selectButcherTheme = Method::post('selectButcherTheme') )
+                {
+                    Butcher::extractForce($selectButcherTheme, Method::post('project'));
+                }  
+                else
+                {
+                    $source = EXTERNAL_FILES_DIR . 'DefaultProject.zip';
+                    $target = PROJECTS_DIR . Method::post('project');
 
-                File::zipExtract($source, $target);
+                    File::zipExtract($source, $target);
+                }
                 
-                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
+                Redirect::location('', 0, ['success' => LANG['success']]);
             }
             else
             {
@@ -47,6 +55,20 @@ class Home extends Controller
 
             Session::insert('return', $return);
         }
+
+        $themesZip = Folder::files(EXTERNAL_BUTCHERY_DIR, 'zip');
+
+        if( ! empty($themesZip) ) foreach( $themesZip as $zip )
+        {
+            $target = EXTERNAL_BUTCHERY_DIR . rtrim($zip, '.zip');
+
+            if( ! file_exists($target) || ! Folder::files($target) )
+            {
+                File::zipExtract(EXTERNAL_BUTCHERY_DIR . $zip, $target);
+            }
+        }
+
+        View::butcherThemes(Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir'));
         
         Masterpage::page('dashboard');
         Masterpage::pdata(['return' => $return]);

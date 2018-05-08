@@ -183,6 +183,7 @@ class Initialize extends Controller
             $menus['views']         = ['icon' => 'file-code-o',    'href' => 'generate/view'];
         }
 
+        $tools['themeIntegration'] = 'integration';
 
         if( IS_CONTAINER === FALSE )
         {
