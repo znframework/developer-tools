@@ -121,7 +121,12 @@
 
                     @if( ! empty($butcherThemes) )
                     <div class="form-group">
-                        {{Form::required()->class('form-control')->placeholder('Select Theme')->select('selectButcherTheme', array_combine($butcherThemes, $butcherThemes))}}
+                        @php
+                            $themes = array_combine($butcherThemes, $butcherThemes);
+
+                            $themes[0] = LANG['selectTheme'];
+                        @endphp
+                        {{Form::required()->class('form-control')->placeholder('Select Theme')->select('selectButcherTheme', $themes)}}
                     </div>
                     @endif
 

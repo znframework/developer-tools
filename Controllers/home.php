@@ -41,7 +41,7 @@ class Home extends Controller
                     File::zipExtract($source, $target);
                 }
                 
-                Redirect::location(URI::current(), 0, ['success' => LANG['success']]);
+                Redirect::location('', 0, ['success' => LANG['success']]);
             }
             else
             {
@@ -56,11 +56,16 @@ class Home extends Controller
             Session::insert('return', $return);
         }
 
-        $themesZip = Folder::files(EXTERNAL_BUTCHERY_DIR, 'zip', true);
+        $themesZip = Folder::files(EXTERNAL_BUTCHERY_DIR, 'zip');
 
         if( ! empty($themesZip) ) foreach( $themesZip as $zip )
         {
-            File::zipExtract($zip, EXTERNAL_BUTCHERY_DIR);
+            $target = EXTERNAL_BUTCHERY_DIR . rtrim($zip, '.zip');
+
+            if( ! file_exists($target) || ! Folder::files($target) )
+            {
+                File::zipExtract(EXTERNAL_BUTCHERY_DIR . $zip, $target);
+            }
         }
 
         View::butcherThemes(Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir'));
