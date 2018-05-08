@@ -15,6 +15,7 @@ use Redirect;
 use Lang;
 use URL;
 use Butcher;
+use ZN\Base;
 
 class Home extends Controller
 {
@@ -31,7 +32,7 @@ class Home extends Controller
             {
                 if( $selectButcherTheme = Method::post('selectButcherTheme') )
                 {
-                    Butcher::extractForce($selectButcherTheme, Method::post('project'));
+                    Butcher::extractDelete($selectButcherTheme, Method::post('project'));
                 }  
                 else
                 {
@@ -68,7 +69,19 @@ class Home extends Controller
             }
         }
 
-        View::butcherThemes(Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir'));
+        $butcheryFiles = Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir');
+
+        $butcherThemes = [];
+
+        foreach( $butcheryFiles as $bf )
+        {
+            if( Folder::files(EXTERNAL_BUTCHERY_DIR . $bf, 'dir') )
+            {
+                $butcheryThemes[] = $bf;
+            }
+        }
+
+        View::butcherThemes($butcheryThemes);
         
         Masterpage::page('dashboard');
         Masterpage::pdata(['return' => $return]);
