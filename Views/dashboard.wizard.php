@@ -128,6 +128,12 @@
                         @endphp
                         {{Form::required()->class('form-control')->placeholder('Select Theme')->select('selectButcherTheme', $themes)}}
                     </div>
+                    <div class="form-group">
+                        {{Form::radio('extractType', 'extractForce')}}
+                        <label>{{LANG['extractForce']}}</label>
+                        {{Form::radio('extractType', 'extractDelete')}}
+                        <label>{{LANG['extractDelete']}}</label>
+                    </div>
                     @endif
 
                     <div class="form-group">

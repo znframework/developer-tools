@@ -32,7 +32,9 @@ class Home extends Controller
             {
                 if( $selectButcherTheme = Method::post('selectButcherTheme') )
                 {
-                    Butcher::extractDelete($selectButcherTheme, Method::post('project'));
+                    $extractType = Method::post('extractType') ?: 'extract';
+
+                    Butcher::$extractType($selectButcherTheme, Method::post('project'));
                 }  
                 else
                 {
@@ -69,9 +71,8 @@ class Home extends Controller
             }
         }
 
-        $butcheryFiles = Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir');
-
-        $butcherThemes = [];
+        $butcheryFiles  = Folder::files(EXTERNAL_BUTCHERY_DIR, 'dir');
+        $butcheryThemes = [];
 
         foreach( $butcheryFiles as $bf )
         {
