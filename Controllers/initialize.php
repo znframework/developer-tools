@@ -179,21 +179,24 @@ class Initialize extends Controller
 
         if( ! IS_EXTERNAL )
         {
-            $menus['controllers']   = ['icon' => 'gears',   'href' => 'generate/controller'];
-            $menus['views']         = ['icon' => 'file-code-o',    'href' => 'generate/view'];
+            $menus['controllers']      = ['icon' => 'gears',   'href' => 'generate/controller'];
+            $menus['views']            = ['icon' => 'file-code-o',    'href' => 'generate/view'];
+            
+            if( SELECT_PROJECT !== CURRENT_PROJECT)
+            {
+                $tools['themeIntegration'] = 'integration';
+            }
         }
-
-        $tools['themeIntegration'] = 'integration';
 
         if( IS_CONTAINER === FALSE )
         {
-            $menus['models']    = ['icon' => 'database',   'href' => 'generate/model'];
-            $menus['migrations']= ['icon' => 'cubes',      'href' => 'generate/migration'];
-            $menus['libraries'] = ['icon' => 'book',       'href' => 'generate/library'];
-            $menus['commands']  = ['icon' => 'code',       'href' => 'generate/command'];
-            $menus['routes']    = ['icon' => 'repeat',     'href' => 'generate/route'];
-            $tools['languages'] = 'system/language';
-            $menus['starting']  = ['icon' => 'renren',     'href' => 'generate/starting'];
+            $menus['models']     = ['icon' => 'database',   'href' => 'generate/model'];
+            $menus['migrations'] = ['icon' => 'cubes',      'href' => 'generate/migration'];
+            $menus['libraries']  = ['icon' => 'book',       'href' => 'generate/library'];
+            $menus['commands']   = ['icon' => 'code',       'href' => 'generate/command'];
+            $menus['routes']     = ['icon' => 'repeat',     'href' => 'generate/route'];
+            $tools['languages']  = 'system/language';
+            $menus['starting']   = ['icon' => 'renren',     'href' => 'generate/starting'];
         }
 
         $tools['datatables']    = 'datatables';
