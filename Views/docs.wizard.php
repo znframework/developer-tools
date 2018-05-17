@@ -17,7 +17,7 @@
 
     <div class="col-lg-12">
 
-        @foreach( $docs as $key => $doc )
+        @if( ! empty($docs) ) foreach( $docs as $key => $doc )
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 style="cursor:pointer" data-toggle="collapse" data-target="#id{{$key}}" class="panel-title">

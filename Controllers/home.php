@@ -1,5 +1,6 @@
 <?php namespace Project\Controllers;
 
+use Import;
 use Restful;
 use Method;
 use Validation;
@@ -95,19 +96,17 @@ class Home extends Controller
     {
         $docs = FILES_DIR . 'docs.json';
 
-        if( Method::post('refresh') )
-        {
-            File::delete($docs);
-            clearstatcache();
-        }
+        $return = [];
 
-        if( ! File::exists($docs) )
+        if( Method::post('refresh') || ! file_exists($docs) )
         {
-            $return = Restful::get('https://api.znframework.com/docs');
-
-            if( ! empty($return) )
+            if( $return = Restful::get('https://api.znframework.com/docs') )
             {
                 File::write($docs, Json::encode($return));
+            }
+            else
+            {
+                Masterpage::error(LANG['docsRetrievalFailed']);
             }
         }
         else
@@ -115,9 +114,10 @@ class Home extends Controller
             $return = Json::decode(File::read($docs));
         }
 
-        \Import::handload('Functions');
+        Import::handload('Functions');
 
-        Masterpage::plugin(['name' => [
+        Masterpage::plugin(['name' => 
+        [
             'Dashboard/highlight/styles/agate.css',
             'Dashboard/highlight/highlight.pack.js'
         ]]);
