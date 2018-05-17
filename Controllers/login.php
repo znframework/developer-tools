@@ -1,5 +1,6 @@
 <?php namespace Project\Controllers;
 
+use Import;
 use Method;
 use Session;
 use Redirect;
@@ -29,6 +30,8 @@ class Login extends Controller
                 Redirect::location();
             }
         }
+
+        Import::view('login');
     }
 
     /**
