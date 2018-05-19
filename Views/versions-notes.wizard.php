@@ -11,7 +11,7 @@
 
     <div class="col-lg-12">
 
-        @foreach( $znframework as $key => $version )
+        @if( ! empty($znframework) ) foreach( $znframework as $key => $version )
             {[
                 if( $key === 10 || is_string($version) )
                 {
