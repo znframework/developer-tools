@@ -22,7 +22,7 @@
     | Database connection settings are made.
     |
     | driver     : The database platform to be used is set. 
-    |              Options: mysqli, pdo(Only MySQL), oracle, postgres, sqlite, 
+    |              Options: mysqli, oracle, postgres, sqlite, 
     |              sqlserver, odbc
     | host       : Database server address.
     | database   : Sets the database name.
