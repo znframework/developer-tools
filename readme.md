@@ -1,7 +1,14 @@
-[![Latest Stable Version](https://poser.pugx.org/znframework/developer-tools/v/stable)](https://packagist.org/packages/znframework/developer-tools)
-[![Total Downloads](https://poser.pugx.org/znframework/developer-tools/downloads)](https://packagist.org/packages/znframework/developer-tools)
-[![Latest Unstable Version](https://poser.pugx.org/znframework/developer-tools/v/unstable)](https://packagist.org/packages/znframework/developer-tools)
-[![License](https://poser.pugx.org/znframework/developer-tools/license)](https://packagist.org/packages/znframework/developer-tools)
+
+<p align="center">
+<a href="https://packagist.org/packages/znframework/developer-tools" rel="nofollow">
+	<img src="https://img.shields.io/packagist/dt/znframework/developer-tools?style=flat-square" style="max-width:100%;"></a>
+<a href="//packagist.org/packages/znframework/developer-tools" rel="nofollow">
+	<img src="https://img.shields.io/github/v/release/znframework/developer-tools?style=flat-square&color=00BFFF" style="max-width:100%;"></a>
+<a href="//packagist.org/packages/znframework/developer-tools" rel="nofollow">
+	<img src="https://img.shields.io/github/release-date/znframework/developer-tools?style=flat-square" style="max-width:100%;"></a>
+<a href="//packagist.org/packages/znframework/developer-tools" rel="nofollow">
+	<img src="https://img.shields.io/github/license/znframework/developer-tools?style=flat-square" style="max-width:100%;"></a>
+</p>
 
 # ZN Framework Developer Tools
 <p>Developer Tools For Original Edition</p>
