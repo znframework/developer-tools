@@ -37,7 +37,7 @@ class System extends Controller
     /**
      * Converter Page
      */
-    public function converter(String $params = NULL)
+    public function converter(string $params = NULL)
     {
         if( Method::post('convert') )
         {
@@ -77,7 +77,7 @@ class System extends Controller
     /**
      * Language Page
      */
-    public function language(String $params = NULL)
+    public function language(string $params = NULL)
     {
         $pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
 
@@ -89,7 +89,7 @@ class System extends Controller
     /**
      * Grid Page
      */
-    public function grid(String $params = NULL)
+    public function grid(string $params = NULL)
     {
         $tables             = DBTool::listTables();
         $sessionSelectTable = Session::select('gridSelectTable');
@@ -288,7 +288,7 @@ class System extends Controller
     /**
      * Info Page
      */
-    public function info(String $params = NULL)
+    public function info(string $params = NULL)
     {
         if( ZN::$projectType === 'EIP' )
         {   
@@ -363,7 +363,7 @@ class System extends Controller
     /**
      * Log Page
      */
-    public function log(String $params = NULL)
+    public function log(string $params = NULL)
     {
         $project = SELECT_PROJECT;
         $path    = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
@@ -385,7 +385,7 @@ class System extends Controller
     /**
      * Terminal Page
      */
-    public function terminal(String $params = NULL)
+    public function terminal(string $params = NULL)
     {
         $pdata['supportCommands'] =
         [
@@ -453,7 +453,7 @@ class System extends Controller
     /**
      * Backup Page
      */
-    public function backup(String $params = NULL)
+    public function backup(string $params = NULL)
     {
         $project = SELECT_PROJECT;
         $path    = STORAGE_DIR . 'ProjectBackup' . DS;

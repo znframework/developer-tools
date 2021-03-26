@@ -30,7 +30,7 @@ class Cronjobs extends Controller
     /**
      * Main
      */
-    public function main(String $params = NULL)
+    public function main(string $params = NULL)
     {
         # Crontab can only be used with unix operating systems.
         if( PHP_OS !== 'Linux' && PHP_OS !== 'Unix' )
@@ -56,7 +56,7 @@ class Cronjobs extends Controller
      * 
      * @param int $id
      */
-    public function delete(Int $id)
+    public function delete(int $id)
     {
         # Scheduled task deletion.
         CronjobsModel\Job::delete($id);

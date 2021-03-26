@@ -20,7 +20,7 @@ class Generate extends Controller
     /**
      * Generate Controller
      */
-    public function controller(String $params = NULL)
+    public function controller(string $params = NULL)
     {
         if( ! Menus::isDirectory('Controllers') )
         {
@@ -43,7 +43,7 @@ class Generate extends Controller
     /**
      * Generate Library
      */
-    public function library(String $params = NULL)
+    public function library(string $params = NULL)
     {
         if( ! Menus::isDirectory('Libraries') )
         {
@@ -66,7 +66,7 @@ class Generate extends Controller
     /**
      * Generate Command
      */
-    public function command(String $params = NULL)
+    public function command(string $params = NULL)
     {
         if( ! Menus::isDirectory('Commands') )
         {
@@ -89,7 +89,7 @@ class Generate extends Controller
     /**
      * Generate Route
      */
-    public function route(String $params = NULL)
+    public function route(string $params = NULL)
     {
         if( ! Menus::isDirectory('Routes') )
         {
@@ -112,7 +112,7 @@ class Generate extends Controller
     /**
      * Generate Config
      */
-    public function config(String $params = NULL)
+    public function config(string $params = NULL)
     {
         if( ! Menus::isDirectory('Config') )
         {
@@ -135,7 +135,7 @@ class Generate extends Controller
     /**
      * Generate Model
      */
-    public function model(String $params = NULL)
+    public function model(string $params = NULL)
     {
         if( ! Menus::isDirectory('Models') )
         {
@@ -158,7 +158,7 @@ class Generate extends Controller
     /**
      * Generate View
      */
-    public function view(String $params = NULL)
+    public function view(string $params = NULL)
     {
         if( ! Menus::isDirectory('Views') )
         {
@@ -183,7 +183,7 @@ class Generate extends Controller
     /**
      * Generate Starting File
      */
-    public function starting(String $params = NULL)
+    public function starting(string $params = NULL)
     {   
         if( ! Menus::isDirectory('Starting') )
         {
@@ -206,7 +206,7 @@ class Generate extends Controller
     /**
      * Generate Migration
      */
-    public function migration(String $params = NULL)
+    public function migration(string $params = NULL)
     {
         if( ! Menus::isDirectory('Models') )
         {

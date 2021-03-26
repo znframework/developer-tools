@@ -48,7 +48,7 @@ class Grid extends MLExtends
      * 
      * @return Grid
      */
-    public function url(String $url = NULL) : Grid
+    public function url(string $url = NULL) : Grid
     {
         $this->url = $url;
 
@@ -62,7 +62,7 @@ class Grid extends MLExtends
      * 
      * @return Grid
      */
-    public function limit(Int $limit = NULL) : Grid
+    public function limit(int $limit = NULL) : Grid
     {
         $this->limit = $limit;
 
@@ -76,7 +76,7 @@ class Grid extends MLExtends
      * 
      * @return string
      */
-    public function create($app = NULL) : String
+    public function create($app = NULL) : string
     {
         $searchWord = '';
 

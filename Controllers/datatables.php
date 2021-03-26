@@ -17,7 +17,7 @@ class Datatables extends Controller
     /**
      * Main
      */
-    public function main(String $params = NULL)
+    public function main(string $params = NULL)
     {
         # Sending data to Masterpage.
         Masterpage::pdata(['tables' => DatatablesModel\Table::list()]);

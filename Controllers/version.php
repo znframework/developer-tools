@@ -18,7 +18,7 @@ class Version extends Controller
     /**
      * Notes Page
      */
-    public function notes(String $params = NULL)
+    public function notes(string $params = NULL)
     {
         Import::handload('Functions');
         

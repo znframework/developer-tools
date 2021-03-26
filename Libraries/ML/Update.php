@@ -21,7 +21,7 @@ class Update
     // @param string $data
     //
     //--------------------------------------------------------------------------------------------------------
-    public function do(String $app = NULL, $key, String $data = NULL) : Bool
+    public function do(string $app = NULL, $key, string $data = NULL) : bool
     {
         return (new Insert)->do($app, $key, $data);
     }

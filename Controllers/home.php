@@ -46,7 +46,7 @@ class Home extends Controller
     /**
      * Docs Page
      */
-    public function docs(String $params = NULL)
+    public function docs(string $params = NULL)
     {
         # User defined functions are included.
         Import::handload('Functions');

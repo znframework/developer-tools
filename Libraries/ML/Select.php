@@ -22,7 +22,7 @@ class Select extends MLExtends
     // @return string
     //
     //--------------------------------------------------------------------------------------------------------
-    public function do(String $key = NULL, $convert = NULL)
+    public function do(string $key = NULL, $convert = NULL)
     {
         $read = file_get_contents($this->lang);
 
@@ -58,7 +58,7 @@ class Select extends MLExtends
     // @return array
     //
     //--------------------------------------------------------------------------------------------------------
-    public function all($app = NULL) : Array
+    public function all($app = NULL) : array
     {
         if( ! is_string($app) )
         {
