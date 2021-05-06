@@ -37,10 +37,6 @@ class VersionControl extends Model
             {
                 if( ! isset($return->message) )
                 {
-                    usort($return, function($data1, $data2){ return strcmp($data1->name, $data2->name); });
-
-                    rsort($return);
-
                     $lastest = $return[0];
 
                     $lastVersionData = $lastest->name ?? NULL;

@@ -13,7 +13,10 @@
             @if( ZN::$projectType === 'FE' && ($isUndoUpgrade ?? NULL) ) 
             {{Form::class('btn btn-danger')->submit('undoUpgrade', LANG['undoUpgrade'])}}
             @endif
+
+            @if( $upgrades )
             {{Form::class('btn btn-info')->submit('upgrade', LANG['upgradeButton'])}}
+            @endif
         </h1>
     </div>
 </div>
