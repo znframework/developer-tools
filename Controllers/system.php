@@ -24,7 +24,6 @@ use DBTool;
 use DB;
 use URL;
 use Form;
-use DBGrid;
 use Security;
 use Config;
 use Json;
@@ -82,113 +81,6 @@ class System extends Controller
         $pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
 
         Masterpage::page('language');
-
-        Masterpage::pdata($pdata);
-    }
-
-    /**
-     * Grid Page
-     */
-    public function grid(string $params = NULL)
-    {
-        $tables             = DBTool::listTables();
-        $sessionSelectTable = Session::select('gridSelectTable');
-        $joinings           = Session::select('joinings');
-        $searching          = Session::select('searching');
-        $viewColumns        = Session::select('viewColumns');
-        $selectTable        = ! empty($sessionSelectTable ) ? $sessionSelectTable : ($tables[0] ?? NULL);
-
-        if( empty($selectTable) )
-        {
-            return Masterpage::error(Lang::select('DevtoolsErrors', 'gridError'));
-        }
-
-        $joinCollapse = Session::select('joinCollapse');
-
-        $pdata['tables'] = Arrays::combine($tables, $tables);
-
-        if( Method::post('show') )
-        {
-            Session::delete('joinings');
-            Session::delete('searching');
-            Session::delete('viewColumns');
-            Session::delete('joinCollapse');
-
-            $joinCollapse = Security::htmlDecode(Method::post('joinsCollapse'));
-            Session::insert('joinCollapse', $joinCollapse);
-
-            $joinings        = [];
-            $columns         = [];
-            $searching       = [];
-
-            $selectTable     = Method::post('table');
-            $joinTypes       = Method::post('joinTypes');
-            $viewColumns     = Method::post('viewColumns');
-            $joinTables      = Arrays::deleteElement(Method::post('joinTables'), 'none');
-            $joinColumns     = Arrays::deleteElement(Method::post('joinColumns'), 'none');
-            $joinOtherTables = Arrays::deleteElement(Method::post('joinOtherTables'), 'none');
-            $joinOtherColumns= Arrays::deleteElement(Method::post('joinOtherColumns'), 'none');
-
-            Session::insert('gridSelectTable', $selectTable);
-
-            if( ! empty($joinTables) )
-            {
-                foreach( $joinOtherTables as $key => $table )
-                {
-                    $searching  = array_merge($searching, DB::get($joinTables[$key])->columns(), DB::get($table)->columns());
-                    $joinings[] = [$joinTables[$key] . '.' . $joinColumns[$key], $table . '.' . $joinOtherColumns[$key], $joinTypes[$key]];
-                }
-            }
-        }
-
-        $get     = DB::get($selectTable);
-        $columns = $get->columns();
-
-        DBGrid::limit(DASHBOARD_CONFIG['limits']['grid']);
-
-        if( ! empty($joinings) )
-        {
-            Session::insert('joinings', $joinings);
-            Session::insert('searching', $searching);
-
-            DBGrid::joins(...$joinings);
-            $searchValues  = $searching;
-        }
-        else
-        {
-            $searchValues  = $columns;
-        }
-
-        DBGrid::search(...$searchValues);
-
-        foreach( $get->columnData() as $col )
-        {
-            if( $col->primaryKey === 1 )
-            {
-                DBGrid::processColumn($col->name ?? 'id');
-            }
-        }
-
-        if( ! empty($viewColumns) )
-        {
-            Session::insert('viewColumns', $viewColumns);
-            DBGrid::columns($viewColumns);
-        }
-
-        $path = FILES_DIR . 'Grids';
-
-        Folder::create($path);
-
-        $saves = Folder::files($path);
-
-        $pdata['table']        = DBGrid::create($selectTable);
-        $pdata['selectTable']  = $selectTable;
-        $pdata['viewColumns']  = $viewColumns;
-        $pdata['columns']      = Arrays::combine($columns, $columns);
-        $pdata['joinCollapse'] = $joinCollapse;
-        $pdata['saves']        = Arrays::combine($saves, $saves);
-
-        Masterpage::page('grid');
 
         Masterpage::pdata($pdata);
     }

@@ -40,7 +40,6 @@ class Menus extends Model
         if( self::isDirectory('Starting' ) ) $menus['starting']   = ['icon' => 'renren',     'href' => 'generate/starting'];
 
         $tools['datatables']    = 'datatables';
-        $tools['grids']         = 'system/grid';
         $tools['packages'] =      'packages';
 
         if( PHP_OS === 'Linux' || PHP_OS === 'Unix' )
