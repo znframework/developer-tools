@@ -26,7 +26,7 @@ class Docs extends Model
 
         if( Method::post('refresh') || ! file_exists($docs) )
         {
-            if( $return = Restful::get('https://api.znframework.com/docs') )
+            if( $return = Restful::get('https://znframework.com/output') )
             {
                 File::write($docs, Json::encode($return));
             }
