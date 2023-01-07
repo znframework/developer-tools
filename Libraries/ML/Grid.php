@@ -38,7 +38,7 @@ class Grid extends MLExtends
     {
         parent::__construct();
 
-        $this->getLang = Lang::select('Language');
+        $this->getLang = Lang::default('ZN\Language\GridDefaultLanguage')::select('ViewObjects:mlgrid');
     }
 
     /**

@@ -25,7 +25,7 @@
 
         @if( ! empty($docs) ) foreach( $docs as $key => $doc )
 
-            {[ $title = $doc->$titleColunm ?? $doc->$keywordsColumn ?? NULL ]}
+            {[ $title = $doc->$titleColumn ?? $doc->$keywordsColumn ?? NULL ]}
 
             @if( ! empty($title) )
             <div class="panel panel-default">

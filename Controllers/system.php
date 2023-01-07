@@ -455,7 +455,7 @@ class System extends Controller
                 $val = trim($val);
 
                 $valEx  = explode(' ', $val);
-                $column = $valEx[0] ?? NULL;
+                $column = $valEx[0] ?? '';
 
                 $options .= Base::presuffix(trim($column), '\'') . ' => ' . Base::presuffix(trim(str_replace($column, '', $val)), '\'') . ', ';
             }
@@ -479,15 +479,16 @@ class System extends Controller
             $whereClause = $replaceEx[1] ?? NULL;
             $replace     = Base::suffix($replaceEx[0], ';');
             $syntax      = '/'.$update.'(.*?)\s+set\s+(.*?)(\s+|\;)$/si';
+            $where       = '';
 
             preg_match($syntax, $replace, $match);
 
             if( $whereClause )
             {
-                $where = preg_replace('/(\w+)\s+(\W+)\s+(.*?)\;/si', 'where(\'$1 $2\', \'$3\')->', $whereClause.';');
+                $where = preg_replace('/(\w+)\s+(\W+)\s+(.*?)\;/si', 'where(\'$1 $2\', \'$3\')->', $whereClause . ';');
             }
 
-            $columns = explode(',', $match[2] ?? NULL);
+            $columns = explode(',', $match[2] ?? '');
             $options = '[';
 
             foreach( $columns as $val )
@@ -499,7 +500,7 @@ class System extends Controller
 
             $options  = rtrim($options, ', ');
             $options .= ']';
-            $replace  = preg_replace($syntax, 'DB::' . trim($where) . 'update(\'$1\', '.$options.')', $replace);
+            $replace  = preg_replace($syntax, 'DB::' . trim($where) . 'update(\'$1\', ' . $options . ')', $replace);
         }
     }
 
@@ -517,8 +518,8 @@ class System extends Controller
 
             preg_match($syntax, $replace, $match);
 
-            $columns = explode(',', $match[2] ?? NULL);
-            $values  = explode(',', $match[3] ?? NULL);
+            $columns = explode(',', $match[2] ?? '');
+            $values  = explode(',', $match[3] ?? '');
             $options = '[';
 
             foreach( $columns as $key => $val )

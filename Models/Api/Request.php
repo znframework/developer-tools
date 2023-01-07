@@ -27,7 +27,7 @@ class Request extends Model
 
             foreach( $explode as $value )
             {
-                $valueEx = explode(':', trim(str_replace(EOL, NULL, $value)));
+                $valueEx = explode(':', trim(str_replace(EOL, '', $value)));
 
                 if( isset($valueEx[1]) )
                 {

@@ -20,22 +20,33 @@ class Docs extends Model
 {
     public static function get()
     {
+        $address = 'https://znframework.com/output';
+
         $docs = FILES_DIR . 'docs.json';
 
         $return = [];
 
         if( Method::post('refresh') || ! file_exists($docs) )
         {
-            if( $return = Restful::get('https://znframework.com/output') )
+            if( $return = Restful::get($address) )
             {
-                File::write($docs, Json::encode($return));
+                if( Json::check($return) )
+                {
+                    File::write($docs, $return);
+                }
+                else
+                {  
+                    Masterpage::error(LANG['docsRetrievalFailed']);
+                    
+                    $return = [];
+                }
             }
             else
             {
                 Masterpage::error(LANG['docsRetrievalFailed']);
             }
         }
-        else
+        else if( ! $return )
         {
             $return = Json::decode(File::read($docs));
         }

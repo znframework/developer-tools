@@ -141,7 +141,7 @@
                                     Form::disabled();
                                 }
                             ]}
-                            <td>{{ strlen($row[$column]) > 255
+                            <td>{{ strlen($row[$column] ?? '') > 255
                                                          ? Form::class('form-control')->textarea('columns['.$column.'][]', $row[$column])
                                                          : Form::class('form-control')->text('columns['.$column.'][]', $row[$column]) }}
                             </td>
@@ -186,7 +186,7 @@
                     Form::disabled();
                 }
             ]}
-            <td>{{ strlen($row[$column]) > 255
+            <td>{{ strlen($row[$column] ?? '') > 255
                                          ? Form::class('form-control')->textarea('updateColumns['.$row[$uniqueKey].']['.$column.']', $row[$column])
                                          : Form::class('form-control')->text('updateColumns['.$row[$uniqueKey].']['.$column.']', $row[$column]) }}
             </td>
