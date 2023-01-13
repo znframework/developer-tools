@@ -20,7 +20,7 @@ class Docs extends Model
 {
     public static function get()
     {
-        $address = 'https://znframework.com/output';
+        $address = 'https://www.znframework.com/output';
 
         $docs = FILES_DIR . 'docs.json';
 
@@ -30,6 +30,8 @@ class Docs extends Model
         {
             if( $return = Restful::get($address) )
             {
+                $return = Json::encode($return);
+
                 if( Json::check($return) )
                 {
                     File::write($docs, $return);
