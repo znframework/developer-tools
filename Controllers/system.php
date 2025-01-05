@@ -36,7 +36,7 @@ class System extends Controller
     /**
      * Converter Page
      */
-    public function converter(string $params = NULL)
+    public function converter(?string $params = NULL)
     {
         if( Method::post('convert') )
         {
@@ -76,7 +76,7 @@ class System extends Controller
     /**
      * Language Page
      */
-    public function language(string $params = NULL)
+    public function language(?string $params = NULL)
     {
         $pdata['table']  = \MLS::limit(DASHBOARD_CONFIG['limits']['language'])->create();
 
@@ -180,7 +180,7 @@ class System extends Controller
     /**
      * Info Page
      */
-    public function info(string $params = NULL)
+    public function info(?string $params = NULL)
     {
         if( ZN::$projectType === 'EIP' )
         {   
@@ -255,7 +255,7 @@ class System extends Controller
     /**
      * Log Page
      */
-    public function log(string $params = NULL)
+    public function log(?string $params = NULL)
     {
         $project = SELECT_PROJECT;
         $path    = PROJECTS_DIR . $project . DS . 'Storage/Logs/';
@@ -277,7 +277,7 @@ class System extends Controller
     /**
      * Terminal Page
      */
-    public function terminal(string $params = NULL)
+    public function terminal(?string $params = NULL)
     {
         $pdata['supportCommands'] =
         [
@@ -345,7 +345,7 @@ class System extends Controller
     /**
      * Backup Page
      */
-    public function backup(string $params = NULL)
+    public function backup(?string $params = NULL)
     {
         $project = SELECT_PROJECT;
         $path    = STORAGE_DIR . 'ProjectBackup' . DS;

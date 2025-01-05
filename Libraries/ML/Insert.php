@@ -23,7 +23,7 @@ class Insert extends MLExtends
     // @param string $data
     //
     //--------------------------------------------------------------------------------------------------------
-    public function do(string $app, $key, string $data = NULL) : bool
+    public function do(string $app, $key, ?string $data = NULL) : bool
     {
         $datas = [];
 

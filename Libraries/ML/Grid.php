@@ -48,7 +48,7 @@ class Grid extends MLExtends
      * 
      * @return Grid
      */
-    public function url(string $url = NULL) : Grid
+    public function url(?string $url = NULL) : Grid
     {
         $this->url = $url;
 

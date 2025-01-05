@@ -30,7 +30,7 @@ class Cronjobs extends Controller
     /**
      * Main
      */
-    public function main(string $params = NULL)
+    public function main(?string $params = NULL)
     {
         # Crontab can only be used with unix operating systems.
         if( PHP_OS !== 'Linux' && PHP_OS !== 'Unix' )

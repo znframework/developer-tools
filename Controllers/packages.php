@@ -59,7 +59,7 @@ class Packages extends Controller
     /**
      * Main Page
      */
-    public function main(string $params = NULL)
+    public function main(?string $params = NULL)
     {
         if( Method::post('search') )
         {

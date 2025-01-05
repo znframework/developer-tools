@@ -22,7 +22,7 @@ class Select extends MLExtends
     // @return string
     //
     //--------------------------------------------------------------------------------------------------------
-    public function do(string $key = NULL, $convert = NULL)
+    public function do(?string $key = NULL, $convert = NULL)
     {
         $read = file_get_contents($this->lang);
 

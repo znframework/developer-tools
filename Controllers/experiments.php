@@ -17,7 +17,7 @@ class Experiments extends Controller
     /**
      * Main
      */
-    public function main(string $params = NULL)
+    public function main(?string $params = NULL)
     {
         Masterpage::page('experiment');
     }

@@ -6055,7 +6055,7 @@ var functionMap = {
         "* gets the script for the $locale"
     ],
     "locale_lookup": [
-        "string locale_lookup(array $langtag, string $locale[, bool $canonicalize[, string $default = null]])",
+        "string locale_lookup(array $langtag, string $locale[, bool $canonicalize[, ?string $default = NULL]])",
         "* Searchs the items in $langtag for the best match to the language * range"
     ],
     "locale_set_default": [
