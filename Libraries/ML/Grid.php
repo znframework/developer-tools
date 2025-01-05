@@ -62,7 +62,7 @@ class Grid extends MLExtends
      * 
      * @return Grid
      */
-    public function limit(int $limit = NULL) : Grid
+    public function limit(?int $limit = NULL) : Grid
     {
         $this->limit = $limit;
 
